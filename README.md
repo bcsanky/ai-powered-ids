@@ -25,4 +25,4 @@ The goal is to create a hybrid threat detection platform where traditional log-b
 Work from the Linux filesystem inside WSL:
 
 ```bash
-/home/<user>/thesis-ids
+/home/<user>/ai-powered-ids
