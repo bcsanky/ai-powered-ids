@@ -1,16 +1,28 @@
-# thesis-ids
+# AI-Powered IDS
 
-AI-based cyber threat detection and analysis system.
+AI-based cyber threat detection and analysis platform built around Wazuh and a custom ML service.
 
-## Local development (Windows + WSL2)
+## Overview
 
-Recommended setup:
-- Docker Desktop with WSL2 backend
-- Ubuntu on WSL
-- VS Code with WSL extension
+This project builds an IDS/SIEM-oriented environment with the following components:
 
-## Start ML skeleton
+- **Wazuh Manager**
+- **OpenSearch Indexer**
+- **Wazuh Dashboard**
+- **Custom ML service** based on FastAPI
+
+The goal is to create a hybrid threat detection platform where traditional log-based detection is complemented by machine learning-based analysis.
+
+## Requirements
+
+- Windows 10/11
+- WSL2
+- Docker Desktop with WSL backend enabled
+- Recommended: at least 8 GB RAM
+
+## Recommended local setup
+
+Work from the Linux filesystem inside WSL:
 
 ```bash
-cd infra
-docker compose up -d --build
+/home/<user>/thesis-ids
