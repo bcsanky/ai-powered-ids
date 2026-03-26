@@ -1,15 +1,33 @@
-experiment_id: exp-001
-title: "Initial reproducible environment"
+experiment_id: exp-002
+title: "Dataset and feature pipeline v1"
 random_seed: 42
 
 dataset:
   name: CIC-IDS2017
   version: "raw-v1"
-  split_seed: 42
+  raw_dir: "data/raw/cicids2017"
+  output_dir: "data/processed"
+  label_column_candidates:
+    - Label
+    - label
+
+split:
+  benign_train_ratio: 0.70
+  benign_val_ratio: 0.15
+  benign_test_ratio: 0.15
 
 features:
-  set_name: minimal
-  columns:
+  set_name: minimal_v1
+  numeric:
+    - destination_port
+    - flow_duration
+    - total_fwd_packets
+    - total_backward_packets
+    - flow_bytes_per_sec
+    - flow_packets_per_sec
+  categorical:
+    - protocol
+  drop_if_missing_all:
     - destination_port
     - flow_duration
     - total_fwd_packets
@@ -17,18 +35,13 @@ features:
     - flow_bytes_per_sec
     - flow_packets_per_sec
 
-model:
-  type: autoencoder
-  framework: tensorflow
-  latent_dim: 8
-  epochs: 20
-  batch_size: 128
-  threshold_method: percentile_95
+preprocess:
+  scaler: standard
+  one_hot: true
+  handle_unknown: ignore
 
-infra:
-  wazuh_stack: single-node
-  ml_service_image: mlservice:latest
-  os: windows-wsl2
-
-notes:
-  goal: "Bring up stack and verify central log ingestion"
+output:
+  train_file: "train.parquet"
+  val_file: "val.parquet"
+  test_file: "test.parquet"
+  preprocess_file: "preprocess.pkl"
