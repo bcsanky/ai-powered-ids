@@ -5,7 +5,7 @@ random_seed: 42
 dataset:
   name: CIC-IDS2017
   version: "test-fixture"
-  raw_dir: "ml/tests/fixtures/cicids2017"
+  raw_dir: "ml/tests/cicids2017"
   output_dir: "data/processed"
   label_column_candidates:
     - Label

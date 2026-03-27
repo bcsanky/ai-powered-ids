@@ -6,3 +6,5 @@ joblib
 pyyaml
 pytest
 ruff
+matplotlib
+scipy
