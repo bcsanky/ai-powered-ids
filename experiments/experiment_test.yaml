@@ -1,0 +1,40 @@
+experiment_id: exp-test
+title: "Dataset pipeline test"
+random_seed: 42
+
+dataset:
+  name: CIC-IDS2017
+  version: "test-fixture"
+  raw_dir: "ml/tests/fixtures/cicids2017"
+  output_dir: "data/processed"
+  label_column_candidates:
+    - Label
+    - label
+
+split:
+  benign_train_ratio: 0.70
+  benign_val_ratio: 0.15
+  benign_test_ratio: 0.15
+
+features:
+  set_name: minimal_v1
+  numeric:
+    - destination_port
+    - flow_duration
+    - total_fwd_packets
+    - total_backward_packets
+    - flow_bytes_per_sec
+    - flow_packets_per_sec
+  categorical:
+    - protocol
+
+preprocess:
+  scaler: standard
+  one_hot: true
+  handle_unknown: ignore
+
+output:
+  train_file: "train.parquet"
+  val_file: "val.parquet"
+  test_file: "test.parquet"
+  preprocess_file: "preprocess.pkl"

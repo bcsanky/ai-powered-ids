@@ -1,13 +1,31 @@
 from __future__ import annotations
 
+import json
+import shutil
+import subprocess
+import sys
 from pathlib import Path
-
 
 import joblib
 import pandas as pd
-import json
+import pytest
 
 PROCESSED_DIR = Path("data/processed")
+TEST_CONFIG = Path("experiments/experiment_test.yaml")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def build_test_dataset():
+    if PROCESSED_DIR.exists():
+        shutil.rmtree(PROCESSED_DIR)
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+
+    subprocess.run(
+        [sys.executable, "ml/src/build_dataset.py", "--config", str(TEST_CONFIG)],
+        check=True,
+    )
+
+    yield
 
 
 def test_processed_files_exist():
@@ -49,7 +67,6 @@ def test_preprocessor_can_be_loaded():
     assert pp is not None
     assert type(pp).__name__ == "ColumnTransformer"
 
-PROCESSED_DIR = Path("data/processed")
 
 def test_versioned_preprocess_file_exists():
     metadata_path = PROCESSED_DIR / "dataset_metadata.json"
