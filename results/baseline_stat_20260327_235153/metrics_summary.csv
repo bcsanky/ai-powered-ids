@@ -1,0 +1,2 @@
+tn,fp,fn,tp,precision,recall,f1,n_samples,n_attack,n_benign,roc_auc,baseline,threshold,threshold_quantile,has_timestamp,first_tp_time,first_fp_time,tp_per_min,fp_per_min
+324047,16651,538707,17849,0.5173623188405797,0.032070447538073435,0.06039698438049863,897254,556556,340698,0.4760526578784387,stat,3.522404909133911,0.95,False,,,,

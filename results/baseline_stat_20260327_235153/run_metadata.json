@@ -1,0 +1,6 @@
+{
+  "baseline": "stat",
+  "run_dir": "results/baseline_stat_20260327_235153",
+  "data_dir": "data/processed",
+  "preprocess_path": "data/processed/preprocess.pkl"
+}
