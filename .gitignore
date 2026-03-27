@@ -58,3 +58,8 @@ build/
 *.zip
 *.tar
 *.gz
+
+.venv/
+.venv39/
+__pycache__/
+*.pyc
