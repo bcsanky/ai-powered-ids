@@ -31,18 +31,21 @@ def build_test_dataset():
 def test_processed_files_exist():
     assert (PROCESSED_DIR / "train.parquet").exists()
     assert (PROCESSED_DIR / "val.parquet").exists()
+    assert (PROCESSED_DIR / "calib.parquet").exists()
     assert (PROCESSED_DIR / "test.parquet").exists()
     assert (PROCESSED_DIR / "preprocess.pkl").exists()
     assert (PROCESSED_DIR / "dataset_metadata.json").exists()
 
 
-def test_train_val_test_can_be_loaded():
+def test_train_val_calib_test_can_be_loaded():
     train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
     val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
+    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
     test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
 
     assert len(train) > 0
     assert len(val) > 0
+    assert len(calib) > 0
     assert len(test) > 0
 
 
@@ -52,6 +55,14 @@ def test_train_and_val_are_benign_only():
 
     assert set(train["is_benign"].unique()) == {1}
     assert set(val["is_benign"].unique()) == {1}
+
+
+def test_calib_contains_both_classes():
+    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
+
+    classes = set(calib["is_benign"].unique())
+    assert 0 in classes
+    assert 1 in classes
 
 
 def test_test_contains_both_classes():
@@ -83,18 +94,24 @@ def test_metadata_matches_real_row_counts():
 
     train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
     val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
+    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
     test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
 
     assert metadata["rows_train"] == len(train)
     assert metadata["rows_val"] == len(val)
+    assert metadata["rows_calib"] == len(calib)
     assert metadata["rows_test"] == len(test)
+
+    assert metadata["rows_calib_attacks"] == int((calib["is_benign"] == 0).sum())
+    assert metadata["rows_calib_benign"] == int((calib["is_benign"] == 1).sum())
     assert metadata["rows_test_attacks"] == int((test["is_benign"] == 0).sum())
     assert metadata["rows_test_benign"] == int((test["is_benign"] == 1).sum())
 
 
-def test_train_val_test_have_same_feature_columns():
+def test_train_val_calib_test_have_same_feature_columns():
     train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
     val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
+    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
     test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
 
-    assert list(train.columns) == list(val.columns) == list(test.columns)
+    assert list(train.columns) == list(val.columns) == list(calib.columns) == list(test.columns)

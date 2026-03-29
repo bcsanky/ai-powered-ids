@@ -14,7 +14,10 @@ dataset:
 split:
   benign_train_ratio: 0.70
   benign_val_ratio: 0.15
-  benign_test_ratio: 0.15
+  benign_calib_ratio: 0.075
+  benign_test_ratio: 0.075
+  attack_calib_ratio: 0.50
+  attack_test_ratio: 0.50
 
 features:
   set_name: minimal_v1
@@ -43,5 +46,29 @@ preprocess:
 output:
   train_file: "train.parquet"
   val_file: "val.parquet"
+  calib_file: "calib.parquet"
   test_file: "test.parquet"
   preprocess_file: "preprocess.pkl"
+
+model:
+  type: autoencoder_sklearn
+  hidden_layer_sizes: [32, 16, 8, 16, 32]
+  activation: relu
+  solver: adam
+  alpha: 0.0001
+  batch_size: 256
+  learning_rate_init: 0.001
+  max_iter: 60
+  tol: 0.0001
+  n_iter_no_change: 5
+  early_stopping: true
+  validation_fraction: 0.1
+
+thresholds:
+  fixed: 0.01
+  percentile: 95
+  search_steps: 200
+
+paths:
+  artifacts_dir: "artifacts/ae"
+  results_dir: "results"
