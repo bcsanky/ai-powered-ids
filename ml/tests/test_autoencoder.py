@@ -1,15 +1,8 @@
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
 import numpy as np
 
-SRC_DIR = Path(__file__).resolve().parents[1] / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-
-from autoencoder import (
+from ml.src.autoencoder import (
     AEConfig,
     build_autoencoder,
     feature_reconstruction_scores,
@@ -18,6 +11,7 @@ from autoencoder import (
     sample_reconstruction_scores,
     summarize_top_k_feature_names,
 )
+
 
 def test_autoencoder_can_fit_and_reconstruct():
     rng = np.random.default_rng(42)
