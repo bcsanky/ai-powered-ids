@@ -17,7 +17,7 @@ def test_fixed_threshold_returns_value():
 def test_percentile_threshold_returns_expected_value():
     scores = np.array([0.1, 0.2, 0.3, 0.4], dtype=np.float32)
     thr = percentile_threshold(scores, percentile=50)
-    assert abs(thr - 0.25) < 1e-9
+    assert np.isclose(thr, 0.25, atol=1e-8, rtol=0)
 
 
 def test_best_f1_threshold_finds_good_separator():
