@@ -1,0 +1,2 @@
+tn,fp,fn,tp,precision,recall,f1,n_samples,n_attack,n_benign,roc_auc,baseline,threshold,has_timestamp,first_tp_time,first_fp_time,tp_per_min,fp_per_min,wazuh_input_path,label_column,prediction_source,score_source
+1,1,0,2,0.6666666666666666,1.0,0.8,4,2,2,1.0,wazuh,0.5,True,2026-03-28T10:01:00,2026-03-28T10:02:00,0.6666666666666666,0.3333333333333333,data/processed/wazuh_eval.csv,label,wazuh_alert,alert_score

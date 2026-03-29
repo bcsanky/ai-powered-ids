@@ -20,8 +20,30 @@ from sklearn.metrics import (
     roc_curve,
 )
 
-LABEL_CANDIDATES = ["label", "labels", "target", "y", "is_attack", "attack", "class"]
+LABEL_CANDIDATES = [
+    "label",
+    "labels",
+    "target",
+    "y",
+    "is_attack",
+    "attack",
+    "class",
+    "is_benign",
+]
 TIMESTAMP_CANDIDATES = ["timestamp", "ts", "event_time", "flow_start", "flow_start_time", "date"]
+WAZUH_INPUT_CANDIDATES = [
+    "wazuh_eval.parquet",
+    "wazuh_eval.csv",
+    "wazuh_eval.jsonl",
+    "wazuh_alerts.parquet",
+    "wazuh_alerts.csv",
+    "wazuh_alerts.jsonl",
+]
+WAZUH_ALERT_CANDIDATES = ["wazuh_alert", "is_alert", "alert", "prediction", "y_pred"]
+WAZUH_SCORE_CANDIDATES = ["alert_score", "rule_level", "score", "anomaly_score"]
+
+BENIGN_STRING_TOKENS = {"BENIGN", "NORMAL", "FALSE", "0", "NO", "NONE"}
+POSITIVE_STRING_TOKENS = {"1", "TRUE", "YES", "ALERT", "ATTACK", "POSITIVE"}
 
 
 @dataclass
@@ -39,6 +61,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--results-dir", default="results")
     parser.add_argument("--threshold-quantile", type=float, default=0.95)
     parser.add_argument("--history-json", default=None)
+    parser.add_argument("--wazuh-input", default=None)
     return parser.parse_args()
 
 
@@ -61,18 +84,46 @@ def load_df(path: Path) -> pd.DataFrame:
     return pd.read_parquet(path)
 
 
+def load_tabular_df(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        raise FileNotFoundError(f"Hiányzó fájl: {path}")
+
+    suffix = path.suffix.lower()
+    if suffix == ".parquet":
+        return pd.read_parquet(path)
+    if suffix == ".csv":
+        return pd.read_csv(path)
+    if suffix in {".jsonl", ".ndjson"}:
+        return pd.read_json(path, lines=True)
+
+    raise ValueError(
+        f"Nem támogatott Wazuh input formátum: {path}. "
+        "Támogatott: .parquet, .csv, .jsonl, .ndjson"
+    )
+
+
 def infer_label(df: pd.DataFrame) -> tuple[str, np.ndarray]:
     for col in LABEL_CANDIDATES:
         if col in df.columns:
             s = df[col]
+
+            if col == "is_benign":
+                if pd.api.types.is_bool_dtype(s):
+                    y = (~s).astype(int).to_numpy()
+                elif pd.api.types.is_numeric_dtype(s):
+                    y = (1 - s.fillna(0).astype(int)).to_numpy()
+                else:
+                    upper = s.astype(str).str.strip().str.upper()
+                    y = (~upper.isin(BENIGN_STRING_TOKENS)).astype(int).to_numpy()
+                return col, y
+
             if pd.api.types.is_bool_dtype(s):
                 y = s.astype(int).to_numpy()
             elif pd.api.types.is_numeric_dtype(s):
                 y = s.fillna(0).astype(int).to_numpy()
             else:
                 upper = s.astype(str).str.strip().str.upper()
-                benign_tokens = {"BENIGN", "NORMAL", "FALSE", "0"}
-                y = (~upper.isin(benign_tokens)).astype(int).to_numpy()
+                y = (~upper.isin(BENIGN_STRING_TOKENS)).astype(int).to_numpy()
             return col, y
     raise ValueError(
         f"Nem található label oszlop. Próbáltak: {LABEL_CANDIDATES}. "
@@ -99,16 +150,15 @@ AUXILIARY_NON_FEATURE_COLUMNS = {
     "split",
 }
 
+
 def prepare_feature_matrix(df: pd.DataFrame, preprocess, timestamp_col: Optional[str]):
     raw_feature_cols = list(getattr(preprocess, "feature_names_in_", []))
 
-    # 1) Nyers adat eset: minden, a preprocess által elvárt oszlop jelen van
     if raw_feature_cols and all(col in df.columns for col in raw_feature_cols):
         x_df = df[raw_feature_cols]
         x = to_dense(preprocess.transform(x_df))
         return x, raw_feature_cols, "raw_with_preprocess"
 
-    # 2) Már preprocesselt adat eset: ne transformáljuk újra
     excluded = set(LABEL_CANDIDATES) | AUXILIARY_NON_FEATURE_COLUMNS
     if timestamp_col:
         excluded.add(timestamp_col)
@@ -326,6 +376,139 @@ def save_loss_curve(history_json: Optional[str], out_path: Path) -> None:
     plt.close(fig)
 
 
+def resolve_wazuh_input(data_dir: Path, wazuh_input: Optional[str]) -> Path:
+    if wazuh_input:
+        return Path(wazuh_input)
+
+    for candidate in WAZUH_INPUT_CANDIDATES:
+        candidate_path = data_dir / candidate
+        if candidate_path.exists():
+            return candidate_path
+
+    raise FileNotFoundError(
+        "Nem található Wazuh eval input. "
+        f"Vártak egyet ezek közül a {data_dir} könyvtárban: {WAZUH_INPUT_CANDIDATES}, "
+        "vagy add meg külön a --wazuh-input paraméterrel."
+    )
+
+
+def parse_binary_predictions(series: pd.Series) -> np.ndarray:
+    if pd.api.types.is_bool_dtype(series):
+        return series.fillna(False).astype(int).to_numpy()
+
+    if pd.api.types.is_numeric_dtype(series):
+        return (series.fillna(0).astype(float) > 0).astype(int).to_numpy()
+
+    upper = series.astype(str).str.strip().str.upper()
+    return upper.isin(POSITIVE_STRING_TOKENS).astype(int).to_numpy()
+
+
+def infer_wazuh_predictions_and_scores(df: pd.DataFrame):
+    prediction_source = None
+    score_source = None
+
+    for col in WAZUH_ALERT_CANDIDATES:
+        if col in df.columns:
+            y_pred = parse_binary_predictions(df[col])
+            prediction_source = col
+            break
+    else:
+        if "rule_level" in df.columns:
+            rule_level = pd.to_numeric(df["rule_level"], errors="coerce").fillna(0.0)
+            y_pred = (rule_level > 0).astype(int).to_numpy()
+            prediction_source = "rule_level>0"
+        elif "rule_id" in df.columns:
+            y_pred = df["rule_id"].notna().astype(int).to_numpy()
+            prediction_source = "rule_id_notnull"
+        else:
+            raise ValueError(
+                "Nem található Wazuh riasztás/predikció oszlop. "
+                f"Próbáltak: {WAZUH_ALERT_CANDIDATES} vagy rule_level/rule_id. "
+                f"Elérhető oszlopok: {list(df.columns)}"
+            )
+
+    for col in WAZUH_SCORE_CANDIDATES:
+        if col in df.columns:
+            scores = pd.to_numeric(df[col], errors="coerce").fillna(0.0).to_numpy(dtype=float)
+            score_source = col
+            break
+    else:
+        scores = y_pred.astype(float)
+        score_source = prediction_source
+
+    return y_pred, scores, prediction_source, score_source
+
+
+def save_common_outputs(
+    *,
+    run_dir: Path,
+    baseline: str,
+    df: pd.DataFrame,
+    y_true: np.ndarray,
+    y_pred: np.ndarray,
+    scores: np.ndarray,
+    timestamp_col: Optional[str],
+    data_dir: Path,
+    history_json: Optional[str],
+    threshold: Optional[float] = None,
+    extra_metadata: Optional[dict] = None,
+) -> None:
+    metrics = compute_classification_metrics(y_true, y_pred, scores)
+    metrics["baseline"] = baseline
+    if threshold is not None:
+        metrics["threshold"] = float(threshold)
+
+    time_metrics = compute_time_metrics(df, y_true, y_pred, timestamp_col)
+    metrics.update(time_metrics)
+
+    if extra_metadata:
+        metrics.update(extra_metadata)
+
+    pd.DataFrame([metrics]).to_csv(run_dir / "metrics_summary.csv", index=False)
+
+    cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
+    pd.DataFrame(
+        cm,
+        index=["true_benign", "true_attack"],
+        columns=["pred_benign", "pred_attack"],
+    ).to_csv(run_dir / "confusion_matrix.csv")
+    save_confusion_matrix_png(cm, run_dir / "confusion_matrix.png")
+
+    distribution_threshold = float(threshold) if threshold is not None else 0.5
+    save_score_distribution_png(scores, y_true, distribution_threshold, run_dir / "score_distribution.png")
+    save_threshold_curve(
+        scores,
+        y_true,
+        run_dir / "threshold_curve.csv",
+        run_dir / "threshold_curve.png",
+    )
+    save_roc_png(y_true, scores, run_dir / "roc_curve.png")
+    save_loss_curve(history_json, run_dir / "loss_curve.png")
+
+    pred_df = pd.DataFrame(
+        {
+            "y_true": y_true,
+            "score": scores,
+            "y_pred": y_pred,
+        }
+    )
+    if timestamp_col and timestamp_col in df.columns:
+        pred_df.insert(0, "timestamp", df[timestamp_col].astype(str).values)
+
+    pred_df.to_csv(run_dir / "predictions.csv", index=False)
+
+    metadata = {
+        "baseline": baseline,
+        "run_dir": str(run_dir),
+        "data_dir": str(data_dir),
+    }
+    if extra_metadata:
+        metadata.update(extra_metadata)
+
+    with (run_dir / "run_metadata.json").open("w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2)
+
+
 def run_stat_baseline(args: argparse.Namespace) -> None:
     data_dir = Path(args.data_dir)
     results_root = Path(args.results_dir)
@@ -340,8 +523,8 @@ def run_stat_baseline(args: argparse.Namespace) -> None:
     test_df = load_df(artifacts.test_path)
     preprocess = joblib.load(artifacts.preprocess_path)
 
-    train_label_col, y_train = infer_label(train_df)
-    val_label_col, y_val = infer_label(val_df)
+    infer_label(train_df)
+    infer_label(val_df)
     test_label_col, y_test = infer_label(test_df)
 
     train_ts_col = infer_timestamp_col(train_df)
@@ -376,64 +559,63 @@ def run_stat_baseline(args: argparse.Namespace) -> None:
     test_scores = compute_scores(x_test_t, center)
     y_pred = (test_scores >= threshold).astype(int)
 
-    metrics = compute_classification_metrics(y_test, y_pred, test_scores)
-    metrics["baseline"] = args.baseline
-    metrics["threshold"] = threshold
-    metrics["threshold_quantile"] = args.threshold_quantile
-
-    time_metrics = compute_time_metrics(test_df, y_test, y_pred, test_ts_col)
-    metrics.update(time_metrics)
-
-    pd.DataFrame([metrics]).to_csv(run_dir / "metrics_summary.csv", index=False)
-
-    cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
-    pd.DataFrame(
-        cm,
-        index=["true_benign", "true_attack"],
-        columns=["pred_benign", "pred_attack"],
-    ).to_csv(run_dir / "confusion_matrix.csv")
-    save_confusion_matrix_png(cm, run_dir / "confusion_matrix.png")
-
-    save_score_distribution_png(test_scores, y_test, threshold, run_dir / "score_distribution.png")
-    save_threshold_curve(
-        test_scores,
-        y_test,
-        run_dir / "threshold_curve.csv",
-        run_dir / "threshold_curve.png",
+    save_common_outputs(
+        run_dir=run_dir,
+        baseline=args.baseline,
+        df=test_df,
+        y_true=y_test,
+        y_pred=y_pred,
+        scores=test_scores,
+        timestamp_col=test_ts_col,
+        data_dir=data_dir,
+        history_json=args.history_json,
+        threshold=threshold,
+        extra_metadata={
+            "preprocess_path": str(artifacts.preprocess_path),
+            "label_column": test_label_col,
+            "threshold_quantile": args.threshold_quantile,
+            "feature_mode": feature_mode,
+        },
     )
-    save_roc_png(y_test, test_scores, run_dir / "roc_curve.png")
-    save_loss_curve(args.history_json, run_dir / "loss_curve.png")
-
-    pred_df = pd.DataFrame(
-        {
-            "y_true": y_test,
-            "score": test_scores,
-            "y_pred": y_pred,
-        }
-    )
-    if test_ts_col and test_ts_col in test_df.columns:
-        pred_df.insert(0, "timestamp", test_df[test_ts_col].astype(str).values)
-
-    pred_df.to_csv(run_dir / "predictions.csv", index=False)
-
-    metadata = {
-        "baseline": args.baseline,
-        "run_dir": str(run_dir),
-        "data_dir": str(data_dir),
-        "preprocess_path": str(artifacts.preprocess_path),
-    }
-    with (run_dir / "run_metadata.json").open("w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
 
     print(f"[OK] Eredmények mentve ide: {run_dir}")
 
 
-def run_wazuh_baseline(_: argparse.Namespace) -> None:
-    raise NotImplementedError(
-        "A Wazuh baseline-hez előbb normalizált lab export kell "
-        "(pl. alerts + ground truth timestamp mezőkkel). "
-        "Ez külön adapterrel köthető be."
+def run_wazuh_baseline(args: argparse.Namespace) -> None:
+    data_dir = Path(args.data_dir)
+    results_root = Path(args.results_dir)
+
+    run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+    run_dir = results_root / f"baseline_{args.baseline}_{run_id}"
+    ensure_dir(run_dir)
+
+    wazuh_input_path = resolve_wazuh_input(data_dir, args.wazuh_input)
+    wazuh_df = load_tabular_df(wazuh_input_path)
+
+    label_col, y_true = infer_label(wazuh_df)
+    timestamp_col = infer_timestamp_col(wazuh_df)
+    y_pred, scores, prediction_source, score_source = infer_wazuh_predictions_and_scores(wazuh_df)
+
+    save_common_outputs(
+        run_dir=run_dir,
+        baseline=args.baseline,
+        df=wazuh_df,
+        y_true=y_true,
+        y_pred=y_pred,
+        scores=scores,
+        timestamp_col=timestamp_col,
+        data_dir=data_dir,
+        history_json=args.history_json,
+        threshold=0.5,
+        extra_metadata={
+            "wazuh_input_path": str(wazuh_input_path),
+            "label_column": label_col,
+            "prediction_source": prediction_source,
+            "score_source": score_source,
+        },
     )
+
+    print(f"[OK] Eredmények mentve ide: {run_dir}")
 
 
 def main() -> None:

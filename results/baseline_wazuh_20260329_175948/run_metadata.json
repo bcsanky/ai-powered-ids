@@ -1,0 +1,9 @@
+{
+  "baseline": "wazuh",
+  "run_dir": "results/baseline_wazuh_20260329_175948",
+  "data_dir": "data/processed",
+  "wazuh_input_path": "data/processed/wazuh_eval.csv",
+  "label_column": "label",
+  "prediction_source": "wazuh_alert",
+  "score_source": "alert_score"
+}
