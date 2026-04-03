@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 import yaml
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from schema import canonicalize_columns
