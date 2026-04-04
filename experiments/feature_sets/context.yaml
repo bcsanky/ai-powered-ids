@@ -1,0 +1,39 @@
+experiment_id: ae-context
+feature_set_name: context
+
+features:
+  columns:
+    - destination_port
+    - flow_duration
+    - total_fwd_packets
+    - total_backward_packets
+    - flow_bytes_per_sec
+    - flow_packets_per_sec
+    - src_flow_count_1m
+    - src_flow_count_5m
+    - src_unique_dst_port_count_1m
+    - src_unique_dst_port_count_5m
+    - dst_port_hit_count_1m
+    - dst_port_hit_count_5m
+    - src_bytes_sum_1m
+    - src_packets_sum_1m
+
+preprocessing:
+  scale_numeric: true
+  encode_categorical: false
+  drop_na: true
+  replace_inf: true
+
+model:
+  type: autoencoder
+  latent_dim: 16
+  dropout: 0.0
+  learning_rate: 0.001
+  epochs: 100
+  batch_size: 32
+  early_stopping: true
+
+threshold:
+  method: val_f1_opt
+
+output_dir: results/context

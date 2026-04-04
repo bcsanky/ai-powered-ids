@@ -1,5 +1,6 @@
-experiment_id: exp-002
-title: "Dataset and feature pipeline v1"
+experiment_id: exp-minimal-v1
+title: "Minimal feature set"
+
 random_seed: 42
 
 dataset:
