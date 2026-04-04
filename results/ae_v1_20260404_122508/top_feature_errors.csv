@@ -1,0 +1,3 @@
+destination_port,flow_duration,total_fwd_packets,total_backward_packets,flow_bytes_per_sec,flow_packets_per_sec,protocol,y_true,score,top1_feature,top2_feature,top3_feature
+3.726691,569.7676,3732.4832,858.6243,17400.377,2618.7178,0.52902204,1,3597.7463,flow_bytes_per_sec,total_fwd_packets,flow_packets_per_sec
+0.6251676,7.3852882,32.28515,2.1043515,193.1789,78.67698,0.21865833,0,44.924927,flow_bytes_per_sec,flow_packets_per_sec,total_fwd_packets

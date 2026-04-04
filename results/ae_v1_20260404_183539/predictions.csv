@@ -1,0 +1,3 @@
+score,y_true,source_file,top1_feature,top2_feature,top3_feature,top4_feature,top5_feature,pred_fixed,pred_percentile_95,pred_f1_optimum
+3433.7207,1,sample.csv,flow_bytes_per_sec,total_fwd_packets,flow_packets_per_sec,flow_duration,total_backward_packets,1,1,0
+44.280323,0,sample.csv,flow_bytes_per_sec,total_fwd_packets,flow_packets_per_sec,flow_duration,destination_port,1,0,0

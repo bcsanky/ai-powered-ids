@@ -1,0 +1,4 @@
+tn,fp,fn,tp,precision,recall,f1,n_samples,n_attack,n_benign,roc_auc,threshold_name,threshold_value
+0,1,0,1,0.5,1.0,0.6666666666666666,2,1,1,1.0,fixed,0.01
+1,0,0,1,1.0,1.0,1.0,2,1,1,1.0,percentile_95,46.282814025878906
+1,0,1,0,0.0,0.0,0.0,2,1,1,1.0,f1_optimum,4096.987694515055

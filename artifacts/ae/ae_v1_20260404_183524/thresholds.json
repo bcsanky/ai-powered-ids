@@ -1,0 +1,10 @@
+{
+  "fixed": 0.01,
+  "percentile_95": 46.282814025878906,
+  "f1_optimum": {
+    "threshold": 4096.987694515055,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  }
+}

@@ -17,6 +17,11 @@ from ml.src.autoencoder import (
     fit_autoencoder,
     reconstruct,
     sample_reconstruction_scores,
+    feature_reconstruction_scores,
+)
+from ml.src.explain import (
+    aggregate_feature_errors,
+    top_k_group_names,
 )
 from ml.src.thresholds import (
     best_f1_threshold,
@@ -145,18 +150,25 @@ def main() -> None:
     y_test = attack_labels_from_is_benign(test_df)
 
     model_cfg = cfg["model"]
+    effective_batch_size = min(int(model_cfg["batch_size"]), max(1, len(train_df)))
+    effective_early_stopping = bool(model_cfg["early_stopping"])
+    effective_validation_fraction = float(model_cfg["validation_fraction"])
+
+    if effective_early_stopping and len(train_df) * effective_validation_fraction < 2:
+        effective_early_stopping = False
+        
     ae_config = AEConfig(
         hidden_layer_sizes=tuple(model_cfg["hidden_layer_sizes"]),
         activation=model_cfg["activation"],
         solver=model_cfg["solver"],
         alpha=float(model_cfg["alpha"]),
-        batch_size=int(model_cfg["batch_size"]),
+        batch_size=effective_batch_size,
         learning_rate_init=float(model_cfg["learning_rate_init"]),
         max_iter=int(model_cfg["max_iter"]),
         tol=float(model_cfg["tol"]),
         n_iter_no_change=int(model_cfg["n_iter_no_change"]),
-        early_stopping=bool(model_cfg["early_stopping"]),
-        validation_fraction=float(model_cfg["validation_fraction"]),
+        early_stopping=effective_early_stopping,
+        validation_fraction=effective_validation_fraction,
         random_state=int(cfg["random_seed"]),
     )
 
@@ -181,6 +193,9 @@ def main() -> None:
     val_scores = sample_reconstruction_scores(x_val, val_recon)
     calib_scores = sample_reconstruction_scores(x_calib, calib_recon)
     test_scores = sample_reconstruction_scores(x_test, test_recon)
+    test_feature_errors = feature_reconstruction_scores(x_test, test_recon)
+    grouped_test_errors = aggregate_feature_errors(test_feature_errors, feature_cols)
+    top_feature_names = top_k_group_names(grouped_test_errors, k=5)
 
     thr_cfg = cfg["thresholds"]
     thr_fixed = fixed_threshold(float(thr_cfg["fixed"]))
@@ -223,10 +238,25 @@ def main() -> None:
             "source_file": test_df["source_file"].values if "source_file" in test_df.columns else "",
         }
     )
+
+    predictions_df["top1_feature"] = [names[0] if len(names) > 0 else "" for names in top_feature_names]
+    predictions_df["top2_feature"] = [names[1] if len(names) > 1 else "" for names in top_feature_names]
+    predictions_df["top3_feature"] = [names[2] if len(names) > 2 else "" for names in top_feature_names]
+    predictions_df["top4_feature"] = [names[3] if len(names) > 3 else "" for names in top_feature_names]
+    predictions_df["top5_feature"] = [names[4] if len(names) > 4 else "" for names in top_feature_names]
+
     for col_name, values in prediction_columns.items():
         predictions_df[col_name] = values
-    predictions_df.to_csv(result_dir / "predictions.csv", index=False)
+        predictions_df.to_csv(result_dir / "predictions.csv", index=False)
+        top_feature_summary_df = grouped_test_errors.copy()
+        top_feature_summary_df["y_true"] = y_test
+        top_feature_summary_df["score"] = test_scores
+        top_feature_summary_df["top1_feature"] = [names[0] if len(names) > 0 else "" for names in top_feature_names]
+        top_feature_summary_df["top2_feature"] = [names[1] if len(names) > 1 else "" for names in top_feature_names]
+        top_feature_summary_df["top3_feature"] = [names[2] if len(names) > 2 else "" for names in top_feature_names]
+        top_feature_summary_df.to_csv(result_dir / "top_feature_errors.csv", index=False)
 
+    
     sweep_df = threshold_sweep_dataframe(
         y_calib,
         calib_scores,
@@ -234,14 +264,14 @@ def main() -> None:
     )
     sweep_df.to_csv(result_dir / "threshold_curve.csv", index=False)
 
+    best_validation_score = getattr(model, "best_validation_score_", None)
+    if best_validation_score is not None:
+        best_validation_score = float(best_validation_score)
+
     history = {
         "loss": [float(x) for x in getattr(model, "loss_curve_", [])],
         "n_iter": int(getattr(model, "n_iter_", 0)),
-        "best_validation_score": (
-            float(getattr(model, "best_validation_score_"))
-            if hasattr(model, "best_validation_score_")
-            else None
-        ),
+        "best_validation_score": best_validation_score,
         "out_activation": getattr(model, "out_activation_", None),
     }
 
