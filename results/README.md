@@ -8,18 +8,30 @@ A végleges szakdolgozati eredmények elvárt gyökérkönyvtára:
 
 ```text
 results/final/
-  ae_minimal/
-  ae_context/
-  baseline_stat/
-  baseline_wazuh/
-  hybrid/
+  final-ae-minimal-v1/
+  final-ae-context-v1/
+  final-baseline-stat-v1/
+  final-baseline-wazuh-v1/
+  final-hybrid-v1/
 ```
 
-Az egyes alkönyvtárak egy-egy összehasonlított konfiguráció eredményeit tartalmazzák. Amennyiben egy futtatás időbélyeges alkönyvtárat hoz létre, a szakdolgozatban felhasznált végleges futtatást egyértelműen meg kell jelölni a `run_metadata.json` és a kapcsolódó dokumentáció alapján.
+Az egyes alkönyvtárak egy-egy összehasonlított konfiguráció konfigurált eredménygyökerei. Amennyiben egy futtatás időbélyeges alkönyvtárat hoz létre, a szakdolgozatban felhasznált végleges futtatást egyértelműen meg kell jelölni a `run_metadata.json` és a kapcsolódó dokumentáció alapján.
+
+Az aktuális `train_ae.py` minden autoencoder futtatásnál időbélyeges alkönyvtárat hoz létre a konfigurált `paths.results_dir` alatt. Példa:
+
+```text
+results/final/final-ae-minimal-v1/ae_v1_YYYYMMDD_HHMMSS/
+```
+
+Az aktuális `ml/src/eval.py` baseline futtatásoknál szintén időbélyeges alkönyvtárat hoz létre a megadott `--results-dir` alatt, például:
+
+```text
+results/final/final-baseline-stat-v1/baseline_stat_YYYYMMDD_HHMMSS/
+```
 
 ## Könyvtárankénti elvárt fájlok
 
-### `results/final/ae_minimal/`
+### `results/final/final-ae-minimal-v1/`
 
 Az autoencoder minimális feature-készlettel futtatott végleges konfigurációjának eredményei.
 
@@ -36,7 +48,7 @@ Elvárt fájlok:
 
 Megjegyzés: az aktuális AE tanító pipeline elsősorban CSV eredményeket és rekonstrukciós hiba alapú magyarázati fájlokat állít elő. A PNG ábrák AE esetén külön generálhatók a `predictions.csv` és `metrics_summary.csv` alapján.
 
-### `results/final/ae_context/`
+### `results/final/final-ae-context-v1/`
 
 Az opcionális AE-Context mérési ág eredményei. Jelenlegi állapotban ez csak akkor tekinthető tényleges kontextusmodellnek, ha a kontextusfeature-ök implementálva és validálva vannak. Ellenkező esetben kompatibilis, minimális feature-készletre épülő kontrollfuttatásként kezelendő.
 
@@ -51,7 +63,7 @@ Elvárt fájlok:
 - `roc_curve.png`, ha külön ábrageneráló lépés előállítja
 - `run_metadata.json`
 
-### `results/final/baseline_stat/`
+### `results/final/final-baseline-stat-v1/`
 
 A statisztikai baseline eredményei. Ez a konfiguráció a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot.
 
@@ -69,7 +81,7 @@ Nem elvárt fájl:
 
 - `top_feature_errors.csv`, mivel a statisztikai baseline nem autoencoder rekonstrukciós feature-hibák alapján működik.
 
-### `results/final/baseline_wazuh/`
+### `results/final/final-baseline-wazuh-v1/`
 
 A Wazuh vagy Wazuh-szerű exportált riasztások baseline kiértékelésének eredményei.
 
@@ -87,7 +99,7 @@ Nem elvárt fájl:
 
 - `top_feature_errors.csv`, mivel ez a baseline nem autoencoder modellből származó feature-rekonstrukciós hibát mér.
 
-### `results/final/hybrid/`
+### `results/final/final-hybrid-v1/`
 
 A hibrid AE + Wazuh kiértékelés eredményei. Ez a lépés tervezett implementációhoz kötött, ezért a könyvtár csak akkor tartalmaz végleges eredményeket, ha a hibrid kiértékelő pipeline már elkészült és validált.
 

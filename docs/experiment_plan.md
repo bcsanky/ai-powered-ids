@@ -217,3 +217,30 @@ A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 | Reprodukálhatósági melléklet | `run_metadata.json`, `train_config.json`, `thresholds.json` | Konfigurációk, futtatási útvonalak, küszöbök és metaadatok dokumentálása. |
 
 A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a Wazuh logalapú baseline és a tervezett hibrid fúzió eltérő adatmodellre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű production IDS teljesítménygarancia megfogalmazása.
+
+## 10. May 3 validation checklist
+
+A május 3-i végleges kísérleti beállítás validálásához az alábbi parancsok használhatók. A `py_compile` és YAML-ellenőrző parancsok gyors statikus validációt adnak, míg a `make dataset`, `make train-ae` és `make final-eval-stat` tényleges pipeline-futtatások, ezért ezek hosszabb ideig tarthatnak.
+
+```bash
+python3 -m py_compile ml/src/build_dataset.py
+python3 -m py_compile ml/src/train_ae.py
+python3 -m py_compile ml/src/eval.py
+```
+
+```bash
+python3 - <<'PY'
+import yaml
+from pathlib import Path
+for p in Path("experiments/final").glob("*.yaml"):
+    with open(p, "r", encoding="utf-8") as f:
+        yaml.safe_load(f)
+    print("[OK]", p)
+PY
+```
+
+```bash
+make dataset CONFIG=experiments/final/ae_minimal.yaml
+make train-ae CONFIG=experiments/final/ae_minimal.yaml
+make final-eval-stat
+```
