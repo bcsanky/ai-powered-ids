@@ -1,0 +1,52 @@
+suite_id: final-thesis-experiment-v1
+title: "Final MSc thesis experiment suite"
+description: "Final configuration manifest for CIC-IDS2017 AE, baseline, Wazuh, and hybrid IDS experiments."
+
+random_seed: 42
+
+dataset:
+  name: CIC-IDS2017
+  version: "raw-v1"
+  raw_dir: "data/raw/cicids2017"
+
+execution_order:
+  - experiment_id: final-ae-minimal-v1
+    config: experiments/final/ae_minimal.yaml
+    stage: autoencoder
+    commands:
+      dataset: "python3 ml/src/build_dataset.py --config experiments/final/ae_minimal.yaml"
+      train: "python3 -m ml.src.train_ae --config experiments/final/ae_minimal.yaml"
+
+  - experiment_id: final-ae-context-v1
+    config: experiments/final/ae_context.yaml
+    stage: autoencoder
+    commands:
+      dataset: "python3 ml/src/build_dataset.py --config experiments/final/ae_context.yaml"
+      train: "python3 -m ml.src.train_ae --config experiments/final/ae_context.yaml"
+
+  - experiment_id: final-baseline-stat-v1
+    config: experiments/final/baseline_stat.yaml
+    stage: baseline
+    commands:
+      eval: "python3 -m ml.src.eval --baseline stat --data-dir data/processed/final/ae_minimal --results-dir results/final/final-baseline-stat-v1"
+
+  - experiment_id: final-baseline-wazuh-v1
+    config: experiments/final/baseline_wazuh.yaml
+    stage: baseline
+    commands:
+      eval: "python3 -m ml.src.eval --baseline wazuh --data-dir data/processed/final/wazuh --results-dir results/final/final-baseline-wazuh-v1"
+
+  - experiment_id: final-hybrid-v1
+    config: experiments/final/hybrid.yaml
+    stage: hybrid
+
+comparison_outputs:
+  root_dir: "results/final"
+  planned_files:
+    - "metrics_comparison.csv"
+    - "threshold_comparison.csv"
+    - "thesis_summary.md"
+
+notes:
+  - "This manifest is intentionally orchestration-only; current ML entrypoints consume the per-experiment YAML files directly."
+  - "The Wazuh and hybrid stages require exported Wazuh predictions before they can be fully executed."

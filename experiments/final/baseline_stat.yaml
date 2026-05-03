@@ -1,0 +1,27 @@
+experiment_id: final-baseline-stat-v1
+title: "Final statistical baseline"
+
+random_seed: 42
+
+dataset:
+  name: CIC-IDS2017
+  version: "raw-v1"
+  data_dir: "data/processed/final/ae_minimal"
+
+baseline:
+  type: stat
+  method: train_mean_distance
+  threshold_quantile: 0.95
+  positive_label: attack
+
+inputs:
+  train_file: "train.parquet"
+  val_file: "val.parquet"
+  test_file: "test.parquet"
+  preprocess_file: "preprocess.pkl"
+
+paths:
+  results_dir: "results/final/final-baseline-stat-v1"
+
+commands:
+  eval: "python3 -m ml.src.eval --baseline stat --data-dir data/processed/final/ae_minimal --results-dir results/final/final-baseline-stat-v1 --threshold-quantile 0.95"
