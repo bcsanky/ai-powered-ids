@@ -7,7 +7,7 @@ dataset:
   name: CIC-IDS2017
   version: "raw-v1"
   raw_dir: "data/raw/cicids2017"
-  output_dir: "data/processed"
+  output_dir: "data/processed/minimal"
   label_column_candidates:
     - Label
     - label
@@ -71,5 +71,5 @@ thresholds:
   search_steps: 200
 
 paths:
-  artifacts_dir: "artifacts/ae"
-  results_dir: "results"
+  artifacts_dir: "artifacts/ae/minimal"
+  results_dir: "results/minimal"

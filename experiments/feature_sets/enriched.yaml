@@ -34,4 +34,16 @@ model:
 threshold:
   method: val_f1_opt
 
-output_dir: results/enriched
+dataset:
+  output_dir: "data/processed/enriched"
+
+output:
+  train_file: "train.parquet"
+  val_file: "val.parquet"
+  calib_file: "calib.parquet"
+  test_file: "test.parquet"
+  preprocess_file: "preprocess.pkl"
+
+paths:
+  artifacts_dir: "artifacts/ae/enriched"
+  results_dir: "results/enriched"
