@@ -1,0 +1,9 @@
+{
+  "baseline": "stat",
+  "run_dir": "results/final/final-baseline-stat-v1/baseline_stat_20260503_233227",
+  "data_dir": "data/processed/final/ae_minimal",
+  "preprocess_path": "data/processed/final/ae_minimal/preprocess.pkl",
+  "label_column": "label",
+  "threshold_quantile": 0.95,
+  "feature_mode": "already_preprocessed"
+}
