@@ -17,6 +17,16 @@ import pandas as pd
 from ml.src.score_events import read_events, split_event
 from ml.src.scoring_runtime import AEScorer
 
+try:
+    import resource as _resource
+except ImportError:  # pragma: no cover - platform dependent
+    _resource = None
+
+try:
+    import psutil as _psutil
+except ImportError:  # pragma: no cover - optional dependency
+    _psutil = None
+
 
 RESULT_COLUMNS = [
     "model_load_time_s",
@@ -31,6 +41,12 @@ RESULT_COLUMNS = [
     "p99_latency_ms",
     "max_latency_ms",
     "failed_events",
+    "process_cpu_time_s",
+    "cpu_time_per_event_ms",
+    "memory_rss_mb_before",
+    "memory_rss_mb_after",
+    "memory_rss_delta_mb",
+    "peak_memory_mb",
 ]
 
 
@@ -66,12 +82,48 @@ def percentile(values: list[float], q: float) -> float:
     return float(np.percentile(np.asarray(values, dtype=float), q))
 
 
-def score_records(scorer: Any, records: list[dict[str, Any]], batch_size: int) -> tuple[float, list[float], int]:
+def current_rss_mb() -> float | None:
+    if _psutil is None:
+        return None
+    try:
+        return float(_psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024))
+    except Exception:
+        return None
+
+
+def peak_memory_mb() -> float | None:
+    if _resource is None:
+        return None
+    try:
+        usage = _resource.getrusage(_resource.RUSAGE_SELF)
+        value = float(usage.ru_maxrss)
+    except Exception:
+        return None
+    if sys.platform == "darwin":
+        return value / (1024 * 1024)
+    return value / 1024
+
+
+def resource_measurement_info() -> dict[str, str]:
+    return {
+        "cpu_time_method": "time.process_time",
+        "memory_rss_method": "psutil.Process.memory_info.rss" if _psutil is not None else "not_available",
+        "peak_memory_method": "resource.getrusage.ru_maxrss" if _resource is not None else "not_available",
+    }
+
+
+def score_records(
+    scorer: Any,
+    records: list[dict[str, Any]],
+    batch_size: int,
+) -> tuple[float, list[float], int, dict[str, float | None]]:
     if batch_size <= 0:
         raise ValueError("A batch_size értékének pozitívnak kell lennie.")
 
     latencies_ms = []
     failed_events = 0
+    cpu_before = time.process_time()
+    memory_before = current_rss_mb()
     start_total = time.perf_counter()
 
     for batch_start in range(0, len(records), batch_size):
@@ -92,7 +144,21 @@ def score_records(scorer: Any, records: list[dict[str, Any]], batch_size: int) -
                 latencies_ms.append((time.perf_counter() - start_event) * 1000.0)
 
     total_time_s = time.perf_counter() - start_total
-    return total_time_s, latencies_ms, failed_events
+    cpu_after = time.process_time()
+    memory_after = current_rss_mb()
+    process_cpu_time_s = max(cpu_after - cpu_before, 0.0)
+    memory_delta = None
+    if memory_before is not None and memory_after is not None:
+        memory_delta = memory_after - memory_before
+    resources = {
+        "process_cpu_time_s": process_cpu_time_s,
+        "cpu_time_per_event_ms": (process_cpu_time_s / len(records) * 1000.0) if records else 0.0,
+        "memory_rss_mb_before": memory_before,
+        "memory_rss_mb_after": memory_after,
+        "memory_rss_delta_mb": memory_delta,
+        "peak_memory_mb": peak_memory_mb(),
+    }
+    return total_time_s, latencies_ms, failed_events, resources
 
 
 def summarize_run(
@@ -104,6 +170,7 @@ def summarize_run(
     total_time_s: float,
     latencies_ms: list[float],
     failed_events: int,
+    resources: dict[str, float | None],
 ) -> dict[str, Any]:
     events_per_second = float(total_events / total_time_s) if total_time_s > 0 else 0.0
     return {
@@ -119,6 +186,12 @@ def summarize_run(
         "p99_latency_ms": percentile(latencies_ms, 99),
         "max_latency_ms": float(max(latencies_ms)) if latencies_ms else 0.0,
         "failed_events": int(failed_events),
+        "process_cpu_time_s": resources.get("process_cpu_time_s"),
+        "cpu_time_per_event_ms": resources.get("cpu_time_per_event_ms"),
+        "memory_rss_mb_before": resources.get("memory_rss_mb_before"),
+        "memory_rss_mb_after": resources.get("memory_rss_mb_after"),
+        "memory_rss_delta_mb": resources.get("memory_rss_delta_mb"),
+        "peak_memory_mb": resources.get("peak_memory_mb"),
     }
 
 
@@ -140,6 +213,7 @@ def write_system_info(
         "preprocess_file": str(preprocess_file),
         "note": "lokális/labor mérés",
     }
+    info.update(resource_measurement_info())
     path = output_dir / "system_info.json"
     path.write_text(json.dumps(info, indent=2, ensure_ascii=False), encoding="utf-8")
     return path
@@ -149,6 +223,9 @@ def write_benchmark_summary(results: pd.DataFrame, output_dir: Path) -> Path:
     best_throughput = results.sort_values("events_per_second", ascending=False).iloc[0]
     best_latency = results.sort_values("p95_latency_ms", ascending=True).iloc[0]
     failed_total = int(results["failed_events"].sum())
+    cpu_series = pd.to_numeric(results.get("cpu_time_per_event_ms"), errors="coerce")
+    memory_delta = pd.to_numeric(results.get("memory_rss_delta_mb"), errors="coerce")
+    peak_memory = pd.to_numeric(results.get("peak_memory_mb"), errors="coerce")
 
     lines = [
         "# Batch scoring teljesítménymérési összefoglaló",
@@ -160,12 +237,26 @@ def write_benchmark_summary(results: pd.DataFrame, output_dir: Path) -> Path:
         f"- Legjobb áteresztőképesség: {best_throughput['events_per_second']:.2f} esemény/másodperc, batch size {int(best_throughput['batch_size'])}, eseményszám {int(best_throughput['total_events'])}.",
         f"- Legalacsonyabb p95 késleltetés: {best_latency['p95_latency_ms']:.4f} ms, batch size {int(best_latency['batch_size'])}, eseményszám {int(best_latency['total_events'])}.",
         f"- Hibás események összesen: {failed_total}.",
-        "",
-        "## Korlát",
-        "",
-        "Ez lokális/labor mérés, nem éles üzemi benchmark, nem hosszú idejű SOC-terhelés, és nem natív Wazuh indexelési teljesítménymérés.",
-        "",
     ]
+    if cpu_series.notna().any():
+        lines.append(f"- Legalacsonyabb CPU-idő eseményenként: {cpu_series.min():.4f} ms.")
+    if memory_delta.notna().any():
+        lines.append(f"- Legnagyobb mért memória RSS delta: {memory_delta.max():.4f} MB.")
+    elif peak_memory.notna().any():
+        lines.append(f"- Legnagyobb mért csúcsmemória: {peak_memory.max():.4f} MB.")
+    lines.extend(
+        [
+            "",
+            "## Erőforrás-mérés",
+            "",
+            "A CPU-idő mérése `time.process_time()` alapján történik. A memória RSS érték psutil jelenléte esetén érhető el; Unix/Linux környezetben a csúcsmemória `resource.getrusage()` alapján is rögzíthető. Ha egy memóriaadat nem érhető el az adott platformon, az oszlop üresen maradhat.",
+            "",
+            "## Korlát",
+            "",
+            "Ez lokális/labor mérés, nem éles üzemi teljesítménygarancia, nem hosszú idejű SOC-terhelés, és nem natív Wazuh indexelési teljesítménymérés.",
+            "",
+        ]
+    )
     path = output_dir / "benchmark_summary.md"
     path.write_text("\n".join(lines), encoding="utf-8")
     return path
@@ -204,7 +295,11 @@ def run_benchmark(
         records = expand_events(base_events, total_events)
         for batch_size in batch_sizes:
             for repeat_index in range(1, repeats + 1):
-                total_time_s, latencies_ms, failed_events = score_records(scorer, records, batch_size)
+                total_time_s, latencies_ms, failed_events, resources = score_records(
+                    scorer,
+                    records,
+                    batch_size,
+                )
                 rows.append(
                     summarize_run(
                         model_load_time_s=model_load_time_s,
@@ -214,6 +309,7 @@ def run_benchmark(
                         total_time_s=total_time_s,
                         latencies_ms=latencies_ms,
                         failed_events=failed_events,
+                        resources=resources,
                     )
                 )
 

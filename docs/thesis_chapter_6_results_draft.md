@@ -1,5 +1,7 @@
 # 6. Eredmények és értékelés
 
+Megjegyzés: a végleges számozást a Word-dokumentum tartalomjegyzéke szerint kell igazítani.
+
 ## 6.1 Kísérleti cél és értékelési szempontok
 
 Az értékelés célja nem egyetlen modell abszolút bizonyítása, hanem a megvalósított laboratóriumi prototípus detektálási és mérési láncának összehasonlítható vizsgálata. A mérés azt elemzi, hogy az autoencoder-alapú megközelítés, a statisztikai viszonyítási alap (baseline), a szabályalapú proxy baseline és az offline hibrid kombináció milyen mérőszámokkal jellemezhető ugyanazon CIC-IDS2017 alapú tesztelési környezetben.
@@ -186,7 +188,7 @@ A fő eredmények:
 | Legalacsonyabb p95 késleltetés | 2,7723 ms |
 | Hibás események összesen | 0 |
 
-A teljesítményriport összesített táblázata alapján az esemény/másodperc értékek a vizsgált környezetben nagyságrendileg 338 és 399 között mozogtak. Az eredmények lokális hardver- és környezetfüggő mérések, nem éles üzemi teljesítménygaranciák, és nem tartalmazzák a teljes SIEM indexelési vagy incidenskezelési lánc költségét.
+A teljesítményriport összesített táblázata alapján az esemény/másodperc értékek a vizsgált környezetben nagyságrendileg 338 és 399 között mozogtak. A mérés CPU-időt, CPU-idő/esemény értéket, valamint platformfüggően elérhető memória RSS és csúcsmemória adatokat is rögzít. Az eredmények lokális hardver- és környezetfüggő mérések, nem éles üzemi teljesítménygaranciák, és nem tartalmazzák a teljes SIEM indexelési vagy incidenskezelési lánc költségét.
 
 A dolgozatban felhasználható ábrák:
 

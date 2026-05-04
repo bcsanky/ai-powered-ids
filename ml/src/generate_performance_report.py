@@ -44,7 +44,9 @@ def markdown_table(df: pd.DataFrame) -> str:
         values = []
         for col in df.columns:
             value = row[col]
-            if isinstance(value, float):
+            if pd.isna(value):
+                values.append("nincs adat")
+            elif isinstance(value, float):
                 values.append(f"{value:.4f}")
             else:
                 values.append(str(value))
@@ -53,19 +55,39 @@ def markdown_table(df: pd.DataFrame) -> str:
 
 
 def aggregate_results(df: pd.DataFrame) -> pd.DataFrame:
-    grouped = (
-        df.groupby(["total_events", "batch_size"], as_index=False)
-        .agg(
-            events_per_second=("events_per_second", "mean"),
-            avg_latency_ms=("avg_latency_ms", "mean"),
-            p50_latency_ms=("p50_latency_ms", "mean"),
-            p95_latency_ms=("p95_latency_ms", "mean"),
-            p99_latency_ms=("p99_latency_ms", "mean"),
-            failed_events=("failed_events", "sum"),
-        )
-        .sort_values(["total_events", "batch_size"])
-    )
+    aggregations = {
+        "events_per_second": ("events_per_second", "mean"),
+        "avg_latency_ms": ("avg_latency_ms", "mean"),
+        "p50_latency_ms": ("p50_latency_ms", "mean"),
+        "p95_latency_ms": ("p95_latency_ms", "mean"),
+        "p99_latency_ms": ("p99_latency_ms", "mean"),
+        "failed_events": ("failed_events", "sum"),
+    }
+    optional_mean = [
+        "process_cpu_time_s",
+        "cpu_time_per_event_ms",
+        "memory_rss_delta_mb",
+    ]
+    optional_max = [
+        "memory_rss_mb_before",
+        "memory_rss_mb_after",
+        "peak_memory_mb",
+    ]
+    for col in optional_mean:
+        if col in df.columns:
+            aggregations[col] = (col, "mean")
+    for col in optional_max:
+        if col in df.columns:
+            aggregations[col] = (col, "max")
+    grouped = df.groupby(["total_events", "batch_size"], as_index=False).agg(**aggregations)
+    grouped = grouped.sort_values(["total_events", "batch_size"])
     return grouped
+
+
+def numeric_series(df: pd.DataFrame, column: str) -> pd.Series:
+    if column not in df.columns:
+        return pd.Series(dtype=float)
+    return pd.to_numeric(df[column], errors="coerce")
 
 
 def build_report(df: pd.DataFrame, system_info: dict[str, Any], warning: str | None) -> str:
@@ -75,15 +97,42 @@ def build_report(df: pd.DataFrame, system_info: dict[str, Any], warning: str | N
     failed_total = int(df["failed_events"].sum())
     event_counts = ", ".join(str(int(v)) for v in sorted(df["total_events"].unique()))
     batch_sizes = ", ".join(str(int(v)) for v in sorted(df["batch_size"].unique()))
+    cpu_per_event = numeric_series(df, "cpu_time_per_event_ms")
+    memory_delta = numeric_series(df, "memory_rss_delta_mb")
+    peak_memory = numeric_series(df, "peak_memory_mb")
 
     system_lines = []
     if warning:
         system_lines.append(f"- Figyelmeztetés: {warning}")
-    for key in ["timestamp", "python_version", "platform", "processor", "cpu_count", "input_file", "preprocess_file"]:
+    for key in [
+        "timestamp",
+        "python_version",
+        "platform",
+        "processor",
+        "cpu_count",
+        "input_file",
+        "preprocess_file",
+        "cpu_time_method",
+        "memory_rss_method",
+        "peak_memory_method",
+    ]:
         if key in system_info:
             system_lines.append(f"- {key}: `{system_info[key]}`")
     if not system_lines:
         system_lines.append("- A rendszerinformáció nem áll rendelkezésre.")
+
+    resource_lines = [
+        "- A CPU-idő mérése `time.process_time()` alapján történt, ezért processzszintű CPU-időt mutat.",
+        "- A memória RSS érték psutil jelenléte esetén érhető el.",
+        "- Unix/Linux környezetben a csúcsmemória `resource.getrusage()` alapján is rögzíthető.",
+        "- Ha egy memóriaérték nem elérhető az adott platformon, az adott CSV mező üresen maradhat.",
+    ]
+    if cpu_per_event.notna().any():
+        resource_lines.append(f"- Legalacsonyabb CPU-idő eseményenként: {cpu_per_event.min():.4f} ms.")
+    if memory_delta.notna().any():
+        resource_lines.append(f"- Legnagyobb mért memória RSS delta: {memory_delta.max():.4f} MB.")
+    if peak_memory.notna().any():
+        resource_lines.append(f"- Legnagyobb mért csúcsmemória: {peak_memory.max():.4f} MB.")
 
     lines = [
         "# Batch scoring teljesítményriport",
@@ -110,6 +159,10 @@ def build_report(df: pd.DataFrame, system_info: dict[str, Any], warning: str | N
         f"- Legalacsonyabb p95 késleltetés: {best_latency['p95_latency_ms']:.4f} ms, batch size {int(best_latency['batch_size'])}, eseményszám {int(best_latency['total_events'])}.",
         f"- Hibás események összesen: {failed_total}.",
         "",
+        "## CPU- és memóriahasználat",
+        "",
+        "\n".join(resource_lines),
+        "",
         "## Összesített táblázat",
         "",
         markdown_table(summary),
@@ -128,7 +181,7 @@ def build_report(df: pd.DataFrame, system_info: dict[str, Any], warning: str | N
         "- Hardver- és környezetfüggő eredmények.",
         "- Nem hosszú idejű éles üzemi terhelés.",
         "- Nem natív Wazuh indexelési teljesítmény.",
-        "- Batch scoring benchmark, nem teljes SIEM end-to-end benchmark.",
+        "- Batch scoring teljesítménymérés, nem teljes SIEM feldolgozási lánc mérése.",
         "",
     ]
     return "\n".join(lines)

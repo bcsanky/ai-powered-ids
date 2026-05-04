@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-04T17:40:38",
+  "timestamp": "2026-05-04T18:30:05",
   "python_version": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
   "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.29",
   "processor": "x86_64",
@@ -7,5 +7,8 @@
   "input_file": "examples/lab/lab_events.jsonl",
   "model_root": "artifacts/final/final-ae-minimal-v1",
   "preprocess_file": "data/processed/final/ae_minimal/preprocess.pkl",
-  "note": "lokális/labor mérés"
+  "note": "lokális/labor mérés",
+  "cpu_time_method": "time.process_time",
+  "memory_rss_method": "not_available",
+  "peak_memory_method": "resource.getrusage.ru_maxrss"
 }

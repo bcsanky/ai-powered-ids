@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+import ml.src.benchmark_scoring as benchmark_scoring
 from ml.src.benchmark_scoring import run_benchmark
 
 
@@ -54,10 +55,18 @@ def test_benchmark_creates_results_csv(tmp_path):
         "p95_latency_ms",
         "p99_latency_ms",
         "failed_events",
+        "process_cpu_time_s",
+        "cpu_time_per_event_ms",
+        "memory_rss_mb_before",
+        "memory_rss_mb_after",
+        "memory_rss_delta_mb",
+        "peak_memory_mb",
     }
     assert required.issubset(results.columns)
     assert (output_dir / "benchmark_summary.md").exists()
     assert (output_dir / "system_info.json").exists()
+    assert results["process_cpu_time_s"].notna().all()
+    assert results["cpu_time_per_event_ms"].notna().all()
 
 
 def test_benchmark_rejects_zero_event_count(tmp_path):
@@ -108,3 +117,27 @@ def test_benchmark_does_not_fallback_when_model_is_missing(tmp_path):
             batch_sizes=[1],
             repeats=1,
         )
+
+
+def test_benchmark_keeps_resource_columns_when_memory_helpers_are_missing(tmp_path, monkeypatch):
+    input_path = tmp_path / "events.jsonl"
+    output_dir = tmp_path / "out"
+    write_lab_input(input_path)
+    monkeypatch.setattr(benchmark_scoring, "_resource", None)
+    monkeypatch.setattr(benchmark_scoring, "_psutil", None)
+
+    results = run_benchmark(
+        input_path=input_path,
+        output_dir=output_dir,
+        model_root=tmp_path / "model",
+        preprocess_path=tmp_path / "preprocess.pkl",
+        event_counts=[2],
+        batch_sizes=[1],
+        repeats=1,
+        scorer_factory=FakeScorer,
+    )
+
+    assert "process_cpu_time_s" in results.columns
+    assert "memory_rss_delta_mb" in results.columns
+    assert "peak_memory_mb" in results.columns
+    assert results["process_cpu_time_s"].notna().all()

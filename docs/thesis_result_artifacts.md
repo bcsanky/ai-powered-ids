@@ -41,8 +41,10 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Lab/replay scenario summary | `reports/lab/scenario_summary.csv` | Szcenáriónkénti kockázati összesítés | demonstrációs validáció, nem benchmark mérés |
 | Thesis figures manifest | `reports/final/thesis_figures/figure_manifest.csv` | Dolgozatba szánt ábrák forrásjegyzéke | dolgozatba beemelhető |
 | Teljesítménymérési eredménytábla | `reports/performance/benchmark_results.csv` | Batch scoring throughput és latency táblázat | teljesítménymérési eredmény, lokális/labor mérés |
+| Kompatibilis teljesítménymérési eredménytábla | `results/performance/performance_metrics.csv` | CPU-idővel és memóriaoszlopokkal kiegészített teljesítménymérési táblázat | dolgozatba beemelhető, lokális/labor mérés |
 | Teljesítményriport Markdown formában | `reports/performance/performance_report.md` | Teljesítménymérési alfejezet forrása | dolgozatba beemelhető |
 | Teljesítményriport HTML formában | `reports/performance/performance_report.html` | Dashboard jellegű teljesítmény-összefoglaló | lokális/labor mérés |
+| Május 10-i performance validáció | `docs/may10_performance_validation.md` | CPU/RAM kiegészítés és kompatibilis kimenetek validációs jegyzőkönyve | dolgozatba beemelhető háttérdokumentáció |
 
 ## Ábrákhoz használható PNG állományok
 
@@ -73,6 +75,9 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Teljesítménymérési késleltetés ábra | `reports/performance/latency_by_batch_size.png` | Batch size és p95 késleltetés bemutatása | dolgozatba beemelhető, lokális/labor mérés |
 | Teljesítménymérési throughput ábra | `reports/performance/throughput_by_batch_size.png` | Áteresztőképesség bemutatása esemény/másodpercben | dolgozatba beemelhető, lokális/labor mérés |
 | Scoring időeloszlás ábra | `reports/performance/scoring_time_distribution.png` | Átlagos scoring késleltetés összehasonlítása | dolgozatba beemelhető, lokális/labor mérés |
+| CPU- és memóriahasználati ábra | `reports/performance/resource_usage_by_batch_size.png` | CPU-idő és memóriahasználat batch size szerinti bemutatása, ha az adatok elérhetők | dolgozatba beemelhető, lokális/labor mérés |
+| Kompatibilis késleltetési ábra | `figures/final/latency_by_load.png` | Végleges néven hivatkozható p95 késleltetési ábra | dolgozatba beemelhető |
+| Kompatibilis throughput ábra | `figures/final/throughput.png` | Végleges néven hivatkozható áteresztőképességi ábra | dolgozatba beemelhető |
 | Dolgozatba rendezett performance ábrák | `reports/final/thesis_figures/performance_*.png` | Teljesítménymérési ábrák rendezett másolatai | dolgozatba beemelhető |
 
 ## Demonstrációs prototípuskimenetek

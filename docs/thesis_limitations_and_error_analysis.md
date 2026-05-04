@@ -52,6 +52,8 @@ A teljesítménymérés lokális/labor batch scoring mérés. A benchmark a megl
 
 Az eredmények hardver- és környezetfüggők. Nem tartalmaznak natív Wazuh indexelést, dashboard terhelést, hosszú idejű stressztesztet, hálózati késleltetést vagy többfelhasználós SOC munkafolyamatot. Ezért nem szabad éles üzemi teljesítménygaranciaként értelmezni őket.
 
+A CPU-használat processz CPU-időként értelmezendő, nem teljes gépszintű terhelésként. A memóriahasználati értékek platformfüggők: ahol psutil elérhető, RSS alapú értékek rögzíthetők, Unix/Linux környezetben pedig csúcsmemória is mérhető. Ha valamelyik memóriaérték nem áll rendelkezésre, az nem érvényteleníti a latency és throughput mérést, de a memóriaelemzést korlátozza.
+
 ## Etikai és adatvédelmi megfontolások
 
 A mérés nyilvános kutatási adathalmazra és saját demonstrációs eseményekre épül. A prototípus nem tartalmaz éles felhasználói logokat, személyes azonosítókat vagy valós incidensadatokat.

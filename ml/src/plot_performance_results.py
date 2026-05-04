@@ -103,6 +103,64 @@ def save_failed_events(df: pd.DataFrame, output_path: Path) -> None:
     plt.close(fig)
 
 
+def first_available_metric(df: pd.DataFrame, candidates: list[str]) -> str | None:
+    for metric in candidates:
+        if metric in df.columns and pd.to_numeric(df[metric], errors="coerce").notna().any():
+            return metric
+    return None
+
+
+def save_resource_usage(df: pd.DataFrame, output_path: Path) -> bool:
+    cpu_metric = first_available_metric(df, ["cpu_time_per_event_ms", "process_cpu_time_s"])
+    memory_metric = first_available_metric(df, ["memory_rss_delta_mb", "peak_memory_mb"])
+    if cpu_metric is None and memory_metric is None:
+        print("[WARN] Nincs elérhető CPU- vagy memóriaadat az erőforrás-ábrához.")
+        return False
+
+    fig, ax_cpu = plt.subplots(figsize=(8, 5))
+    if cpu_metric is not None:
+        cpu_df = grouped_mean(df, cpu_metric)
+        for total_events, group in cpu_df.groupby("total_events"):
+            ax_cpu.plot(
+                group["batch_size"],
+                group[cpu_metric],
+                marker="o",
+                label=f"CPU, {int(total_events)} esemény",
+            )
+        ylabel = "CPU-idő eseményenként (ms)" if cpu_metric == "cpu_time_per_event_ms" else "CPU-idő (s)"
+        ax_cpu.set_ylabel(ylabel)
+
+    ax_memory = None
+    if memory_metric is not None:
+        memory_df = grouped_mean(df, memory_metric)
+        ax_memory = ax_cpu.twinx()
+        for total_events, group in memory_df.groupby("total_events"):
+            ax_memory.plot(
+                group["batch_size"],
+                group[memory_metric],
+                marker="s",
+                linestyle="--",
+                label=f"Memória, {int(total_events)} esemény",
+            )
+        ylabel = "Memória RSS delta (MB)" if memory_metric == "memory_rss_delta_mb" else "Csúcsmemória (MB)"
+        ax_memory.set_ylabel(ylabel)
+
+    ax_cpu.set_title("CPU- és memóriahasználat batch size szerint")
+    ax_cpu.set_xlabel("Batch size")
+    ax_cpu.grid(True, alpha=0.25)
+    handles, labels = ax_cpu.get_legend_handles_labels()
+    if ax_memory is not None:
+        mem_handles, mem_labels = ax_memory.get_legend_handles_labels()
+        handles.extend(mem_handles)
+        labels.extend(mem_labels)
+    if handles:
+        ax_cpu.legend(handles, labels, title="Mért érték", fontsize="small")
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=160, bbox_inches="tight")
+    plt.close(fig)
+    return True
+
+
 def plot_performance_results(input_path: Path, output_dir: Path) -> list[Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     df = load_results(input_path)
@@ -132,6 +190,9 @@ def plot_performance_results(input_path: Path, output_dir: Path) -> list[Path]:
     save_failed_events(df, failed_output)
     if failed_output.exists():
         outputs.append(failed_output)
+    resource_output = output_dir / "resource_usage_by_batch_size.png"
+    if save_resource_usage(df, resource_output):
+        outputs.append(resource_output)
     return outputs
 
 
