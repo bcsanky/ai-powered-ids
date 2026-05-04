@@ -237,6 +237,21 @@ Ez a blokk beadás előtti QA segédleteket sorol fel. Ezek nem mérési eredmé
 | Final submission readiness | `reports/final_submission_check/final_submission_readiness.md` | READY_FOR_REAL_MEASUREMENT / READY_FOR_THESIS_INTEGRATION / READY_FOR_SUBMISSION_REVIEW / NOT_READY státusz | beadás előtti döntéstámogatás |
 | Bírálói kockázati kérdések | `reports/final_submission_check/biraloi_risk_questions.md` | Védési és bírálói felkészülési kérdéslista | felkészülési segédlet |
 
+## Live smoke és környezeti readiness ellenőrzések
+
+Ez a blokk a tényleges lab mérés előtti technikai readiness ellenőrzéseket sorolja fel. Ezek nem mérési eredmények, hanem a Docker, ML service, modellállomány, OpenSearch kapcsolat, input útvonal és Makefile dry-run állapot dokumentálására szolgálnak. A `reports/live_smoke/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Docker környezet ellenőrzés | `reports/live_smoke/docker_environment_check.md` | Konténeres környezet readiness dokumentálása | mérés előtti ellenőrzés |
+| ML service health ellenőrzés | `reports/live_smoke/ml_service_health_check.md` | `/health` végpont elérhetőségének dokumentálása | mérés előtti ellenőrzés |
+| Modellállomány ellenőrzés | `reports/live_smoke/model_artifacts_check.md` | AE-Minimal modell és preprocess betölthetősége | mérés előtti ellenőrzés |
+| OpenSearch kapcsolat ellenőrzés | `reports/live_smoke/opensearch_connection_check.md` | Read-only OpenSearch kapcsolat és count lekérdezés | mérés előtti ellenőrzés |
+| Real input útvonalak ellenőrzése | `reports/live_smoke/real_input_paths_check.md` | Demo/sablon/teszt inputok kizárása | mérés előtti guard |
+| Makefile dry-run ellenőrzés | `reports/live_smoke/make_workflow_dry_run.md` | Fő workflow-k dry-run elérhetősége | mérés előtti ellenőrzés |
+| Live smoke readiness | `reports/live_smoke/live_smoke_readiness.md` | READY_FOR_LAB_EXECUTION / READY_WITH_WARNINGS / NOT_READY státusz | mérés előtti döntéstámogatás |
+| Operátori live brief | `reports/live_smoke/operator_smoke_brief.md` | Következő operátori lépések összefoglalása | mérésnapi segédlet |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

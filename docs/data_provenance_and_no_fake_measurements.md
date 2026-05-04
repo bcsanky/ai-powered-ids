@@ -175,3 +175,17 @@ A final submission check nem mérés, hanem beadás előtti követelmény-megfel
 A no-overclaiming check célja, hogy a dokumentációban ne maradjon túlzó vagy nem igazolt állítás. Ez különösen fontos akkor, ha még nincs verified real-lab provenance: ilyenkor nem szabad végleges real-lab eredményként hivatkozni runtime kimenetekre.
 
 A bírálói kockázati kérdések a provenance és a mérési hatókör védhető magyarázatát támogatják. A válaszokat a végleges metrikák ismeretében kézzel kell ellenőrizni.
+
+## Live smoke ellenőrzések szerepe
+
+A live smoke réteg nem mérés, és nem helyettesíti a provenance-t. Célja kizárólag annak ellenőrzése, hogy a tényleges lab futás előtt a technikai környezet készen állhat-e: elérhető-e a konténeres környezet, betölthetők-e a modellállományok, válaszol-e az ML service health végpontja, és a real-lab input útvonalak nem demo vagy teszt eredetűek-e.
+
+A live smoke nem bizonyít detektálási teljesítményt, nem számol Wazuh-only, AE-only vagy hibrid metrikát, és nem ad dolgozati eredményt. A `reports/live_smoke/` alatti riportok csak mérés előtti readiness ellenőrzések. A tényleges eredmény továbbra is kizárólag a provenance-ben rögzített inputokból számolt és QA-val ellenőrzött kimenet lehet.
+
+Ajánlott használat:
+
+```bash
+make live-smoke
+```
+
+Ha a kimenet `READY_WITH_WARNINGS`, a figyelmeztetéseket a mérés megkezdése előtt át kell nézni. Ha `NOT_READY`, a hibát javítani kell, mielőtt real-lab mérés indulna.

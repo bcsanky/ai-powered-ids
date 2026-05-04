@@ -4,6 +4,10 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 
 ## Környezet
 
+- [ ] Lefutott a `make live-smoke`.
+- [ ] A `reports/live_smoke/live_smoke_readiness.md` státusza READY_FOR_LAB_EXECUTION vagy READY_WITH_WARNINGS.
+- [ ] A Docker, ML service, OpenSearch és modellállomány ellenőrzése rendben van, vagy a WARN státusz oka dokumentált.
+- [ ] Elkészült a `reports/live_smoke/operator_smoke_brief.md`.
 - [ ] A Wazuh manager és dashboard elérhető.
 - [ ] A target gép Wazuh agentje látszik a manageren.
 - [ ] A target gép naplói megjelennek a Wazuh felületen.
