@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -10,6 +10,12 @@ WAZUH_GROUND_TRUTH ?= data/lab/lab_ground_truth.csv
 WAZUH_WORK_DIR ?= data/processed/wazuh_real
 WAZUH_RESULTS_DIR ?= results/wazuh_real
 WAZUH_WINDOW_SECONDS ?= 60
+LAB_FEATURES ?= data/lab/lab_features.csv
+LAB_AE_WORK_DIR ?= data/processed/lab_ae
+LAB_AE_RESULTS_DIR ?= results/ae_lab
+HYBRID_REAL_RESULTS_DIR ?= results/hybrid_real
+REAL_COMPARISON_DIR ?= results/real_comparison
+HYBRID_WEIGHTED_THRESHOLD ?= 0.5
 
 dataset:
 	$(PYTHON) ml/src/build_dataset.py --config $(CONFIG)
@@ -37,7 +43,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -81,6 +87,35 @@ wazuh-correlate:
 
 wazuh-eval-real:
 	$(PYTHON) -m ml.src.wazuh_baseline.evaluate_wazuh_baseline --input $(WAZUH_WORK_DIR)/wazuh_correlated.csv --results-dir $(WAZUH_RESULTS_DIR)
+
+lab-ae-validate-features:
+	$(PYTHON) -m ml.src.lab_ae_eval.validate_lab_features --input $(LAB_FEATURES) --output $(LAB_AE_WORK_DIR)/lab_features_validated.csv
+
+lab-ae-score:
+	$(PYTHON) -m ml.src.lab_ae_eval.score_lab_features --features $(LAB_AE_WORK_DIR)/lab_features_validated.csv --ground-truth $(WAZUH_WORK_DIR)/lab_ground_truth_validated.csv --output $(LAB_AE_WORK_DIR)/ae_lab_predictions.csv --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl
+
+lab-ae-eval:
+	$(PYTHON) -m ml.src.lab_ae_eval.evaluate_ae_lab --input $(LAB_AE_WORK_DIR)/ae_lab_predictions.csv --results-dir $(LAB_AE_RESULTS_DIR)
+
+hybrid-real-eval:
+	$(PYTHON) -m ml.src.hybrid_real.evaluate_hybrid_real --wazuh-predictions $(WAZUH_RESULTS_DIR)/predictions.csv --ae-predictions $(LAB_AE_RESULTS_DIR)/predictions.csv --results-dir $(HYBRID_REAL_RESULTS_DIR) --weighted-threshold $(HYBRID_WEIGHTED_THRESHOLD)
+
+real-compare:
+	$(PYTHON) -m ml.src.hybrid_real.compare_real_results --wazuh-metrics $(WAZUH_RESULTS_DIR)/metrics_summary.csv --ae-metrics $(LAB_AE_RESULTS_DIR)/metrics_summary.csv --hybrid-metrics $(HYBRID_REAL_RESULTS_DIR)/metrics_summary.csv --output-dir $(REAL_COMPARISON_DIR)
+
+real-plot:
+	$(PYTHON) -m ml.src.hybrid_real.plot_real_comparison --comparison $(REAL_COMPARISON_DIR)/metrics_comparison.csv --output-dir $(REAL_COMPARISON_DIR)
+
+final-real-hybrid:
+	$(MAKE) wazuh-parse-alerts
+	$(MAKE) wazuh-correlate
+	$(MAKE) wazuh-eval-real
+	$(MAKE) lab-ae-validate-features
+	$(MAKE) lab-ae-score
+	$(MAKE) lab-ae-eval
+	$(MAKE) hybrid-real-eval
+	$(MAKE) real-compare
+	$(MAKE) real-plot
 
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto

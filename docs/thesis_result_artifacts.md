@@ -96,6 +96,22 @@ A scoring szolgáltatás, a batch scoring és a szakértői jelentés a diplomam
 | Lab/replay esettanulmányok | `reports/lab/case_study_*.md` | Port scan, SSH brute force és kombinált mintázatok elemzése | dolgozatba beemelhető |
 | Dolgozati ábrajegyzék | `reports/final/thesis_figures/figure_manifest.csv` | Ábrák forrásának és fejezeti helyének rögzítése | dolgozatba beemelhető |
 
+## Valódi lab-alapú Wazuh+AE eredmények
+
+Ez a blokk a natív Wazuh alert exporttal, lab ground truth eseményekkel és AE-Minimal lab feature-ökkel futtatható összehasonlító mérési lánc kimeneteit rögzíti. Ezek az eredmények csak akkor nevezhetők validált lab-alapú Wazuh+AE eredménynek, ha a bemeneti `data/wazuh/alerts.jsonl`, `data/lab/lab_ground_truth.csv` és `data/lab/lab_features.csv` állományok rendelkezésre állnak, és a `make final-real-hybrid` parancs sikeresen lefutott.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Natív Wazuh-only lab metrikák | `results/wazuh_real/metrics_summary.csv` | Natív Wazuh szabályalapú baseline értékelése címkézett lab eseményeken | bemenetfüggő, valódi Wazuh export szükséges |
+| AE-Minimal lab metrikák | `results/ae_lab/metrics_summary.csv` | AE-Minimal offline lab scoring értékelése ugyanazon eseményeken | bemenetfüggő |
+| Valós hibrid metrikák | `results/hybrid_real/metrics_summary.csv` | Hybrid OR, weighted és priority stratégiák összehasonlítása | bemenetfüggő |
+| Valós lab összehasonlító táblázat | `results/real_comparison/metrics_comparison.csv` | Wazuh-only, AE-Minimal lab és hibrid stratégiák egységes táblázata | bemenetfüggő |
+| Valós lab összehasonlító Markdown | `results/real_comparison/metrics_comparison.md` | Dolgozatba átemelhető összehasonlító táblázat | bemenetfüggő |
+| Valós lab precision/recall/F1 ábra | `results/real_comparison/fig_precision_recall_f1.png` | Wazuh-only, AE-only és hibrid konfigurációk fő metrikáinak összehasonlítása | bemenetfüggő |
+| Valós lab hamis pozitív arány ábra | `results/real_comparison/fig_false_positive_rate.png` | Téves riasztási arány összehasonlítása | bemenetfüggő |
+| Valós lab riasztásszám ábra | `results/real_comparison/fig_alert_count.png` | Riasztási mennyiség összehasonlítása | bemenetfüggő |
+| Valós lab TTD ábra | `results/real_comparison/fig_mean_ttd.png` | Átlagos Wazuh-alapú detektálási idő összehasonlítása, ha rendelkezésre áll | opcionális, Wazuh TTD szükséges |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:
