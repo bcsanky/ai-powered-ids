@@ -1,0 +1,5 @@
+scenario,event_count,normal_count,medium_count,high_count,critical_count,avg_anomaly_score,max_anomaly_score,ml_alert_count,rule_alert_count
+benign_activity,5,0,0,5,0,0.4024200835531088,0.4494088747925252,5,0
+combined_suspicious,5,0,0,0,5,0.32646593284462433,0.4492578979125752,5,5
+port_scan,5,0,0,0,5,0.3446627440671296,0.44829734841108093,5,5
+ssh_bruteforce,5,0,0,0,5,0.45105280429319317,0.45184621929972074,5,5

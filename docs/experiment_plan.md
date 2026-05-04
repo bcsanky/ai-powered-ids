@@ -389,3 +389,53 @@ make final-day7
 ```
 
 Ez a `final-validate`, `score-sample-events` és `generate-security-report` lépéseket futtatja. A cél nem épít új adatkészletet, nem indít AE-Minimal vagy AE-Context tanítást, és nem módosítja a végleges mérési eredményeket. A riport demonstrációs és dolgozati összefoglaló célú; nem éles SOC incidensjelentés és nem új benchmark mérés.
+
+## 13. Május 8-i lab/replay esettanulmányos lépések
+
+A május 8-i réteg kontrollált replay eseménysort használ a scoring és riportkészítési lánc bemutatására. A bemeneti események nem natív Wazuh exportból származnak, és nem tekinthetők éles SOC-validációnak.
+
+Bemeneti fájlok:
+
+```text
+examples/lab/lab_events.jsonl
+examples/lab/lab_events.csv
+```
+
+Lab események pontozása:
+
+```bash
+make score-lab-events
+```
+
+Case study riportok és ábrák előállítása:
+
+```bash
+make generate-case-studies
+```
+
+Dolgozatba szánt ábrák rendezése:
+
+```bash
+make collect-thesis-figures
+```
+
+Teljes május 8-i cél:
+
+```bash
+make final-day8
+```
+
+A `final-day8` nem indít új autoencoder tanítást és nem épít új végleges adatkészletet. Csak a lab/replay scoringot, az esettanulmányos riportokat, az ábrák rendezését és a szakértői riport frissítését futtatja.
+
+Fő kimenetek:
+
+```text
+reports/lab/lab_scored_events.jsonl
+reports/lab/lab_scored_events.csv
+reports/lab/case_study_summary.md
+reports/lab/lab_timeline.png
+reports/lab/risk_level_distribution.png
+reports/final/thesis_figures/figure_manifest.csv
+```
+
+Ezek a kimenetek elsősorban az 5. fejezet implementációs és demonstrációs részeihez használhatók. A 6. fejezet benchmark jellegű összehasonlítása továbbra is a `results/final/` alatti validált futtatási könyvtárakra épül.

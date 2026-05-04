@@ -34,6 +34,12 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Szakértői jelentés Markdown formában | `reports/final/security_report.md` | Riportkészítési prototípus bemutatása az 5. fejezetben | dolgozatba beemelhető demonstrációs kimenet |
 | Szakértői jelentés HTML formában | `reports/final/security_report.html` | Dashboard jellegű összefoglaló bemutatása | demonstrációs kimenet |
 | Dashboard összefoglaló CSV | `reports/final/dashboard_summary.csv` | Fő metrikák riportoldali összesítése | demonstrációs kimenet, nem mérési benchmark |
+| Lab/replay pontozott események CSV | `reports/lab/lab_scored_events.csv` | Eseményalapú demonstráció táblázatos bemutatása | demonstrációs validáció, nem benchmark mérés |
+| Lab/replay case study összefoglaló | `reports/lab/case_study_summary.md` | Esettanulmányos összefoglaló az 5. fejezethez | dolgozatba beemelhető |
+| Port scan esettanulmány | `reports/lab/case_study_port_scan.md` | Port scan jellegű mintázat bemutatása | dolgozatba beemelhető |
+| SSH brute force esettanulmány | `reports/lab/case_study_ssh_bruteforce.md` | SSH brute force jellegű mintázat bemutatása | dolgozatba beemelhető |
+| Lab/replay scenario summary | `reports/lab/scenario_summary.csv` | Szcenáriónkénti kockázati összesítés | demonstrációs validáció, nem benchmark mérés |
+| Thesis figures manifest | `reports/final/thesis_figures/figure_manifest.csv` | Dolgozatba szánt ábrák forrásjegyzéke | dolgozatba beemelhető |
 
 ## Ábrákhoz használható PNG állományok
 
@@ -59,6 +65,8 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Precision, recall és F1 összehasonlítása | `results/final/comparison/fig_comparison_precision_recall_f1.png` | Konfigurációk fő metrikáinak összehasonlítása | validált |
 | Hamis pozitív arány összehasonlítása | `results/final/comparison/fig_comparison_false_positive_rate.png` | Üzemeltetési terheléshez kapcsolódó hibaarány bemutatása | validált |
 | Riasztásszám összehasonlítása | `results/final/comparison/fig_comparison_alert_count.png` | Riasztási mennyiség összehasonlítása | validált |
+| Lab/replay timeline ábra | `reports/lab/lab_timeline.png` | Kontrollált eseménysor időbeli szemléltetése az 5. fejezetben | dolgozatba beemelhető demonstrációs ábra |
+| Lab/replay kockázati eloszlás | `reports/lab/risk_level_distribution.png` | Kockázati szintek eloszlásának bemutatása | dolgozatba beemelhető demonstrációs ábra |
 
 ## Demonstrációs prototípuskimenetek
 
@@ -70,6 +78,9 @@ A scoring szolgáltatás, a batch scoring és a szakértői jelentés a diplomam
 | Szakértői riport | `reports/final/security_report.md` | Implementációs fejezetben bemutatható riport | dolgozatba beemelhető |
 | HTML riport | `reports/final/security_report.html` | Dashboard jellegű megjelenítés demonstrálása | demonstrációs kimenet |
 | Dashboard CSV | `reports/final/dashboard_summary.csv` | Riportoldali metrikaösszesítés | demonstrációs kimenet, nem mérési benchmark |
+| Lab/replay pontozott események | `reports/lab/lab_scored_events.jsonl` | Kontrollált eseménysor pontozásának bemutatása | demonstrációs validáció |
+| Lab/replay esettanulmányok | `reports/lab/case_study_*.md` | Port scan, SSH brute force és kombinált mintázatok elemzése | dolgozatba beemelhető |
+| Dolgozati ábrajegyzék | `reports/final/thesis_figures/figure_manifest.csv` | Ábrák forrásának és fejezeti helyének rögzítése | dolgozatba beemelhető |
 
 ## Validált és hiányzó konfigurációk
 

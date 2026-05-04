@@ -13,6 +13,8 @@ Ez a dokumentum összefoglalja, hogy a prototípus mely komponensei írhatók le
 - FastAPI scoring szolgáltatás AE-Minimal modellalapú pontozással.
 - Batch scoring parancssori feldolgozás JSONL és CSV bemenetre.
 - Szakértői riport és dashboard jellegű összefoglaló.
+- Lab/replay eseménysor pontozása kontrollált port scan, SSH brute force jellegű és kombináltan gyanús mintákon.
+- Case study riportok és dolgozatba rendezett ábrakészlet.
 
 ## 5. fejezetben leírható témák
 
@@ -22,6 +24,10 @@ Ez a dokumentum összefoglalja, hogy a prototípus mely komponensei írhatók le
 - A FastAPI scoring végpont működése és hibakezelése hiányzó modell esetén.
 - A batch scoring célja és bemeneti/kimeneti sémája.
 - A szakértői jelentés szerepe mint demonstrációs riportkészítési réteg.
+- Scoring szolgáltatás és batch scoring külön alfejezetben.
+- Eseményalapú demonstráció kontrollált replay adatsorral.
+- Szakértői riport és dashboard összefoglaló.
+- Esettanulmányok port scan és SSH brute force jellegű mintázatokra.
 
 ## 6. fejezetben leírható témák
 
@@ -39,3 +45,4 @@ Ez a dokumentum összefoglalja, hogy a prototípus mely komponensei írhatók le
 - A hibrid kiértékelés azonos teszthalmaz-sorrenden alapul, nem éles eseménykorreláció.
 - A scoring szolgáltatás laboratóriumi prototípus-réteg, nem éles üzemi SOC rendszer.
 - A szakértői riport demonstrációs összefoglaló, nem éles incidensjelentés.
+- A lab/replay esettanulmány kis elemszámú kontrollált eseménysor, nem natív Wazuh export és nem éles SOC-validáció.

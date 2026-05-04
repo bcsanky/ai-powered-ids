@@ -1,0 +1,8 @@
+figure_file,source_file,thesis_section,status,note
+reports/final/thesis_figures/ae_minimal_confusion_matrix.png,results/final/final-ae-minimal-v1/ae_v1_20260504_113852/confusion_matrix.png,6. fejezet,copied,AE-Minimal konfúziós mátrix.
+reports/final/thesis_figures/ae_context_confusion_matrix.png,results/final/final-ae-context-v1/ae_v1_20260504_131741/confusion_matrix.png,6. fejezet,copied,AE-Context konfúziós mátrix.
+reports/final/thesis_figures/comparison_precision_recall_f1.png,results/final/comparison/fig_comparison_precision_recall_f1.png,6. fejezet,copied,"Precision, recall és F1 összehasonlítása."
+reports/final/thesis_figures/comparison_false_positive_rate.png,results/final/comparison/fig_comparison_false_positive_rate.png,6. fejezet,copied,Hamis pozitív arány összehasonlítása.
+reports/final/thesis_figures/comparison_alert_count.png,results/final/comparison/fig_comparison_alert_count.png,6. fejezet,copied,Riasztásszám összehasonlítása.
+reports/final/thesis_figures/lab_timeline.png,reports/lab/lab_timeline.png,5. fejezet,copied,Lab/replay eseménysor idővonala.
+reports/final/thesis_figures/lab_risk_level_distribution.png,reports/lab/risk_level_distribution.png,5. fejezet,copied,Lab/replay kockázati szintek eloszlása.

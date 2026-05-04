@@ -39,6 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--comparison", default="results/final/comparison/metrics_comparison.csv")
     parser.add_argument("--scored-events", default=None)
+    parser.add_argument("--case-summary", default=None)
     parser.add_argument("--output-dir", default="reports/final")
     return parser.parse_args()
 
@@ -68,6 +69,12 @@ def load_scored_events(path: Path | None) -> pd.DataFrame | None:
     if suffix == ".csv":
         return pd.read_csv(path)
     raise ValueError("A pontozott események támogatott formátumai: .jsonl, .csv")
+
+
+def load_case_summary(path: Path | None) -> pd.DataFrame | None:
+    if path is None or not path.exists():
+        return None
+    return pd.read_csv(path)
 
 
 def format_number(value: Any) -> str:
@@ -168,6 +175,7 @@ def build_markdown_report(
     *,
     comparison: pd.DataFrame,
     scored_events: pd.DataFrame | None,
+    case_summary: pd.DataFrame | None,
     created_at: datetime,
 ) -> str:
     dashboard = comparison_subset(comparison)
@@ -219,6 +227,30 @@ def build_markdown_report(
             ]
         )
 
+    if case_summary is not None and not case_summary.empty:
+        lab_columns = [
+            col
+            for col in [
+                "scenario",
+                "event_count",
+                "medium_count",
+                "high_count",
+                "critical_count",
+                "max_anomaly_score",
+            ]
+            if col in case_summary.columns
+        ]
+        lines.extend(
+            [
+                "## Lab/replay demonstráció",
+                "",
+                markdown_table(case_summary[lab_columns]),
+                "",
+                "A lab/replay demonstráció kontrollált eseménysoron mutatja be a scoring és priorizálási folyamatot. Ez nem éles üzemű SOC eseményfolyam és önmagában nem bizonyít éles üzemi teljesítményt.",
+                "",
+            ]
+        )
+
     lines.extend(
         [
             "## Korlátok",
@@ -253,11 +285,13 @@ def write_report(
     *,
     comparison_path: Path,
     scored_events_path: Path | None,
+    case_summary_path: Path | None = None,
     output_dir: Path,
 ) -> dict[str, Path]:
     output_dir.mkdir(parents=True, exist_ok=True)
     comparison = load_comparison(comparison_path)
     scored_events = load_scored_events(scored_events_path)
+    case_summary = load_case_summary(case_summary_path)
     created_at = datetime.now()
 
     dashboard = comparison_subset(comparison)
@@ -267,6 +301,7 @@ def write_report(
     markdown = build_markdown_report(
         comparison=comparison,
         scored_events=scored_events,
+        case_summary=case_summary,
         created_at=created_at,
     )
     md_path = output_dir / "security_report.md"
@@ -284,9 +319,11 @@ def write_report(
 def main() -> None:
     args = parse_args()
     scored_path = Path(args.scored_events) if args.scored_events else None
+    case_summary_path = Path(args.case_summary) if args.case_summary else None
     outputs = write_report(
         comparison_path=Path(args.comparison),
         scored_events_path=scored_path,
+        case_summary_path=case_summary_path,
         output_dir=Path(args.output_dir),
     )
     print(f"[OK] Szakértői jelentés: {outputs['markdown']}")

@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid score-sample-events generate-security-report final-day4 final-day5 final-day6 final-day7
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid score-sample-events score-lab-events generate-security-report generate-case-studies collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -32,7 +32,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/collect_thesis_figures.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -70,8 +70,17 @@ final-hybrid:
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto
 
+score-lab-events:
+	$(PYTHON) -m ml.src.score_events --input examples/lab/lab_events.jsonl --output reports/lab/lab_scored_events.jsonl --csv-output reports/lab/lab_scored_events.csv --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto
+
+generate-case-studies:
+	$(PYTHON) -m ml.src.generate_case_studies --scored-events reports/lab/lab_scored_events.jsonl --output-dir reports/lab
+
+collect-thesis-figures:
+	$(PYTHON) -m ml.src.collect_thesis_figures --output-dir reports/final/thesis_figures --ae-minimal-root results/final/final-ae-minimal-v1 --ae-context-root results/final/final-ae-context-v1 --comparison-dir results/final/comparison --lab-dir reports/lab
+
 generate-security-report:
-	$(PYTHON) -m ml.src.generate_security_report --comparison results/final/comparison/metrics_comparison.csv --scored-events reports/scored_events.jsonl --output-dir reports/final
+	$(PYTHON) -m ml.src.generate_security_report --comparison results/final/comparison/metrics_comparison.csv --scored-events reports/scored_events.jsonl --case-summary reports/lab/scenario_summary.csv --output-dir reports/final
 
 final-day4:
 	$(MAKE) final-validate
@@ -100,4 +109,11 @@ final-day6:
 final-day7:
 	$(MAKE) final-validate
 	$(MAKE) score-sample-events
+	$(MAKE) generate-security-report
+
+final-day8:
+	$(MAKE) final-validate
+	$(MAKE) score-lab-events
+	$(MAKE) generate-case-studies
+	$(MAKE) collect-thesis-figures
 	$(MAKE) generate-security-report

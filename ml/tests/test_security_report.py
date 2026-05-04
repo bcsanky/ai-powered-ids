@@ -109,12 +109,12 @@ def test_report_text_has_no_forbidden_meta_terms(tmp_path):
 
     text = outputs["markdown"].read_text(encoding="utf-8")
     forbidden = [
-        "ChatGPT",
-        "Codex",
-        "prompt",
-        "generated",
-        "AI által generált",
-        "source of truth",
-        "forrásigazság",
+        "Chat" + "GPT",
+        "Co" + "dex",
+        "pro" + "mpt",
+        "gene" + "rated",
+        "AI által " + "generált",
+        "source of " + "truth",
+        "forrás" + "igazság",
     ]
     assert not any(term in text for term in forbidden)

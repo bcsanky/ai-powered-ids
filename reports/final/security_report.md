@@ -1,6 +1,6 @@
 # Szakértői biztonsági összefoglaló
 
-Futtatás dátuma: 2026-05-04 15:26:22
+Futtatás dátuma: 2026-05-04 16:45:02
 
 ## Validált konfigurációk
 
@@ -38,6 +38,17 @@ Az AE-Context F1 értéke az AE-Minimal eredményéhez képest gyakorlatilag azo
 | demo-001 | high | 0.4490 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |
 | demo-002 | high | 0.4453 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |
 | demo-003 | high | 0.1691 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |
+
+## Lab/replay demonstráció
+
+| scenario | event_count | medium_count | high_count | critical_count | max_anomaly_score |
+| --- | --- | --- | --- | --- | --- |
+| benign_activity | 5 | 0 | 5 | 0 | 0.4494 |
+| combined_suspicious | 5 | 0 | 0 | 5 | 0.4493 |
+| port_scan | 5 | 0 | 0 | 5 | 0.4483 |
+| ssh_bruteforce | 5 | 0 | 0 | 5 | 0.4518 |
+
+A lab/replay demonstráció kontrollált eseménysoron mutatja be a scoring és priorizálási folyamatot. Ez nem éles üzemű SOC eseményfolyam és önmagában nem bizonyít éles üzemi teljesítményt.
 
 ## Korlátok
 

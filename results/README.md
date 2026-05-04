@@ -242,3 +242,27 @@ reports/final/dashboard_summary.csv
 ```
 
 Ezek a fájlok a scoring szolgáltatás, a batch scoring és a szakértői jelentés bemutatását szolgálják. Nem helyettesítik a `results/final/` alatti validált mérési eredményeket, és nem tekintendők külön benchmark futásnak. A dolgozatban felhasználhatók az implementációs feldolgozási lánc szemléltetésére, ha egyértelműen demonstrációs kimenetként szerepelnek.
+
+## Lab/replay esettanulmányos kimenetek
+
+A lab/replay validáció kimenetei a `reports/lab/` könyvtárban találhatók:
+
+```text
+reports/lab/lab_scored_events.jsonl
+reports/lab/lab_scored_events.csv
+reports/lab/case_study_summary.md
+reports/lab/case_study_<scenario>.md
+reports/lab/scenario_summary.csv
+reports/lab/scenario_risk_matrix.csv
+reports/lab/lab_timeline.png
+reports/lab/risk_level_distribution.png
+```
+
+A dolgozatba szánt ábrák rendezett másolatai:
+
+```text
+reports/final/thesis_figures/
+reports/final/thesis_figures/figure_manifest.csv
+```
+
+Ezek demonstrációs validációs kimenetek. Nem helyettesítik a végleges mérési benchmarkot, és nem jelentenek natív Wazuh teljesítménymérést.
