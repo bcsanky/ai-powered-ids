@@ -17,13 +17,13 @@ results/final/
 
 Az egyes alkönyvtárak egy-egy összehasonlított konfiguráció konfigurált eredménygyökerei. Amennyiben egy futtatás időbélyeges alkönyvtárat hoz létre, a szakdolgozatban felhasznált végleges futtatást egyértelműen meg kell jelölni a `run_metadata.json` és a kapcsolódó dokumentáció alapján.
 
-Az aktuális `train_ae.py` minden autoencoder futtatásnál időbélyeges alkönyvtárat hoz létre a konfigurált `paths.results_dir` alatt. Példa:
+A prototípus jelen változatában a `train_ae.py` minden autoencoder futtatásnál időbélyeges alkönyvtárat hoz létre a konfigurált `paths.results_dir` alatt. Példa:
 
 ```text
 results/final/final-ae-minimal-v1/ae_v1_YYYYMMDD_HHMMSS/
 ```
 
-Az aktuális `ml/src/eval.py` baseline futtatásoknál szintén időbélyeges alkönyvtárat hoz létre a megadott `--results-dir` alatt, például:
+A prototípus jelen változatában az `ml/src/eval.py` baseline futtatásoknál szintén időbélyeges alkönyvtárat hoz létre a megadott `--results-dir` alatt, például:
 
 ```text
 results/final/final-baseline-stat-v1/baseline_stat_YYYYMMDD_HHMMSS/
@@ -44,9 +44,10 @@ Elvárt fájlok:
 - `confusion_matrix.png`, ha külön ábrageneráló lépés előállítja
 - `score_distribution.png`, ha külön ábrageneráló lépés előállítja
 - `roc_curve.png`, ha külön ábrageneráló lépés előállítja
+- `top_feature_frequency.png`, ha külön ábrageneráló lépés előállítja
 - `run_metadata.json`
 
-Megjegyzés: az aktuális AE tanító pipeline elsősorban CSV eredményeket és rekonstrukciós hiba alapú magyarázati fájlokat állít elő. A PNG ábrák AE esetén külön generálhatók a `predictions.csv` és `metrics_summary.csv` alapján.
+Megjegyzés: az AE tanító pipeline elsősorban CSV eredményeket és rekonstrukciós hiba alapú magyarázati fájlokat állít elő. A PNG ábrák AE esetén a `plot_final_results.py` ábrageneráló lépéssel állíthatók elő a `predictions.csv`, `threshold_curve.csv` és kapcsolódó eredményfájlok alapján.
 
 ### `results/final/final-ae-context-v1/`
 
@@ -61,6 +62,7 @@ Elvárt fájlok:
 - `confusion_matrix.png`, ha külön ábrageneráló lépés előállítja
 - `score_distribution.png`, ha külön ábrageneráló lépés előállítja
 - `roc_curve.png`, ha külön ábrageneráló lépés előállítja
+- `top_feature_frequency.png`, ha külön ábrageneráló lépés előállítja
 - `run_metadata.json`
 
 ### `results/final/final-baseline-stat-v1/`
@@ -128,11 +130,12 @@ A szakdolgozat táblázataihoz és ábráihoz elsősorban az alábbi fájlok has
 - `score_distribution.png`: anomáliapontszámok eloszlásának bemutatása.
 - `roc_curve.png`: ROC-görbe, ahol a pontszám és a bináris címke alapján értelmezhető.
 - `top_feature_errors.csv`: AE-alapú magyarázhatósági táblázatok forrása.
+- `top_feature_frequency.png`: AE-alapú magyarázhatósági ábra a leggyakoribb top feature értékekről.
 - `run_metadata.json`: reprodukálhatósági adatok, például bemeneti könyvtárak, futtatási azonosítók és konfigurációs hivatkozások.
 
-## Generált fájlok kezelése
+## Automatikusan előállított eredményfájlok kezelése
 
-A következő fájlok generált eredmények, ezért nem szabad őket kézzel szerkeszteni:
+A következő fájlok automatikusan előállított eredményfájlok, ezért nem szabad őket kézzel szerkeszteni:
 
 - `metrics_summary.csv`
 - `predictions.csv`
@@ -141,6 +144,7 @@ A következő fájlok generált eredmények, ezért nem szabad őket kézzel sze
 - `confusion_matrix.png`
 - `score_distribution.png`
 - `roc_curve.png`
+- `top_feature_frequency.png`
 - `run_metadata.json`
 
 Ha egy mérés hibás konfigurációval vagy hibás bemenettel készült, a helyes eljárás az adott mérési parancs újrafuttatása, nem pedig az eredményfájlok kézi javítása.
@@ -181,6 +185,14 @@ Példák:
 - `fig_comparison_alert_count.png`
 - `fig_comparison_false_positive_rate.png`
 
+A május 4-i összehasonlító gyűjtőlépés a `results/final/comparison/` könyvtárban a következő végleges összehasonlító állományokat állítja elő:
+
+- `metrics_comparison.csv`
+- `metrics_comparison.md`
+- `fig_comparison_precision_recall_f1.png`
+- `fig_comparison_false_positive_rate.png`
+- `fig_comparison_alert_count.png`
+
 A névben a konfiguráció legyen kisbetűs, aláhúzással tagolt, és egyezzen a végleges mérési konfiguráció rövid nevével: `ae_minimal`, `ae_context`, `baseline_stat`, `baseline_wazuh`, `hybrid`.
 
 ## Reprodukálhatósági megjegyzés
@@ -191,6 +203,6 @@ Minden végleges eredményhez meg kell őrizni a kapcsolódó konfigurációt, a
 - a `run_metadata.json`,
 - a releváns `metrics_summary.csv`,
 - a kapcsolódó `predictions.csv`,
-- szükség esetén a modell artifact és a küszöbértékeket tartalmazó fájl.
+- szükség esetén a modellfájl és a küszöbértékeket tartalmazó fájl.
 
-Az eredmények összehasonlításakor azonos adathalmazverziót, azonos train/validation/calibration/test felosztást és dokumentált random seedet kell használni. A jelenlegi végleges konfigurációkban a random seed értéke `42`.
+Az eredmények összehasonlításakor azonos adathalmazverziót, azonos train/validation/calibration/test felosztást és dokumentált random seedet kell használni. A végleges konfigurációkban a random seed értéke `42`.

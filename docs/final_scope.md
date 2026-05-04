@@ -8,9 +8,9 @@ A munka célja egy olyan laboratóriumi prototípus megtervezése, megvalósít�
 
 A cél nem egy éles üzemi IDS teljes körű kiváltása, hanem annak vizsgálata, hogy egy hibrid, szabályalapú és gépi tanulási megközelítés milyen módon illeszthető egy SIEM/IDS architektúrába, és milyen mérőszámokkal értékelhető kontrollált, reprodukálható kísérleti környezetben.
 
-## 2. A végleges MVP pontos lehatárolása
+## 2. A végleges laboratóriumi prototípus pontos lehatárolása
 
-A végleges MVP egy reprodukálható kísérleti prototípus, amely az alábbi fő elemekből áll:
+A végleges laboratóriumi prototípus egy reprodukálható kísérleti rendszer, amely az alábbi fő elemekből áll:
 
 - Wazuh Manager, Wazuh Indexer és Wazuh Dashboard Docker Compose alapú laboratóriumi környezetben.
 - Egy saját FastAPI alapú ML szolgáltatás-prototípus komponens, amely az architekturális integrációs pontot reprezentálja.
@@ -20,9 +20,9 @@ A végleges MVP egy reprodukálható kísérleti prototípus, amely az alábbi f
 - Három küszöbölési stratégia: fix küszöb, validációs percentilis alapú küszöb és kalibrációs halmazon optimalizált F1-küszöb.
 - Statisztikai baseline, amely a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot.
 - Wazuh-stílusú baseline, amely exportált Wazuh riasztásokat vagy Wazuh-szerű predikciós mezőket hasonlít össze a címkézett adatokkal.
-- Eredményfájlok, mérőszámok és ábrák előállítása a szakdolgozati értékeléshez.
+- Eredményfájlok, mérőszámok, AE ábrák és összehasonlító ábrák előállítása a szakdolgozati értékeléshez.
 
-Az MVP a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható kísérleti pipeline-on, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
+A laboratóriumi prototípus a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható kísérleti pipeline-on, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
 
 ## 3. Megvalósítási kör május 15-ig
 
@@ -36,12 +36,12 @@ A szakdolgozati prototípus lezárásáig az alábbi elemek tartoznak a megvaló
 - A `baseline_wazuh` konfiguráció előkészítése Wazuh vagy Wazuh-szerű exportált predikciók kiértékelésére.
 - A `hybrid` konfiguráció tervezési szintű rögzítése, amely az AE és Wazuh predikciók kombinálásának módját írja le.
 - A fő mérőszámok táblázatos exportja: precision, recall, F1, false positive rate, confusion matrix és alert count.
-- A szakdolgozathoz felhasználható ábrák és táblázatok előállítása: küszöbgörbe, ROC-görbe, score eloszlás, confusion matrix és modellveszteség-görbe, ahol értelmezhető.
+- A szakdolgozathoz felhasználható ábrák és táblázatok előállítása: küszöbgörbe, ROC-görbe, score eloszlás, confusion matrix, top feature gyakoriság és összehasonlító metrikaábrák, ahol értelmezhető.
 - A kísérleti lépések rövid futtatási dokumentációja és az eredmények értelmezése.
 
 ## 4. Mit nem valósítunk meg, és miért nem
 
-A végleges MVP nem vállal teljes éles üzemi IDS implementációt. Ennek oka, hogy a szakdolgozat időkerete és a laboratóriumi validációs környezet nem teszi lehetővé egy termelési környezetben hosszú ideig futó, teljes körűen üzemeltetett detektáló rendszer megbízható értékelését.
+A végleges laboratóriumi prototípus nem vállal teljes éles üzemi IDS implementációt. Ennek oka, hogy a szakdolgozat időkerete és a laboratóriumi validációs környezet nem teszi lehetővé egy termelési környezetben hosszú ideig futó, teljes körűen üzemeltetett detektáló rendszer megbízható értékelését.
 
 Nem valósítunk meg teljes körű online tanulást vagy automatikus modellfrissítést. A concept drift kezeléséhez hosszabb idejű, időben változó valós forgalmi adatokra és külön validációs metodikára lenne szükség.
 
@@ -69,7 +69,7 @@ A cél nem annak állítása, hogy a Wazuh natívan ugyanazokat a CIC-IDS2017 fl
 
 ### ae_minimal
 
-Az `ae_minimal` a fő autoencoder konfiguráció. A bemeneti feature-készlet a jelenleg implementált minimális jellemzőkből áll:
+Az `ae_minimal` a fő autoencoder konfiguráció. A bemeneti feature-készlet az implementált minimális jellemzőkből áll:
 
 - `destination_port`
 - `flow_duration`
@@ -83,7 +83,7 @@ A numerikus jellemzőket standard skálázás, a kategorikus protokollmezőt one
 
 ### ae_context
 
-Az `ae_context` a minimális flow feature-készletet egyszerű, timestamp nélküli context feature-ökkel egészíti ki. A jelenleg implementált context jellemzők train splitből illesztett port- és protokollgyakoriságon, ritka célport jelzőn, valamint soronként számított forgalmi arányokon alapulnak:
+Az `ae_context` a minimális flow feature-készletet egyszerű, timestamp nélküli context feature-ökkel egészíti ki. Az implementált context jellemzők train splitből illesztett port- és protokollgyakoriságon, ritka célport jelzőn, valamint soronként számított forgalmi arányokon alapulnak:
 
 - `destination_port_frequency`
 - `protocol_frequency`
@@ -148,7 +148,7 @@ A validáció laboratóriumi környezetben történik, nem hosszú ideig futó p
 
 ### Concept drift
 
-A modell statikus tanítóhalmazon tanul. Valós hálózatokban a normál forgalom idővel változhat, ami concept driftet okozhat. Ennek kezelése újratanítási stratégiát, driftmonitorozást és időalapú validációt igényelne, amely a jelenlegi MVP-ben nem része a megvalósításnak.
+A modell statikus tanítóhalmazon tanul. Valós hálózatokban a normál forgalom idővel változhat, ami concept driftet okozhat. Ennek kezelése újratanítási stratégiát, driftmonitorozást és időalapú validációt igényelne, amely a laboratóriumi prototípusban nem része a megvalósításnak.
 
 ### Egyszerűsített CTI kezelés
 

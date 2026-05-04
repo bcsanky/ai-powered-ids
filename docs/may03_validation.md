@@ -3,7 +3,7 @@
 Validáció dátuma: 2026-05-03  
 Branch: `thesis/final`
 
-A május 3-i végleges kísérleti beállítás futtathatósági ellenőrzése során a final konfigurációk, a fő Python belépési pontok, az AE-Minimal adatépítés, az AE-Minimal tanítás és a statisztikai baseline futtathatósága került ellenőrzésre. A későbbi lokális validáció alapján a teljes AE-Minimal tanítás sikeresen befejeződött, és létrejöttek a hozzá tartozó artifact és result könyvtárak.
+A május 3-i végleges kísérleti beállítás futtathatósági ellenőrzése során a final konfigurációk, a fő Python belépési pontok, az AE-Minimal adatépítés, az AE-Minimal tanítás és a statisztikai baseline futtathatósága került ellenőrzésre. A későbbi lokális validáció alapján a teljes AE-Minimal tanítás sikeresen befejeződött, és létrejöttek a hozzá tartozó modellkimeneti és eredménykönyvtárak.
 
 ## Lefuttatott parancsok
 
@@ -100,7 +100,7 @@ make train-ae CONFIG=experiments/final/ae_minimal.yaml
 
 Eredmény: a későbbi lokális futtatás sikeresen befejeződött teljes AE-Minimal konfigurációval.
 
-Ellenőrzött artifact könyvtár:
+Ellenőrzött modellkimeneti könyvtár:
 
 ```text
 artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/
@@ -129,7 +129,7 @@ A mentett `train_config.json` alapján a futás teljes adatos final konfiguráci
 - `dev_sample.max_rows_total`: `null`
 - `random_seed`: `42`
 
-Létrejött artifact fájlok:
+Létrejött modellkimeneti fájlok:
 
 - `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/model.joblib`
 - `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/history.json`
@@ -187,7 +187,7 @@ Megjegyzés: a futás közben a Matplotlib ideiglenes cache könyvtárra vonatko
 
 ## AE-Context státusz
 
-Az `AE-Context` aktuális állapotban már nem pusztán kompatibilis konfiguráció: az adatépítő pipeline egyszerű, timestamp nélküli context feature-öket tud előállítani. Ezek port- és protokollgyakoriságon, ritka célport jelzőn, valamint forgalmi arányokon alapulnak.
+Az `AE-Context` a prototípus jelen változatában már nem pusztán kompatibilis konfiguráció: az adatépítő pipeline egyszerű, timestamp nélküli context feature-öket tud előállítani. Ezek port- és protokollgyakoriságon, ritka célport jelzőn, valamint forgalmi arányokon alapulnak.
 
 Az implementált context feature-ök:
 
@@ -235,7 +235,7 @@ Sikeresen validált elemek:
 - CIC-IDS2017 raw adat elérhetősége.
 - Final AE-Minimal dataset build.
 - Final AE-Minimal autoencoder tréning teljes befejezése.
-- Final AE-Minimal artifact fájlok létrejötte.
+- Final AE-Minimal modellkimeneti fájlok létrejötte.
 - Final AE-Minimal eredményfájlok létrejötte.
 - AE-Context dataset build és context metaadatok létrejötte.
 - Final statisztikai baseline kiértékelés és ábragenerálás.
@@ -247,7 +247,7 @@ Nem lezárt elemek:
 
 ## Git hygiene update
 
-A generált `artifacts/` és `results/final/` alatti mérési fájlok nem maradnak verziókezelve, mert a `.gitignore` kizárja ezeket az útvonalakat. Ezek futtatási artefaktok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például modelleket, küszöböket, predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
+Az automatikusan előállított `artifacts/` és `results/final/` alatti mérési fájlok nem maradnak verziókezelve, mert a `.gitignore` kizárja ezeket az útvonalakat. Ezek futtatási kimeneti állományok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például modelleket, küszöböket, predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
 
 A repository-ban a hosszú távon karbantartandó elemek maradnak verziókezelve:
 

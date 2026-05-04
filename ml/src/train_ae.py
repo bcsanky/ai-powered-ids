@@ -81,14 +81,26 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray, scores: np.ndarray) 
         zero_division=0,
     )
 
+    tn = int(cm[0, 0])
+    fp = int(cm[0, 1])
+    fn = int(cm[1, 0])
+    tp = int(cm[1, 1])
+    benign_total = tn + fp
+    attack_total = tp + fn
+
     metrics = {
-        "tn": int(cm[0, 0]),
-        "fp": int(cm[0, 1]),
-        "fn": int(cm[1, 0]),
-        "tp": int(cm[1, 1]),
+        "tn": tn,
+        "fp": fp,
+        "fn": fn,
+        "tp": tp,
         "precision": float(precision),
         "recall": float(recall),
         "f1": float(f1),
+        "false_positive_rate": float(fp / benign_total) if benign_total > 0 else 0.0,
+        "false_negative_rate": float(fn / attack_total) if attack_total > 0 else 0.0,
+        "true_positive_rate": float(tp / attack_total) if attack_total > 0 else 0.0,
+        "true_negative_rate": float(tn / benign_total) if benign_total > 0 else 0.0,
+        "alert_count": int(tp + fp),
         "n_samples": int(len(y_true)),
         "n_attack": int(np.sum(y_true == 1)),
         "n_benign": int(np.sum(y_true == 0)),
