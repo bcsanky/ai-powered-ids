@@ -2,7 +2,7 @@
 
 A szakdolgozat végleges mérési folyamata a projektben rögzített parancsokra, a `Makefile` célokra, az `ml/src/build_dataset.py`, `ml/src/train_ae.py` és `ml/src/eval.py` belépési pontokra, valamint az `experiments/final/` alatti végleges konfigurációkra épül.
 
-A cél egy reprodukálható mérési lánc kialakítása, amelyben az autoencoder-alapú konfigurációk, a statisztikai baseline, a Wazuh-stílusú baseline és a tervezett hibrid kiértékelés egységesen dokumentált eredményfájlokat állít elő.
+A cél egy reprodukálható mérési lánc kialakítása, amelyben az autoencoder-alapú konfigurációk, a statisztikai viszonyítási alap (baseline), a Wazuh-stílusú baseline és a tervezett hibrid kiértékelés egységesen dokumentált eredményfájlokat állít elő.
 
 ## 1. Szükséges bemeneti adatok
 
@@ -33,7 +33,7 @@ dev_sample:
   max_rows_total: null
 ```
 
-A `dev_sample` kizárólag technikai validációra szolgál. Bekapcsolt állapotban az adatépítés a tisztítás után, de a train/validation/calibration/test felosztás előtt determinisztikus mintavételt végez a `random_seed` alapján, és lehetőség szerint megőrzi mind a benign, mind a támadó osztályt. Az így készült gyors futtathatósági ellenőrzés eredményei nem használhatók végleges szakdolgozati mérési eredményként.
+A `dev_sample` kizárólag technikai validációra szolgál. Bekapcsolt állapotban az adatépítés a tisztítás után, de a tanító, validációs, kalibrációs és teszt adatrészekre bontás előtt determinisztikus mintavételt végez a `random_seed` alapján, és lehetőség szerint megőrzi mind a benign, mind a támadó osztályt. Az így készült gyors futtathatósági ellenőrzés eredményei nem használhatók végleges szakdolgozati mérési eredményként.
 
 A Wazuh baseline külön bemenetet igényel: egy Wazuh vagy Wazuh-szerű exportot, amely tartalmazza a valós címkét és a Wazuh riasztási vagy predikciós mezőit. Támogatott formátumok a prototípus jelen változatában az `ml/src/eval.py` alapján:
 
@@ -72,7 +72,7 @@ data/processed/final/ae_minimal/
 
 ## 3. AE-Minimal tanítási parancs
 
-Az AE-Minimal a végleges minimális feature-készletre épül. A tanítás parancsa:
+Az AE-Minimal a végleges minimális jellemzőkészletre épül. A tanítás parancsa:
 
 ```bash
 make train-ae CONFIG=experiments/final/ae_minimal.yaml
@@ -110,7 +110,7 @@ Megjegyzés: a prototípus jelen változatában a `train_ae.py` minden futtatás
 
 ## 4. AE-Context tanítási parancs
 
-Az AE-Context mérési ág a minimális CIC-IDS2017 flow feature-ök mellett egyszerű, timestamp nélküli context feature-öket is használ. Az `experiments/final/ae_context.yaml` konfigurációban a `features.context_enabled: true` kapcsoló aktiválja ezeket az előállított numerikus jellemzőket:
+Az AE-Context mérési ág a minimális CIC-IDS2017 flow jellemzők mellett egyszerű, timestamp nélküli kontextusjellemzőket is használ. Az `experiments/final/ae_context.yaml` konfigurációban a `features.context_enabled: true` kapcsoló aktiválja ezeket az előállított numerikus jellemzőket:
 
 - `destination_port_frequency`
 - `protocol_frequency`
@@ -118,7 +118,7 @@ Az AE-Context mérési ág a minimális CIC-IDS2017 flow feature-ök mellett egy
 - `packet_ratio`
 - `bytes_packets_ratio`
 
-A `destination_port_frequency`, `protocol_frequency` és `is_rare_destination_port` train splitből illesztett gyakorisági statisztikákon alapul. A validation, calibration és test splitben megjelenő, trainben nem látott célportok vagy protokollok `0.0` gyakoriságot kapnak. A `packet_ratio` és `bytes_packets_ratio` soronként számított arányok, ezért nem igényelnek globális statisztikát.
+A `destination_port_frequency`, `protocol_frequency` és `is_rare_destination_port` tanító adatrészből illesztett gyakorisági statisztikákon alapul. A validációs, kalibrációs és teszt adatrészben megjelenő, tanító adatrészben nem látott célportok vagy protokollok `0.0` gyakoriságot kapnak. A `packet_ratio` és `bytes_packets_ratio` soronként számított arányok, ezért nem igényelnek globális statisztikát.
 
 Futtatás:
 
@@ -142,7 +142,7 @@ artifacts/final/final-ae-context-v1/
 results/final/final-ae-context-v1/
 ```
 
-Fontos értelmezési szabály: az AE-Context nem használ timestamphez kötött időablakos aggregációkat. A prototípus jelen változatában a context feature engineering train-alapú gyakorisági és soronkénti arányalapú jellemzőket használ, ezért stabilan futtatható a meglévő CIC-IDS2017 flow adatokon.
+Fontos értelmezési szabály: az AE-Context nem használ timestamphez kötött időablakos aggregációkat. A prototípus jelen változatában a kontextusjellemzők képzése tanító adatrészből illesztett gyakorisági és soronkénti arányalapú jellemzőket használ, ezért stabilan futtatható a meglévő CIC-IDS2017 flow adatokon.
 
 ## 5. Statisztikai baseline kiértékelési parancs
 
@@ -187,7 +187,7 @@ wazuh_alerts.csv
 wazuh_alerts.jsonl
 ```
 
-A Wazuh baseline eredményeinek értelmezésekor jelezni kell, hogy ez riasztás- vagy logorientált baseline, míg az AE-Minimal CIC-IDS2017 flow feature-ökön tanul.
+A Wazuh baseline eredményeinek értelmezésekor jelezni kell, hogy ez riasztás- vagy logorientált baseline, míg az AE-Minimal CIC-IDS2017 flow jellemzőkön tanul.
 
 ## 7. Tervezett hibrid kiértékelési lépés
 
@@ -207,17 +207,17 @@ Az alábbi eredményfájlok szolgálnak a szakdolgozati mérés alapjául. Nem m
 
 | Fájl | Előállító lépés | Tartalom | Megjegyzés |
 |---|---|---|---|
-| `metrics_summary.csv` | AE tanítás és baseline eval | Fő mérőszámok: precision, recall, F1, ROC-AUC, mintaszámok, küszöbinformációk | Az összehasonlító táblázatok elsődleges forrása. |
-| `predictions.csv` | AE tanítás és baseline eval | Mintaszintű pontszámok, címkék és predikciók | Alert count és részletes hibaelemzés számítható belőle. |
-| `threshold_curve.csv` | AE tanítás és baseline eval | Küszöbértékekhez tartozó precision, recall és F1 | Küszöbérzékenységi elemzéshez. |
-| `top_feature_errors.csv` | AE tanítás | Feature-csoportonkénti rekonstrukciós hiba | Autoencoder magyarázhatósági kiegészítés; baseline eval nem állítja elő. |
-| `confusion_matrix.png` | Baseline eval és AE ábragenerálás | Confusion matrix ábra | Baseline futtatásokhoz az `eval.py`, AE futtatásokhoz a `plot_final_results.py` állítja elő. |
-| `score_distribution.png` | Baseline eval és AE ábragenerálás | Benign és támadó pontszámeloszlások | Baseline futtatásokhoz az `eval.py`, AE futtatásokhoz a `plot_final_results.py` állítja elő. |
-| `roc_curve.png` | Baseline eval és AE ábragenerálás | ROC-görbe | Csak akkor értelmezhető, ha mindkét osztály jelen van. |
-| `top_feature_frequency.png` | AE ábragenerálás | A leggyakoribb top feature értékek oszlopdiagramja | Autoencoder magyarázhatósági kiegészítés. |
-| `run_metadata.json` | AE tanítás és baseline eval | Futtatási metaadatok, input- és output-útvonalak | Reprodukálhatósági dokumentációhoz. |
+| `metrics_summary.csv` | AE tanítás és baseline kiértékelés | Fő mérőszámok: precision, recall, F1, ROC-AUC, mintaszámok, küszöbinformációk | Az összehasonlító táblázatok elsődleges forrása. |
+| `predictions.csv` | AE tanítás és baseline kiértékelés | Mintaszintű pontszámok, címkék és predikciók | Alert count és részletes hibaelemzés számítható belőle. |
+| `threshold_curve.csv` | AE tanítás és baseline kiértékelés | Küszöbértékekhez tartozó precision, recall és F1 | Küszöbérzékenységi elemzéshez. |
+| `top_feature_errors.csv` | AE tanítás | Jellemzőcsoportonkénti rekonstrukciós hiba | Autoencoder magyarázhatósági kiegészítés; baseline kiértékelés nem állítja elő. |
+| `confusion_matrix.png` | Baseline kiértékelés és AE ábragenerálás | Konfúziós mátrix ábra | Baseline futtatásokhoz az `eval.py`, AE futtatásokhoz a `plot_final_results.py` állítja elő. |
+| `score_distribution.png` | Baseline kiértékelés és AE ábragenerálás | Benign és támadó pontszámeloszlások | Baseline futtatásokhoz az `eval.py`, AE futtatásokhoz a `plot_final_results.py` állítja elő. |
+| `roc_curve.png` | Baseline kiértékelés és AE ábragenerálás | ROC-görbe | Csak akkor értelmezhető, ha mindkét osztály jelen van. |
+| `top_feature_frequency.png` | AE ábragenerálás | A leggyakoribb elsődleges jellemzők oszlopdiagramja | Autoencoder magyarázhatósági kiegészítés. |
+| `run_metadata.json` | AE tanítás és baseline kiértékelés | Futtatási metaadatok, input- és output-útvonalak | Reprodukálhatósági dokumentációhoz. |
 
-Az AE tanítás CSV-alapú eredményeket és modellfájlokat ment. A baseline eval ezen felül több PNG ábrát is előállít. Az AE eredményekhez a `plot_final_results.py` készíti el a `confusion_matrix.png`, `score_distribution.png`, `threshold_curve.png`, `roc_curve.png` és `top_feature_frequency.png` ábrákat a futtatási eredménykönyvtárban.
+Az AE tanítás CSV-alapú eredményeket és modellfájlokat ment. A baseline kiértékelés ezen felül több PNG ábrát is előállít. Az AE eredményekhez a `plot_final_results.py` készíti el a `confusion_matrix.png`, `score_distribution.png`, `threshold_curve.png`, `roc_curve.png` és `top_feature_frequency.png` ábrákat a futtatási eredménykönyvtárban.
 
 ## 9. Május 4-i értékelési és validációs lépések
 
@@ -279,7 +279,7 @@ Ez a `final-validate`, `final-plot-ae-minimal` és `final-compare` lépéseket f
 
 A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 
-| Thesis elem | Forrásfájl | Felhasználás |
+| Dolgozati elem | Forrásfájl | Felhasználás |
 |---|---|---|
 | Konfigurációk összehasonlító táblázata | `metrics_summary.csv` | Precision, recall, F1, ROC-AUC és mintaszámok konfigurációnkénti bemutatása. |
 | Confusion matrix ábra | `confusion_matrix.png` vagy `confusion_matrix.csv` | A true positive, false positive, true negative és false negative értékek szemléltetése. |
@@ -287,9 +287,9 @@ A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 | Pontszámeloszlás ábra | `score_distribution.png` vagy `predictions.csv` | Benign és támadó minták anomáliapontszám-eloszlásának összehasonlítása. |
 | ROC-görbe | `roc_curve.png` | Detektálási képesség vizuális értékelése különböző küszöbök mellett. |
 | Alert count táblázat | `predictions.csv` | A pozitív predikciók számának összesítése konfigurációnként. |
-| Autoencoder magyarázhatósági táblázat | `top_feature_errors.csv` | A legnagyobb rekonstrukciós hibát adó feature-csoportok bemutatása. |
+| Autoencoder magyarázhatósági táblázat | `top_feature_errors.csv` | A legnagyobb rekonstrukciós hibát adó jellemzőcsoportok bemutatása. |
 | Reprodukálhatósági melléklet | `run_metadata.json`, `train_config.json`, `thresholds.json` | Konfigurációk, futtatási útvonalak, küszöbök és metaadatok dokumentálása. |
 | Végleges összehasonlító táblázat | `results/final/comparison/metrics_comparison.md` | A fő konfigurációk egységes metrikáinak szakdolgozatba átemelhető táblázata. |
 | Végleges összehasonlító ábrák | `results/final/comparison/fig_comparison_*.png` | Precision/recall/F1, false positive rate és alert count összehasonlítása. |
 
-A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a Wazuh logalapú baseline és a tervezett hibrid fúzió eltérő adatmodellre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű production IDS teljesítménygarancia megfogalmazása.
+A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a Wazuh logalapú baseline és a tervezett hibrid fúzió eltérő adatmodellre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű éles üzemi IDS teljesítménygarancia megfogalmazása.

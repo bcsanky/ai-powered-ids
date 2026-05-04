@@ -23,7 +23,7 @@ A prototípus jelen változatában a `train_ae.py` minden autoencoder futtatásn
 results/final/final-ae-minimal-v1/ae_v1_YYYYMMDD_HHMMSS/
 ```
 
-A prototípus jelen változatában az `ml/src/eval.py` baseline futtatásoknál szintén időbélyeges alkönyvtárat hoz létre a megadott `--results-dir` alatt, például:
+A prototípus jelen változatában az `ml/src/eval.py` viszonyítási alap (baseline) futtatásoknál szintén időbélyeges alkönyvtárat hoz létre a megadott `--results-dir` alatt, például:
 
 ```text
 results/final/final-baseline-stat-v1/baseline_stat_YYYYMMDD_HHMMSS/
@@ -33,7 +33,7 @@ results/final/final-baseline-stat-v1/baseline_stat_YYYYMMDD_HHMMSS/
 
 ### `results/final/final-ae-minimal-v1/`
 
-Az autoencoder minimális feature-készlettel futtatott végleges konfigurációjának eredményei.
+Az autoencoder minimális jellemzőkészlettel futtatott végleges konfigurációjának eredményei.
 
 Elvárt fájlok:
 
@@ -51,7 +51,7 @@ Megjegyzés: az AE tanítási folyamat elsősorban CSV eredményeket és rekonst
 
 ### `results/final/final-ae-context-v1/`
 
-Az AE-Context mérési ág eredményei. Ez a konfiguráció a minimális CIC-IDS2017 flow feature-k mellett egyszerű, timestamp nélküli context feature-öket használ: train splitből illesztett célport- és protokollgyakoriságot, ritka célport jelzőt, valamint soronként számított csomag- és forgalmi arányokat. Ezek nem időablakos, hostalapú vagy CTI-alapú context feature-ök.
+Az AE-Context mérési ág eredményei. Ez a konfiguráció a minimális CIC-IDS2017 flow jellemzők mellett egyszerű, timestamp nélküli kontextusjellemzőket használ: tanító adatrészből illesztett célport- és protokollgyakoriságot, ritka célport jelzőt, valamint soronként számított csomag- és forgalmi arányokat. Ezek nem időablakos, hostalapú vagy CTI-alapú kontextusjellemzők.
 
 Elvárt fájlok:
 
@@ -81,7 +81,7 @@ Elvárt fájlok:
 
 Nem elvárt fájl:
 
-- `top_feature_errors.csv`, mivel a statisztikai baseline nem autoencoder rekonstrukciós feature-hibák alapján működik.
+- `top_feature_errors.csv`, mivel a statisztikai baseline nem autoencoder rekonstrukciós jellemzőhibák alapján működik.
 
 ### `results/final/final-baseline-wazuh-v1/`
 
@@ -99,7 +99,7 @@ Elvárt fájlok:
 
 Nem elvárt fájl:
 
-- `top_feature_errors.csv`, mivel ez a baseline nem autoencoder modellből származó feature-rekonstrukciós hibát mér.
+- `top_feature_errors.csv`, mivel ez a baseline nem autoencoder modellből származó jellemző-rekonstrukciós hibát mér.
 
 ### `results/final/final-hybrid-v1/`
 
@@ -130,7 +130,7 @@ A szakdolgozat táblázataihoz és ábráihoz elsősorban az alábbi fájlok has
 - `score_distribution.png`: anomáliapontszámok eloszlásának bemutatása.
 - `roc_curve.png`: ROC-görbe, ahol a pontszám és a bináris címke alapján értelmezhető.
 - `top_feature_errors.csv`: AE-alapú magyarázhatósági táblázatok forrása.
-- `top_feature_frequency.png`: AE-alapú magyarázhatósági ábra a leggyakoribb top feature értékekről.
+- `top_feature_frequency.png`: AE-alapú magyarázhatósági ábra a leggyakoribb elsődleges jellemzőkről.
 - `run_metadata.json`: reprodukálhatósági adatok, például bemeneti könyvtárak, futtatási azonosítók és konfigurációs hivatkozások.
 
 ## Automatikusan előállított eredményfájlok kezelése
@@ -205,4 +205,4 @@ Minden végleges eredményhez meg kell őrizni a kapcsolódó konfigurációt, a
 - a kapcsolódó `predictions.csv`,
 - szükség esetén a modellfájl és a küszöbértékeket tartalmazó fájl.
 
-Az eredmények összehasonlításakor azonos adathalmazverziót, azonos train/validation/calibration/test felosztást és dokumentált random seedet kell használni. A végleges konfigurációkban a random seed értéke `42`.
+Az eredmények összehasonlításakor azonos adathalmazverziót, azonos tanító, validációs, kalibrációs és teszt adatrészekre bontást, valamint dokumentált random seedet kell használni. A végleges konfigurációkban a random seed értéke `42`.

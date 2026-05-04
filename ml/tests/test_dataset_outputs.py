@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -9,39 +8,47 @@ from pathlib import Path
 import joblib
 import pandas as pd
 import pytest
+import yaml
 
-PROCESSED_DIR = Path("data/processed")
 TEST_CONFIG = Path("experiments/experiment_test.yaml")
 
 
-@pytest.fixture(scope="session", autouse=True)
-def build_test_dataset():
-    if PROCESSED_DIR.exists():
-        shutil.rmtree(PROCESSED_DIR)
-    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+@pytest.fixture(scope="session")
+def processed_dir(tmp_path_factory):
+    work_dir = tmp_path_factory.mktemp("dataset_outputs")
+    output_dir = work_dir / "processed"
+    config_path = work_dir / "experiment_test_tmp.yaml"
+
+    with open(TEST_CONFIG, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+
+    config["dataset"]["output_dir"] = str(output_dir)
+
+    with open(config_path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(config, f, sort_keys=False, allow_unicode=True)
 
     subprocess.run(
-        [sys.executable, "ml/src/build_dataset.py", "--config", str(TEST_CONFIG)],
+        [sys.executable, "ml/src/build_dataset.py", "--config", str(config_path)],
         check=True,
     )
 
-    yield
+    return output_dir
 
 
-def test_processed_files_exist():
-    assert (PROCESSED_DIR / "train.parquet").exists()
-    assert (PROCESSED_DIR / "val.parquet").exists()
-    assert (PROCESSED_DIR / "calib.parquet").exists()
-    assert (PROCESSED_DIR / "test.parquet").exists()
-    assert (PROCESSED_DIR / "preprocess.pkl").exists()
-    assert (PROCESSED_DIR / "dataset_metadata.json").exists()
+def test_processed_files_exist(processed_dir):
+    assert (processed_dir / "train.parquet").exists()
+    assert (processed_dir / "val.parquet").exists()
+    assert (processed_dir / "calib.parquet").exists()
+    assert (processed_dir / "test.parquet").exists()
+    assert (processed_dir / "preprocess.pkl").exists()
+    assert (processed_dir / "dataset_metadata.json").exists()
 
 
-def test_train_val_calib_test_can_be_loaded():
-    train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
-    val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
-    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
-    test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
+def test_train_val_calib_test_can_be_loaded(processed_dir):
+    train = pd.read_parquet(processed_dir / "train.parquet")
+    val = pd.read_parquet(processed_dir / "val.parquet")
+    calib = pd.read_parquet(processed_dir / "calib.parquet")
+    test = pd.read_parquet(processed_dir / "test.parquet")
 
     assert len(train) > 0
     assert len(val) > 0
@@ -49,38 +56,38 @@ def test_train_val_calib_test_can_be_loaded():
     assert len(test) > 0
 
 
-def test_train_and_val_are_benign_only():
-    train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
-    val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
+def test_train_and_val_are_benign_only(processed_dir):
+    train = pd.read_parquet(processed_dir / "train.parquet")
+    val = pd.read_parquet(processed_dir / "val.parquet")
 
     assert set(train["is_benign"].unique()) == {1}
     assert set(val["is_benign"].unique()) == {1}
 
 
-def test_calib_contains_both_classes():
-    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
+def test_calib_contains_both_classes(processed_dir):
+    calib = pd.read_parquet(processed_dir / "calib.parquet")
 
     classes = set(calib["is_benign"].unique())
     assert 0 in classes
     assert 1 in classes
 
 
-def test_test_contains_both_classes():
-    test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
+def test_test_contains_both_classes(processed_dir):
+    test = pd.read_parquet(processed_dir / "test.parquet")
 
     classes = set(test["is_benign"].unique())
     assert 0 in classes
     assert 1 in classes
 
 
-def test_preprocessor_can_be_loaded():
-    pp = joblib.load(PROCESSED_DIR / "preprocess.pkl")
+def test_preprocessor_can_be_loaded(processed_dir):
+    pp = joblib.load(processed_dir / "preprocess.pkl")
     assert pp is not None
     assert type(pp).__name__ == "ColumnTransformer"
 
 
-def test_versioned_preprocess_file_exists():
-    metadata_path = PROCESSED_DIR / "dataset_metadata.json"
+def test_versioned_preprocess_file_exists(processed_dir):
+    metadata_path = processed_dir / "dataset_metadata.json"
     with open(metadata_path, "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
@@ -88,14 +95,14 @@ def test_versioned_preprocess_file_exists():
     assert versioned_file.exists()
 
 
-def test_metadata_matches_real_row_counts():
-    with open(PROCESSED_DIR / "dataset_metadata.json", "r", encoding="utf-8") as f:
+def test_metadata_matches_real_row_counts(processed_dir):
+    with open(processed_dir / "dataset_metadata.json", "r", encoding="utf-8") as f:
         metadata = json.load(f)
 
-    train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
-    val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
-    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
-    test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
+    train = pd.read_parquet(processed_dir / "train.parquet")
+    val = pd.read_parquet(processed_dir / "val.parquet")
+    calib = pd.read_parquet(processed_dir / "calib.parquet")
+    test = pd.read_parquet(processed_dir / "test.parquet")
 
     assert metadata["rows_train"] == len(train)
     assert metadata["rows_val"] == len(val)
@@ -117,10 +124,10 @@ def test_metadata_matches_real_row_counts():
     assert metadata["dev_sample"]["rows_before"] == metadata["dev_sample"]["rows_after"]
 
 
-def test_train_val_calib_test_have_same_feature_columns():
-    train = pd.read_parquet(PROCESSED_DIR / "train.parquet")
-    val = pd.read_parquet(PROCESSED_DIR / "val.parquet")
-    calib = pd.read_parquet(PROCESSED_DIR / "calib.parquet")
-    test = pd.read_parquet(PROCESSED_DIR / "test.parquet")
+def test_train_val_calib_test_have_same_feature_columns(processed_dir):
+    train = pd.read_parquet(processed_dir / "train.parquet")
+    val = pd.read_parquet(processed_dir / "val.parquet")
+    calib = pd.read_parquet(processed_dir / "calib.parquet")
+    test = pd.read_parquet(processed_dir / "test.parquet")
 
     assert list(train.columns) == list(val.columns) == list(calib.columns) == list(test.columns)

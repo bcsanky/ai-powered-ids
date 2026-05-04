@@ -163,7 +163,7 @@ Az összehasonlító táblázat a hiányzó konfigurációkat nem hagyja figyelm
 Az alábbi kimenetek csak a megfelelő futtatások elkészülte után tekinthetők véglegesnek:
 
 - AE-Context tanítási eredmények és AE-Context ábrák,
-- Wazuh baseline eredmények megfelelő címkézett Wazuh vagy Wazuh-szerű export alapján,
+- Wazuh viszonyítási alap (baseline) eredmények megfelelő címkézett Wazuh vagy Wazuh-szerű export alapján,
 - hibrid kiértékelési eredmények a hibrid fúziós lépés implementálása és validálása után.
 
 ## Hiányzó elemek

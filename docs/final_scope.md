@@ -18,7 +18,7 @@ A végleges laboratóriumi prototípus egy reprodukálható kísérleti rendszer
 - Autoencoder alapú anomáliadetektáló modell sklearn `MLPRegressor` implementációval.
 - Rekonstrukciós hiba alapú anomáliapontszám.
 - Három küszöbölési stratégia: fix küszöb, validációs percentilis alapú küszöb és kalibrációs halmazon optimalizált F1-küszöb.
-- Statisztikai baseline, amely a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot.
+- Statisztikai viszonyítási alap (baseline), amely a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot.
 - Wazuh-stílusú baseline, amely exportált Wazuh riasztásokat vagy Wazuh-szerű predikciós mezőket hasonlít össze a címkézett adatokkal.
 - Eredményfájlok, mérőszámok, AE ábrák és összehasonlító ábrák előállítása a szakdolgozati értékeléshez.
 
@@ -31,12 +31,12 @@ A szakdolgozati prototípus lezárásáig az alábbi elemek tartoznak a megvaló
 - A végleges kísérleti konfigurációk rögzítése az `experiments/final/` könyvtárban.
 - A CIC-IDS2017 adathalmazból előállított feldolgozott adatszeletek létrehozása.
 - Az `ae_minimal` konfiguráció teljes futtatása, beleértve az adatépítést, a modell tanítását, a küszöbök számítását és a tesztkiértékelést.
-- Az `ae_context` konfiguráció futtatása egyszerű, timestamp nélküli context feature-ökkel.
+- Az `ae_context` konfiguráció futtatása egyszerű, timestamp nélküli kontextusjellemzőkkel.
 - A `baseline_stat` konfiguráció futtatása és eredményeinek összehasonlítása az autoencoder eredményeivel.
 - A `baseline_wazuh` konfiguráció előkészítése Wazuh vagy Wazuh-szerű exportált predikciók kiértékelésére.
 - A `hybrid` konfiguráció tervezési szintű rögzítése, amely az AE és Wazuh predikciók kombinálásának módját írja le.
 - A fő mérőszámok táblázatos exportja: precision, recall, F1, false positive rate, confusion matrix és alert count.
-- A szakdolgozathoz felhasználható ábrák és táblázatok előállítása: küszöbgörbe, ROC-görbe, score eloszlás, confusion matrix, top feature gyakoriság és összehasonlító metrikaábrák, ahol értelmezhető.
+- A szakdolgozathoz felhasználható ábrák és táblázatok előállítása: küszöbgörbe, ROC-görbe, pontszámeloszlás, konfúziós mátrix, legfontosabb jellemzők gyakorisága és összehasonlító metrikaábrák, ahol értelmezhető.
 - A kísérleti lépések rövid futtatási dokumentációja és az eredmények értelmezése.
 
 ## 4. Mit nem valósítunk meg, és miért nem
@@ -47,17 +47,17 @@ Nem valósítunk meg teljes körű online tanulást vagy automatikus modellfriss
 
 Nem valósítunk meg teljes körű CTI integrációt, például STIX/TAXII feedek automatikus feldolgozását, indikátorok életciklus-kezelését vagy több forrásból származó threat intelligence korrelációját. A CTI kezelés a prototípusban egyszerűsített, koncepcionális elemként jelenik meg.
 
-Nem cél mély Wazuh szabálykészlet-fejlesztés vagy egyedi Wazuh rule engineering kampány végrehajtása. A Wazuh komponens elsősorban IDS/SIEM architekturális baseline és integrációs környezet.
+Nem cél mély Wazuh szabálykészlet-fejlesztés vagy egyedi Wazuh szabályfejlesztési kampány végrehajtása. A Wazuh komponens elsősorban IDS/SIEM architekturális baseline és integrációs környezet.
 
-Nem cél a CIC-IDS2017 flow feature-jeinek teljes megfeleltetése valós Wazuh logmezőknek. A két reprezentáció eltérő adatmodellt használ: a CIC-IDS2017 hálózati flow-jellemzőket tartalmaz, míg a Wazuh esemény- és logorientált adatokat kezel.
+Nem cél a CIC-IDS2017 flow jellemzőinek teljes megfeleltetése valós Wazuh logmezőknek. A két reprezentáció eltérő adatmodellt használ: a CIC-IDS2017 hálózati flow-jellemzőket tartalmaz, míg a Wazuh esemény- és logorientált adatokat kezel.
 
-Nem valósítunk meg nagy skálájú teljesítménytesztet, magas rendelkezésre állású üzemeltetést, jogosultságkezelési auditot vagy production hardeninget. Ezek fontos mérnöki feladatok, de túlmutatnak a szakdolgozat kísérleti fókuszán.
+Nem valósítunk meg nagy skálájú teljesítménytesztet, magas rendelkezésre állású üzemeltetést, jogosultságkezelési auditot vagy éles üzemi megerősítést. Ezek fontos mérnöki feladatok, de túlmutatnak a szakdolgozat kísérleti fókuszán.
 
 ## 5. A végleges összehasonlított konfigurációk
 
 ### baseline_stat
 
-A `baseline_stat` egy egyszerű statisztikai anomáliadetektáló baseline. A feldolgozott feature-térben kiszámítja a tanítóhalmaz középpontját, majd a tesztminták ehhez viszonyított távolságából képez anomáliapontszámot. A küszöböt a validációs pontszámok percentilise alapján állítja be.
+A `baseline_stat` egy egyszerű statisztikai anomáliadetektáló baseline. A feldolgozott jellemzőtérben kiszámítja a tanítóhalmaz középpontját, majd a tesztminták ehhez viszonyított távolságából képez anomáliapontszámot. A küszöböt a validációs pontszámok percentilise alapján állítja be.
 
 Ez a konfiguráció nem tekinthető fejlett IDS-nek, de hasznos referenciaérték: megmutatja, hogy egy egyszerű, nem neurális módszer milyen teljesítményt ér el ugyanazon adatelőkészítési folyamat mellett.
 
@@ -65,11 +65,11 @@ Ez a konfiguráció nem tekinthető fejlett IDS-nek, de hasznos referenciaérté
 
 A `baseline_wazuh` a Wazuh vagy Wazuh-szerű riasztási eredmények kiértékelésére szolgál. A bemenet egy exportált fájl, amely tartalmazza a valós címkét, valamint a Wazuh riasztási vagy predikciós mezőit.
 
-A cél nem annak állítása, hogy a Wazuh natívan ugyanazokat a CIC-IDS2017 flow feature-öket használja, mint az autoencoder, hanem egy szabályalapú vagy riasztásalapú baseline beemelése az összehasonlításba. Az eredmények értelmezésénél figyelembe kell venni a logalapú és flow-alapú adatmodell közötti eltérést.
+A cél nem annak állítása, hogy a Wazuh natívan ugyanazokat a CIC-IDS2017 flow jellemzőket használja, mint az autoencoder, hanem egy szabályalapú vagy riasztásalapú baseline beemelése az összehasonlításba. Az eredmények értelmezésénél figyelembe kell venni a logalapú és flow-alapú adatmodell közötti eltérést.
 
 ### ae_minimal
 
-Az `ae_minimal` a fő autoencoder konfiguráció. A bemeneti feature-készlet az implementált minimális jellemzőkből áll:
+Az `ae_minimal` a fő autoencoder konfiguráció. A bemeneti jellemzőkészlet az implementált minimális jellemzőkből áll:
 
 - `destination_port`
 - `flow_duration`
@@ -83,7 +83,7 @@ A numerikus jellemzőket standard skálázás, a kategorikus protokollmezőt one
 
 ### ae_context
 
-Az `ae_context` a minimális flow feature-készletet egyszerű, timestamp nélküli context feature-ökkel egészíti ki. Az implementált context jellemzők train splitből illesztett port- és protokollgyakoriságon, ritka célport jelzőn, valamint soronként számított forgalmi arányokon alapulnak:
+Az `ae_context` a minimális flow jellemzőkészletet egyszerű, timestamp nélküli kontextusjellemzőkkel egészíti ki. Az implementált kontextusjellemzők tanító adatrészből illesztett port- és protokollgyakoriságon, ritka célport jelzőn, valamint soronként számított forgalmi arányokon alapulnak:
 
 - `destination_port_frequency`
 - `protocol_frequency`
@@ -91,7 +91,7 @@ Az `ae_context` a minimális flow feature-készletet egyszerű, timestamp nélk�
 - `packet_ratio`
 - `bytes_packets_ratio`
 
-Ez a megközelítés lehetőséget ad annak bemutatására, hogyan bővíthető a rendszer egyszerű kontextussal úgy, hogy a feature engineering stabilan működjön a CIC-IDS2017 flow adatokon. A gyakorisági térképek nem használják a validation, calibration vagy test split eloszlását. Fontos korlát, hogy ezek nem időablakos, hostalapú vagy CTI-alapú context feature-ök.
+Ez a megközelítés lehetőséget ad annak bemutatására, hogyan bővíthető a rendszer egyszerű kontextussal úgy, hogy a jellemzőképzés stabilan működjön a CIC-IDS2017 flow adatokon. A gyakorisági térképek nem használják a validációs, kalibrációs vagy teszt adatrész eloszlását. Fontos korlát, hogy ezek nem időablakos, hostalapú vagy CTI-alapú kontextusjellemzők.
 
 ### hybrid
 
@@ -110,9 +110,9 @@ Az összehasonlítás fő mérőszámai:
 - **Confusion matrix**: a true negative, false positive, false negative és true positive értékek táblázatos összefoglalása.
 - **Alert count**: az előállított riasztások száma, amely az üzemeltetési terhelés becsléséhez fontos.
 
-A mérőszámokat minden konfigurációnál azonos címkézési logika és azonos tesztelési elvek mellett kell értelmezni. A különböző adatmodellekből fakadó eltéréseket, különösen a Wazuh és CIC flow feature-k esetében, az eredmények elemzésében külön jelezni kell.
+A mérőszámokat minden konfigurációnál azonos címkézési logika és azonos tesztelési elvek mellett kell értelmezni. A különböző adatmodellekből fakadó eltéréseket, különösen a Wazuh és CIC flow jellemzők esetében, az eredmények elemzésében külön jelezni kell.
 
-## 7. A thesishez készülő fájlok és ábrák
+## 7. A diplomamunkához készülő fájlok és ábrák
 
 A szakdolgozat eredményfejezeteihez az alábbi fájlok és ábrák használhatók fel:
 
@@ -125,7 +125,7 @@ A szakdolgozat eredményfejezeteihez az alábbi fájlok és ábrák használhat�
 - `roc_curve.png`: ROC-görbe, ahol a címkék és pontszámok alapján értelmezhető.
 - `score_distribution.png`: benign és támadó minták anomáliapontszám-eloszlása.
 - `loss_curve.png`: tanítási veszteséggörbe, ahol a modell története rendelkezésre áll.
-- `top_feature_errors.csv`: autoencoder esetén a legnagyobb rekonstrukciós hibát adó feature-csoportok.
+- `top_feature_errors.csv`: autoencoder esetén a legnagyobb rekonstrukciós hibát adó jellemzőcsoportok.
 - `run_metadata.json`: futtatási metaadatok, például konfiguráció, adathalmaz, sorszámok és kimeneti könyvtárak.
 - `train_config.json`: a modell tanításához használt konfiguráció mentett példánya.
 - `thresholds.json`: az autoencoder küszöbértékei és a kapcsolódó kalibrációs eredmények.
@@ -138,13 +138,13 @@ A szakdolgozatban ezekből elsősorban összehasonlító táblázatok, konfigur�
 
 A CIC-IDS2017 széles körben használt kutatási adathalmaz, de nem reprezentál minden modern vállalati, felhős vagy ipari környezetet. Az eredmények ezért kontrollált laboratóriumi következtetéseknek tekinthetők, nem pedig általános érvényű éles üzemi teljesítménygaranciának.
 
-### Wazuh log és CIC flow feature mismatch
+### Wazuh log és CIC flow jellemzők eltérése
 
 A CIC-IDS2017 elsősorban hálózati flow-jellemzőket tartalmaz. A Wazuh ezzel szemben log- és eseményorientált IDS/SIEM platform. A két adatmodell közötti különbség miatt a Wazuh baseline és az AE eredményei csak óvatosan, a bemeneti reprezentáció eltérésének figyelembevételével hasonlíthatók össze.
 
 ### Lab-scale validation
 
-A validáció laboratóriumi környezetben történik, nem hosszú ideig futó production rendszerben. Emiatt az üzemeltetési megbízhatóság, skálázhatóság, válaszidő, jogosultságkezelés és incidenskezelési workflow csak korlátozottan értékelhető.
+A validáció laboratóriumi környezetben történik, nem hosszú ideig futó éles üzemi rendszerben. Emiatt az üzemeltetési megbízhatóság, skálázhatóság, válaszidő, jogosultságkezelés és incidenskezelési munkafolyamat csak korlátozottan értékelhető.
 
 ### Concept drift
 
