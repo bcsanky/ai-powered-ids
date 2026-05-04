@@ -224,6 +224,19 @@ Ez a blokk a tényleges mérés előtti release-candidate ellenőrzéseket sorol
 | Release-candidate readiness | `reports/final_acceptance/release_candidate_readiness.md` | READY_FOR_REAL_LAB_RUN / READY_WITH_WARNINGS / NOT_READY státusz | mérés előtti döntéstámogatás |
 | Real-lab execution brief | `reports/final_acceptance/real_lab_execution_brief.md` | Operátori mérési sorrend a tényleges lab futtatáshoz | mérésnapi segédlet |
 
+## Final submission check kimenetek
+
+Ez a blokk beadás előtti QA segédleteket sorol fel. Ezek nem mérési eredmények, hanem a feladatlap, a dolgozati szerkezet, a túlzó állítások és a beadási melléklet tervének ellenőrzését támogatják. A `reports/final_submission_check/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Követelmény-lefedettség | `reports/final_submission_check/requirement_coverage.md` | Feladatlap-pontok és bizonyítékok ellenőrzése | beadás előtti QA |
+| Fejezetszerkezet ellenőrzés | `reports/final_submission_check/thesis_structure_check.md` | Dolgozati témák lefedésének ellenőrzése | beadás előtti QA |
+| No-overclaiming ellenőrzés | `reports/final_submission_check/no_overclaiming_check.md` | Túlzó vagy nem igazolt állítások kiszűrése | beadás előtti QA |
+| Beadási melléklet terv | `reports/final_submission_check/submission_artifact_plan.md` | Mellékletek és érzékeny fájlok kezelésének ellenőrzése | beadás előtti QA |
+| Final submission readiness | `reports/final_submission_check/final_submission_readiness.md` | READY_FOR_REAL_MEASUREMENT / READY_FOR_THESIS_INTEGRATION / READY_FOR_SUBMISSION_REVIEW / NOT_READY státusz | beadás előtti döntéstámogatás |
+| Bírálói kockázati kérdések | `reports/final_submission_check/biraloi_risk_questions.md` | Védési és bírálói felkészülési kérdéslista | felkészülési segédlet |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

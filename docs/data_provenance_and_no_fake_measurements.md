@@ -167,3 +167,11 @@ A final acceptance check célja annak ellenőrzése, hogy a rendszer a ténylege
 A failure mode ellenőrzések azt bizonyítják, hogy a rendszer hiányzó Wazuh export, hiányzó lab feature, demo input vagy provenance hiány esetén nem ad végleges READY státuszt. Ez azért fontos, mert a helyes hibázás ugyanúgy része a mérnöki megbízhatóságnak, mint a sikeres futás.
 
 A real-lab pipeline-nak input nélkül hibáznia kell, mert ellenkező esetben fennállna a veszélye, hogy üres vagy demonstrációs fájlokból látszólagos eredmény születik. Ugyanebből az okból a demo inputot real-lab inputként minden guard rétegnek el kell utasítania.
+
+## Final submission check szerepe
+
+A final submission check nem mérés, hanem beadás előtti követelmény-megfelelőségi QA. A feladatlap teljesítésének ellenőrzése nem helyettesíti a valós lab mérést, és nem ad új metrikát.
+
+A no-overclaiming check célja, hogy a dokumentációban ne maradjon túlzó vagy nem igazolt állítás. Ez különösen fontos akkor, ha még nincs verified real-lab provenance: ilyenkor nem szabad végleges real-lab eredményként hivatkozni runtime kimenetekre.
+
+A bírálói kockázati kérdések a provenance és a mérési hatókör védhető magyarázatát támogatják. A válaszokat a végleges metrikák ismeretében kézzel kell ellenőrizni.

@@ -53,6 +53,7 @@ reports/live_integration/
 reports/lab_session/
 reports/thesis_integration/
 reports/final_acceptance/
+reports/final_submission_check/
 reports/scored_events.jsonl
 
 # Generated result outputs

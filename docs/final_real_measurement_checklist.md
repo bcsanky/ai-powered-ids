@@ -129,3 +129,12 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] A tracked futási output guard sikeres.
 - [ ] A final acceptance után továbbra is lefutott a `make repo-hygiene-check`.
 - [ ] A final acceptance után továbbra is lefutott a `make final-validate`.
+
+## Final submission check
+
+- [ ] Lefutott a `make final-submission-check`.
+- [ ] A requirement coverage PASS vagy csak runtime outputokra vonatkozó WARN státuszú.
+- [ ] A no-overclaiming check PASS.
+- [ ] Elkészült a `reports/final_submission_check/submission_artifact_plan.md`.
+- [ ] Elkészült a `reports/final_submission_check/biraloi_risk_questions.md`.
+- [ ] A `reports/final_submission_check/final_submission_readiness.md` státusza a mérési állapotnak megfelelő.

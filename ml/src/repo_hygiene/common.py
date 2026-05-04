@@ -19,6 +19,7 @@ TRACKED_GENERATED_OUTPUT_PREFIXES = (
     "reports/lab_session/",
     "reports/thesis_integration/",
     "reports/final_acceptance/",
+    "reports/final_submission_check/",
     "results/performance/",
     "figures/final/",
 )

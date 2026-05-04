@@ -1,0 +1,61 @@
+requirements:
+  - id: intro_problem_goal_motivation
+    title: Bevezetés, problémafelvetés, célkitűzés és motiváció
+    expected_chapters: ["1"]
+    evidence:
+      - uploaded thesis document
+      - docs/thesis_chapter_5_implementation_final.md
+  - id: architecture
+    title: Rendszerarchitektúra részletes bemutatása
+    expected_chapters: ["3", "5"]
+    evidence:
+      - docs/final_scope.md
+      - docs/thesis_chapter_5_implementation_final.md
+      - infra/docker-compose.yml
+  - id: technologies_methods
+    title: Alkalmazott technológiák és módszerek ismertetése
+    expected_chapters: ["3", "5"]
+    evidence:
+      - experiments/final/*.yaml
+      - ml/src/*
+  - id: datasets_features_preprocessing
+    title: Adathalmazok, feature-kiválasztás és előfeldolgozás
+    expected_chapters: ["4", "5", "6"]
+    evidence:
+      - ml/src/build_dataset.py
+      - docs/feature_catalog.md
+      - experiments/final/ae_minimal.yaml
+      - experiments/final/ae_context.yaml
+  - id: realtime_alerting_visualization
+    title: Valós idejű riasztási és vizualizációs komponensek
+    expected_chapters: ["5"]
+    evidence:
+      - infra/mlservice/app/main.py
+      - ml/src/live_integration/*
+      - docs/live_integration_runbook.md
+  - id: security_ethics_privacy
+    title: Biztonsági, etikai és adatvédelmi megfontolások
+    expected_chapters: ["6", "7"]
+    evidence:
+      - docs/data_provenance_and_no_fake_measurements.md
+      - docs/thesis_limitations_and_error_analysis.md
+  - id: technical_challenges_future_work
+    title: Technikai kihívások és jövőbeli fejlesztési irányok
+    expected_chapters: ["6", "7"]
+    evidence:
+      - docs/thesis_limitations_and_error_analysis.md
+      - docs/final_scope.md
+  - id: summary_and_applicability
+    title: Összegzés és további alkalmazási lehetőségek
+    expected_chapters: ["7", "8"]
+    evidence:
+      - reports/thesis_integration/chapter7_osszegzes_generated.md
+      - reports/thesis_integration/chapter8_summary_generated.md
+  - id: bibliography_figures_tables
+    title: Irodalomjegyzék, ábrajegyzék, táblázatjegyzék
+    expected_chapters: ["9", "10", "11"]
+    evidence:
+      - docs/thesis_result_artifacts.md
+      - reports/thesis_integration/figures_plan.md
+      - reports/thesis_integration/tables_plan.md
+
