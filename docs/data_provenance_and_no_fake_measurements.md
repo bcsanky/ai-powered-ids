@@ -133,3 +133,17 @@ OpenSearch/dashboard demóhoz:
 ```bash
 make final-live-integration-opensearch OPENSEARCH_PASSWORD=<jelszo>
 ```
+
+## Verziózott demo fájlok és generált outputok kezelése
+
+Az `examples/lab` és `examples/scoring` könyvtár verziózott demo inputokat tartalmazhat, mert ezek a fejlesztési és demonstrációs használatot segítik. Ezeket azonban minden dokumentációban demo bemenetként kell megjelölni, és nem használhatók real-lab mérési eredmény forrásaként.
+
+A `reports/*`, `results/*` és `figures/final/*` alatti mérési outputok nem kerülhetnek Gitbe. Ezek futási kimenetek, amelyeket tényleges mérés után provenance és manifest alapján kell kezelni. A real-lab eredményeket nem a Git repository bizonyítja, hanem a mérési csomag:
+
+- inputfájlok SHA256 azonosítói;
+- `measurement_provenance.json`;
+- `measurement_manifest.*`;
+- post-run QA státusz;
+- szükség esetén anonimizált beadási melléklet.
+
+Gitben lévő demo input nem bizonyít kutatási eredményt. Kutatási eredményként csak verified real_lab provenance-hez kötött, tényleges lab futásból számolt metrika, ábra vagy riport használható.

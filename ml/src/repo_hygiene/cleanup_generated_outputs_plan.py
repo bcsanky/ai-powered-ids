@@ -12,7 +12,7 @@ ACTION_BY_POLICY = {
     "keep_tracked": "keep",
     "should_ignore": "ignore_future",
     "should_remove_from_git": "remove_from_git",
-    "real_lab_only": "keep",
+    "real_lab_only": "remove_from_git",
 }
 
 
@@ -31,7 +31,7 @@ def suggested_action(row: pd.Series) -> str:
     if path.startswith("templates/lab/"):
         return "keep"
     if path.startswith("reports/lab/"):
-        return "keep_but_mark_demo"
+        return "remove_from_git"
     if category in {"generated_offline_result", "unknown_generated"}:
         return "remove_from_git"
     return ACTION_BY_POLICY.get(str(row["tracked_policy"]), "keep")

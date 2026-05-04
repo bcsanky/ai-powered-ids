@@ -1,6 +1,8 @@
 # Eredménykönyvtárak felépítése
 
-A `results/` könyvtár a szakdolgozat végleges mérési eredményeinek egységes tárolására szolgál. Az itt megjelenő mérési állományok a mérési lánc által előállított kimenetek; ezeket alapértelmezetten nem szabad kézzel módosítani.
+A `results/` könyvtár a mérési lánc által előállított kimenetek egységes helye. Az itt megjelenő mérési állományokat alapértelmezetten nem szabad kézzel módosítani, és nem kell Git verziókezelésbe commitolni.
+
+Real-lab eredmény csak verified real_lab provenance és manifest mellett használható dolgozati bizonyítékként. Demo, replay vagy offline output nem real-lab bizonyíték, és a beadási mellékletben is egyértelmű eredetmegjelöléssel kezelendő.
 
 ## Végleges struktúra
 

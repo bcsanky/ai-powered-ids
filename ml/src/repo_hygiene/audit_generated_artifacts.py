@@ -7,7 +7,11 @@ from typing import Any
 
 import pandas as pd
 
-from ml.src.repo_hygiene.common import load_provenance, validate_provenance_payload
+from ml.src.repo_hygiene.common import (
+    TRACKED_GENERATED_OUTPUT_PREFIXES,
+    load_provenance,
+    validate_provenance_payload,
+)
 
 
 SCAN_PATTERNS = [
@@ -16,6 +20,7 @@ SCAN_PATTERNS = [
     "reports/performance/**/*",
     "reports/scored_events.jsonl",
     "reports/real_measurement_qa/preflight_*",
+    "reports/live_integration/**/*",
     "results/performance/**/*",
     "figures/final/**/*",
     "examples/lab/**/*",
@@ -40,6 +45,18 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def generated_output_classification(rel_path: Path, category: str, reason: str) -> dict[str, str]:
+    text = rel_path.as_posix()
+    risk_level = "high" if text.startswith(("reports/final/", "figures/final/")) else "medium"
+    return {
+        "category": category,
+        "risk_level": risk_level,
+        "tracked_policy": "should_remove_from_git",
+        "reason": reason,
+        "recommendation": "Távolítsd el a Gitből, és futási kimenetként vagy beadási mellékletben kezeld.",
+    }
+
+
 def classify_path(rel_path: Path, has_valid_provenance: bool) -> dict[str, str]:
     text = rel_path.as_posix()
     name = rel_path.name
@@ -54,11 +71,17 @@ def classify_path(rel_path: Path, has_valid_provenance: bool) -> dict[str, str]:
     if text.startswith("templates/"):
         return {"category": "template", "risk_level": "low", "tracked_policy": "keep_tracked", "reason": "Kitölthető sablon.", "recommendation": "Verziókezelésben tartható."}
     if text.startswith("reports/lab/"):
-        return {"category": "demo_output", "risk_level": "medium", "tracked_policy": "should_remove_from_git", "reason": "Replay/demo kimenet.", "recommendation": "Beadási mellékletben vagy külön demo jelöléssel kezeld."}
-    if text.startswith("reports/final/") or text.startswith("reports/performance/") or text.startswith("results/performance/") or text.startswith("figures/final/"):
-        return {"category": "generated_offline_result", "risk_level": "medium", "tracked_policy": "should_remove_from_git", "reason": "Automatikusan előállított offline eredmény.", "recommendation": "Ne keverd real-lab eredményekkel."}
+        return generated_output_classification(rel_path, "demo_output", "Replay/demo kimenet.")
+    if any(text.startswith(prefix) for prefix in TRACKED_GENERATED_OUTPUT_PREFIXES) or text.startswith(
+        "reports/performance/"
+    ):
+        return generated_output_classification(
+            rel_path,
+            "generated_offline_result",
+            "Automatikusan előállított offline vagy futási eredmény.",
+        )
     if text == "reports/scored_events.jsonl":
-        return {"category": "demo_output", "risk_level": "medium", "tracked_policy": "should_remove_from_git", "reason": "Demonstrációs batch scoring kimenet.", "recommendation": "Ne használd mérési eredményként."}
+        return generated_output_classification(rel_path, "demo_output", "Demonstrációs batch scoring kimenet.")
     if text.startswith("data/wazuh/alerts") and rel_path.suffix.lower() in {".json", ".jsonl"}:
         return {"category": "sensitive_input", "risk_level": "high", "tracked_policy": "should_ignore", "reason": "Wazuh alert export érzékeny adatot tartalmazhat.", "recommendation": "Ne commitold; szükség esetén anonimizált mellékletbe kerüljön."}
     if text in {"data/lab/lab_ground_truth.csv", "data/lab/lab_features.csv"}:
@@ -69,6 +92,22 @@ def classify_path(rel_path: Path, has_valid_provenance: bool) -> dict[str, str]:
         if has_valid_provenance:
             return {"category": "generated_real_lab_result", "risk_level": "medium", "tracked_policy": "real_lab_only", "reason": "Provenance alapján real-lab méréshez köthető eredmény.", "recommendation": "Csak ellenőrzött mellékletként kezeld."}
         return {"category": "unknown_generated", "risk_level": "high", "tracked_policy": "should_remove_from_git", "reason": "Real-lab jellegű kimenet provenance nélkül.", "recommendation": "Készíts measurement_provenance.json fájlt tényleges mérés után."}
+    if text.startswith("reports/live_integration/"):
+        if has_valid_provenance:
+            return {
+                "category": "generated_real_lab_result",
+                "risk_level": "medium",
+                "tracked_policy": "real_lab_only",
+                "reason": "Live integration kimenet verified real-lab provenance mellett.",
+                "recommendation": "Ne commitold, hanem mérési csomagként kezeld.",
+            }
+        return {
+            "category": "unknown_generated",
+            "risk_level": "high",
+            "tracked_policy": "should_remove_from_git",
+            "reason": "Live integration kimenet provenance nélkül.",
+            "recommendation": "Ne commitold; csak verified real-lab provenance mellett használd dolgozati demonstrációként.",
+        }
     if text.startswith("reports/real_measurement_qa/"):
         return {"category": "unknown_generated", "risk_level": "medium", "tracked_policy": "should_remove_from_git", "reason": "Futtatási QA kimenet.", "recommendation": "Ne commitold; futtasd újra a mérés után."}
     if "fixture" in name:

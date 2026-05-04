@@ -27,25 +27,39 @@ volumes/
 data/
 
 # Raw lab measurement inputs
+data/lab/lab_ground_truth.csv
+data/lab/lab_features.csv
+data/lab/session_events.json
 data/lab/zeek/
 data/lab/*.pcap
 data/lab/*.pcapng
+data/lab/flows.csv
 data/wazuh/alerts*.json
 data/wazuh/alerts*.jsonl
 raw/wazuh_export*.json
 reports/real_measurement_redacted/redaction_mapping.json
-reports/real_measurement_qa/*.md
-reports/real_measurement_qa/*.csv
-reports/real_measurement_qa/*.json
+
+# Generated reports and runtime outputs
+reports/final/
+reports/lab/
+reports/performance/
+reports/real_measurement_qa/
 reports/repo_hygiene/
 reports/real_measurement/
+reports/real_measurement_redacted/
 reports/wazuh_export/
 reports/lab_input_validation/
 reports/live_integration/
+reports/scored_events.jsonl
+
+# Generated result outputs
+results/final/
+results/performance/
 results/real_comparison/
 results/wazuh_real/
 results/ae_lab/
 results/hybrid_real/
+figures/final/
 
 # Wazuh / OpenSearch generated data
 infra/wazuh/data/
@@ -72,12 +86,6 @@ Thumbs.db
 
 # Generated experiment outputs
 artifacts/
-results/final/**
-!results/final/
-!results/final/.gitkeep
-!results/final/**/
-!results/final/**/notes.md
-!results/final/**/selected_run.md
 
 # Build artifacts
 dist/

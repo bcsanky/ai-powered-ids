@@ -1,6 +1,8 @@
 # Dolgozatba beemelhető eredményjegyzék
 
-Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely futtatási könyvtárak, CSV állományok és PNG ábrák használhatók a diplomamunka 6. fejezetében. A felsorolt eredmények dokumentált konfigurációval, azonos futtatási beállítások mellett reprodukálhatók.
+Ez a dokumentum rögzíti, hogy a validált mérési eredmények milyen futtatási könyvtárakban, CSV állományokban és PNG ábrákban állnak elő. A felsorolt eredmények dokumentált konfigurációval, azonos futtatási beállítások mellett reprodukálhatók.
+
+Repository clean state megjegyzés: a `reports/final`, `reports/lab`, `reports/performance`, `results/performance` és `figures/final` alatti korábbi futási kimenetek nem verziózott forrásként hivatkozandók. A dolgozatba kerülő ábrákat és táblázatokat a tényleges mérés után kell előállítani, majd provenance és manifest alapján kell beadási mellékletként kezelni. A dokumentumban szereplő ilyen útvonalak várható kimeneti helyek vagy korábbi validációs hivatkozások, nem Gitben tartandó kutatási bizonyítékok.
 
 Fontos adateredeti megkötés: a `reports/lab`, `reports/final` és `examples/lab` tartalma demonstrációs vagy offline jellegű, ezért nem használható real-lab mérési eredményként. Real-lab eredmény csak `reports/real_measurement/measurement_provenance.json` megléte és `verified_real_lab` provenance státusz esetén emelhető be a dolgozat mérési eredményei közé.
 

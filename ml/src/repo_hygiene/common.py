@@ -11,6 +11,16 @@ DEMO_NAME_TOKENS = ("fixture", "sample", "demo")
 PROVENANCE_PATH = Path("reports/real_measurement/measurement_provenance.json")
 REAL_LAB_INPUT_KEYS = ["ground_truth_path", "lab_features_path", "wazuh_alerts_path"]
 REQUIRED_INPUT_HASH_KEYS = ["ground_truth_sha256", "lab_features_sha256", "wazuh_alerts_sha256"]
+TRACKED_GENERATED_OUTPUT_PREFIXES = (
+    "reports/final/",
+    "reports/lab/",
+    "reports/performance/",
+    "reports/real_measurement_qa/",
+    "results/performance/",
+    "figures/final/",
+)
+TRACKED_GENERATED_OUTPUT_FILES = ("reports/scored_events.jsonl",)
+ALLOWED_TRACKED_OUTPUT_NAMES = {"README.md", ".gitkeep"}
 
 
 def sha256_file(path: Path) -> str:
@@ -34,6 +44,19 @@ def is_demo_or_fixture_path(path: str | Path) -> bool:
     if DEMO_PATH_PARTS & parts:
         return True
     return any(token in text for token in DEMO_NAME_TOKENS)
+
+
+def is_allowed_tracked_output_placeholder(path: str | Path) -> bool:
+    return Path(path).name in ALLOWED_TRACKED_OUTPUT_NAMES
+
+
+def is_forbidden_tracked_generated_output(path: str | Path) -> bool:
+    text = Path(path).as_posix()
+    if is_allowed_tracked_output_placeholder(text):
+        return False
+    if text in TRACKED_GENERATED_OUTPUT_FILES:
+        return True
+    return any(text.startswith(prefix) for prefix in TRACKED_GENERATED_OUTPUT_PREFIXES)
 
 
 def load_provenance(path: Path = PROVENANCE_PATH) -> dict[str, Any] | None:
