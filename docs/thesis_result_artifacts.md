@@ -143,6 +143,20 @@ Ez a blokk a tényleges real-lab futtatás után előálló ellenőrző, riport-
 | Mérési manifest Markdown | `reports/real_measurement/measurement_manifest.md` | Ember által olvasható mérési csomagjegyzék | archiválási és beadási ellenőrzés |
 | Anonimizált real-lab riportok | `reports/real_measurement_redacted/` | IP-címek és hostnevek eltávolítása után mellékelhető riportok | opcionális, érzékeny adatok esetén szükséges |
 
+## Real-lab QA és dolgozati beemelési segédletek
+
+Ez a blokk a tényleges mérés előtti és utáni minőségbiztosítási kimeneteket sorolja fel. Ezek a fájlok nem helyettesítik a mérési eredményeket, hanem azt dokumentálják, hogy az eredmények alkalmasak-e a 6. fejezetbe történő beemelésre.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Real-lab preflight riport | `reports/real_measurement_qa/preflight_report.md` | Mérés előtti feltétel-ellenőrzés dokumentálása | mérés előtt futtatandó |
+| Post-run QA riport | `reports/real_measurement_qa/postrun_quality_report.md` | Eredmények dolgozati beemelhetőségének ellenőrzése | tényleges mérés után futtatandó |
+| Kutatási kérdés összefoglaló JSON | `reports/real_measurement_qa/research_question_answer.json` | Wazuh-onlyhoz viszonyított hibrid változások géppel olvasható összegzése | tényleges metrikákból áll elő |
+| Dolgozati beemelhetőség | `reports/real_measurement_qa/thesis_readiness.md` | READY / READY_WITH_LIMITATIONS / NOT_READY státusz magyarázata | 6. fejezet előtti ellenőrzés |
+| Real-lab comparison táblázat | `reports/real_measurement_qa/thesis_table_real_comparison.md` | Wordbe másolható fő eredménytábla | dolgozatba beemelhető, ha QA szerint alkalmas |
+| Dolgozati értelmezési pontok | `reports/real_measurement_qa/thesis_interpretation_bullets.md` | Rövid megállapítások a 6. fejezethez | tényleges metrikákból áll elő |
+| Védési real-lab jegyzet | `reports/real_measurement_qa/defense_notes_real_measurement.md` | Védésre használható kérdés-válasz segédlet | mérési eredmények alapján frissítendő |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

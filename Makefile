@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid lab-templates lab-build-features-zeek lab-build-features-flow-csv lab-validate-real-inputs final-real-hybrid-zeek final-real-hybrid-flow-csv wazuh-export-opensearch wazuh-export-from-file wazuh-export-summary real-measurement-validate-bundle real-measurement-report real-measurement-manifest real-measurement-redact final-real-measurement-package final-real-measurement-package-zeek final-real-measurement-package-flow-csv score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid lab-templates lab-build-features-zeek lab-build-features-flow-csv lab-validate-real-inputs final-real-hybrid-zeek final-real-hybrid-flow-csv wazuh-export-opensearch wazuh-export-from-file wazuh-export-summary real-measurement-validate-bundle real-measurement-report real-measurement-manifest real-measurement-redact final-real-measurement-package final-real-measurement-package-zeek final-real-measurement-package-flow-csv real-measurement-preflight real-measurement-postrun-qa real-measurement-thesis-tables real-measurement-defense-notes final-real-measurement-thesis-ready final-real-measurement-package-with-qa score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -30,6 +30,7 @@ WAZUH_EXPORT_START ?=
 WAZUH_EXPORT_END ?=
 WAZUH_RAW_EXPORT ?= raw/wazuh_export.json
 REAL_MEASUREMENT_REPORT_DIR ?= reports/real_measurement
+REAL_MEASUREMENT_QA_DIR ?= reports/real_measurement_qa
 
 dataset:
 	$(PYTHON) ml/src/build_dataset.py --config $(CONFIG)
@@ -57,7 +58,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py ml/src/lab_capture/event_marker.py ml/src/lab_capture/generate_lab_templates.py ml/src/lab_features/common.py ml/src/lab_features/build_features_from_zeek_conn.py ml/src/lab_features/build_features_from_flow_csv.py ml/src/lab_features/validate_real_lab_inputs.py ml/src/wazuh_export/export_alerts_from_opensearch.py ml/src/wazuh_export/export_alerts_from_file.py ml/src/wazuh_export/summarize_wazuh_export.py ml/src/real_measurement/validate_measurement_bundle.py ml/src/real_measurement/generate_real_measurement_report.py ml/src/real_measurement/create_measurement_manifest.py ml/src/real_measurement/redact_measurement_outputs.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py ml/src/lab_capture/event_marker.py ml/src/lab_capture/generate_lab_templates.py ml/src/lab_features/common.py ml/src/lab_features/build_features_from_zeek_conn.py ml/src/lab_features/build_features_from_flow_csv.py ml/src/lab_features/validate_real_lab_inputs.py ml/src/wazuh_export/export_alerts_from_opensearch.py ml/src/wazuh_export/export_alerts_from_file.py ml/src/wazuh_export/summarize_wazuh_export.py ml/src/real_measurement/validate_measurement_bundle.py ml/src/real_measurement/generate_real_measurement_report.py ml/src/real_measurement/create_measurement_manifest.py ml/src/real_measurement/redact_measurement_outputs.py ml/src/real_measurement_qa/preflight_check.py ml/src/real_measurement_qa/postrun_quality_gate.py ml/src/real_measurement_qa/generate_thesis_tables.py ml/src/real_measurement_qa/generate_defense_notes.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -194,6 +195,27 @@ final-real-measurement-package-zeek:
 final-real-measurement-package-flow-csv:
 	$(MAKE) lab-build-features-flow-csv
 	$(MAKE) final-real-measurement-package
+
+real-measurement-preflight:
+	$(PYTHON) -m ml.src.real_measurement_qa.preflight_check --output-dir $(REAL_MEASUREMENT_QA_DIR)
+
+real-measurement-postrun-qa:
+	$(PYTHON) -m ml.src.real_measurement_qa.postrun_quality_gate --output-dir $(REAL_MEASUREMENT_QA_DIR)
+
+real-measurement-thesis-tables:
+	$(PYTHON) -m ml.src.real_measurement_qa.generate_thesis_tables --output-dir $(REAL_MEASUREMENT_QA_DIR)
+
+real-measurement-defense-notes:
+	$(PYTHON) -m ml.src.real_measurement_qa.generate_defense_notes --output-dir $(REAL_MEASUREMENT_QA_DIR)
+
+final-real-measurement-thesis-ready:
+	$(MAKE) real-measurement-postrun-qa
+	$(MAKE) real-measurement-thesis-tables
+	$(MAKE) real-measurement-defense-notes
+
+final-real-measurement-package-with-qa:
+	$(MAKE) final-real-measurement-package
+	$(MAKE) final-real-measurement-thesis-ready
 
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto

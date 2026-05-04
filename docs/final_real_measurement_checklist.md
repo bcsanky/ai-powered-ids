@@ -39,6 +39,7 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 ## Feature build és input validáció
 
 - [ ] `make lab-templates` lefutott, ha sablonokra volt szükség.
+- [ ] `make real-measurement-preflight` lefutott a tényleges lab mérés előtt.
 - [ ] Zeek input esetén `make lab-build-features-zeek` lefutott.
 - [ ] Flow CSV input esetén `make lab-build-features-flow-csv` lefutott.
 - [ ] Elkészült a `data/lab/lab_features.csv`.
@@ -48,9 +49,12 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 
 ## Teljes mérési lánc
 
+- [ ] Lefutott a `make final-real-measurement-package`.
 - [ ] Lefutott a `make final-real-hybrid`.
 - [ ] Lefutott a `make real-measurement-validate-bundle`.
 - [ ] A bundle validáció státusza PASS.
+- [ ] Lefutott a `make real-measurement-postrun-qa`.
+- [ ] A post-run QA státusza READY vagy READY_WITH_LIMITATIONS.
 - [ ] Elkészült a `results/wazuh_real/metrics_summary.csv`.
 - [ ] Elkészült a `results/ae_lab/metrics_summary.csv`.
 - [ ] Elkészült a `results/hybrid_real/metrics_summary.csv`.
@@ -59,6 +63,8 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Elkészült a `reports/real_measurement/real_lab_results_report.md`.
 - [ ] Elkészült a `reports/real_measurement/thesis_real_lab_section.md`.
 - [ ] Elkészült a `reports/real_measurement/measurement_manifest.md`.
+- [ ] Elkészültek a `reports/real_measurement_qa/thesis_table_*.md` táblázatok.
+- [ ] Elkészült a `reports/real_measurement_qa/defense_notes_real_measurement.md`.
 - [ ] Szükség esetén elkészült az anonimizált riport: `reports/real_measurement_redacted/`.
 
 ## Dolgozatba emelés
@@ -69,3 +75,4 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Az AE-only eredmény ugyanazon `event_id` készleten készült.
 - [ ] A hibrid eredmény ugyanazon ground truth eseményeken értelmezhető.
 - [ ] A korlátok rögzítve vannak: lab mérés, nem hosszú idejű éles SOC-validáció.
+- [ ] A 6. fejezetbe történő beemelés a `thesis_readiness.md` alapján megtörtént.
