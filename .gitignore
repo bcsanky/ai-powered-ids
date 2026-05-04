@@ -41,6 +41,7 @@ reports/repo_hygiene/
 reports/real_measurement/
 reports/wazuh_export/
 reports/lab_input_validation/
+reports/live_integration/
 results/real_comparison/
 results/wazuh_real/
 results/ae_lab/

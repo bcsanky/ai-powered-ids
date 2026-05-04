@@ -159,6 +159,22 @@ Ez a blokk a tényleges mérés előtti és utáni minőségbiztosítási kimene
 | Dolgozati értelmezési pontok | `reports/real_measurement_qa/thesis_interpretation_bullets.md` | Rövid megállapítások a 6. fejezethez | tényleges metrikákból áll elő |
 | Védési real-lab jegyzet | `reports/real_measurement_qa/defense_notes_real_measurement.md` | Védésre használható kérdés-válasz segédlet | mérési eredmények alapján frissítendő |
 
+## End-to-end live integration demonstráció
+
+Ez a blokk a Wazuh alert exportból induló, AE-Minimal scoringgal és hibrid prioritási logikával gazdagított integrációs kimeneteket sorolja fel. Ezek csak verified real-lab provenance mellett használhatók integrációs demonstrációként, és nem helyettesítik a Wazuh-only vs AE-only vs Hybrid benchmark táblát.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Gazdagított alert JSONL | `reports/live_integration/enriched_alerts.jsonl` | Dashboard vagy OpenSearch bemenet eseményszintű JSONL formában | verified real-lab provenance mellett használható |
+| Gazdagított alert CSV | `reports/live_integration/enriched_alerts.csv` | Eseményszintű áttekintés Wazuh, ML és hibrid mezőkkel | verified real-lab provenance mellett használható |
+| Nem illesztett alert lista | `reports/live_integration/unmatched_alerts.csv` | Feature mapping lefedettségének ellenőrzése | értelmezési korlátként közlendő |
+| Enrichment összefoglaló | `reports/live_integration/enrichment_summary.csv` | Scored, unmatched és hibrid pozitív darabszámok összesítése | dashboard-ready kimenet |
+| Dashboard payload | `reports/live_integration/dashboard_payload.json` | Dashboard kártyák és top listák géppel olvasható formában | integrációs demonstráció |
+| Dashboard összefoglaló | `reports/live_integration/dashboard_summary.md` | Dolgozatban röviden hivatkozható dashboard-jellegű áttekintés | integrációs demonstráció |
+| Live integration validáció | `reports/live_integration/live_integration_validation.md` | READY / READY_WITH_LIMITATIONS / NOT_READY státusz indoklása | dolgozati beemelés előtti ellenőrzés |
+| Live integration dolgozati szakasz | `reports/live_integration/thesis_live_integration_section.md` | 5. fejezetbe illeszthető integrációs leírás | verified real-lab provenance mellett használható |
+| Live integration védési jegyzet | `reports/live_integration/live_integration_defense_notes.md` | Védési kérdés-válasz segédlet az integrációs lánchoz | mérési csomag után frissítendő |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

@@ -69,6 +69,20 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Elkészült a `reports/real_measurement_qa/defense_notes_real_measurement.md`.
 - [ ] Szükség esetén elkészült az anonimizált riport: `reports/real_measurement_redacted/`.
 
+## Live integration és dashboard-ready kimenet
+
+- [ ] Lefutott a `make final-live-integration`.
+- [ ] Elkészült a `reports/live_integration/enriched_alerts.csv`.
+- [ ] Elkészült a `reports/live_integration/enriched_alerts.jsonl`.
+- [ ] Elkészült a `reports/live_integration/unmatched_alerts.csv`.
+- [ ] Az unmatched alert arány elfogadható, vagy a korlátok között külön szerepel.
+- [ ] Elkészült a `reports/live_integration/dashboard_payload.json`.
+- [ ] Elkészült a `reports/live_integration/dashboard_summary.md`.
+- [ ] A `reports/live_integration/live_integration_validation.md` READY vagy READY_WITH_LIMITATIONS státuszt ad.
+- [ ] Elkészült a `reports/live_integration/thesis_live_integration_section.md`.
+- [ ] OpenSearchbe írás megtörtént, ha dashboard demó szükséges.
+- [ ] Az integrációs kimenet nem lett benchmarkként értelmezve.
+
 ## Dolgozatba emelés
 
 - [ ] A bemeneti fájlok valódi lab mérésből származnak.

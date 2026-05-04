@@ -110,3 +110,26 @@ Nem emelhető be real-lab eredményként:
 - kézzel összeállított metrika;
 - provenance nélküli real-lab jellegű comparison táblázat;
 - Wazuh export nélküli natív Wazuh mérési állítás.
+
+## Live integration kimenetek kezelése
+
+A live integration réteg enriched alert és dashboard-ready kimeneteket állít elő. Ezek csak akkor használhatók dolgozati integrációs demonstrációként, ha ugyanarra a verified real-lab provenance-re épülnek, mint a Wazuh-only, AE-only és hibrid metrikai összehasonlítás.
+
+Fontos értelmezési szabályok:
+
+- Az enriched alert kimenet nem benchmark, hanem végponttól végpontig tartó mérnöki integrációs bizonyíték.
+- Az unmatched alert arányt mindig közölni kell, mert megmutatja, hogy a Wazuh alert események mekkora része kapott AE scoringot.
+- Dashboard screenshot vagy dashboard payload csak akkor használható, ha ugyanabból a verified real-lab mérésből származik.
+- Provenance nélkül a live integration kimenet nem nevezhető végleges real-lab dolgozati bizonyítéknak.
+
+Futtatás tényleges mérés után:
+
+```bash
+make final-live-integration
+```
+
+OpenSearch/dashboard demóhoz:
+
+```bash
+make final-live-integration-opensearch OPENSEARCH_PASSWORD=<jelszo>
+```
