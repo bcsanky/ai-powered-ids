@@ -1,5 +1,0 @@
-scenario,normal,medium,high,critical
-benign_activity,0,0,5,0
-combined_suspicious,0,0,0,5
-port_scan,0,0,0,5
-ssh_bruteforce,0,0,0,5
