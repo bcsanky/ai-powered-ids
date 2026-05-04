@@ -22,7 +22,9 @@ TRACKED_GENERATED_OUTPUT_PREFIXES = (
     "reports/final_submission_check/",
     "reports/live_smoke/",
     "reports/measurement_quality/",
+    "reports/submission_bundle/",
     "results/performance/",
+    "dist/submission/",
     "figures/final/",
 )
 TRACKED_GENERATED_OUTPUT_FILES = ("reports/scored_events.jsonl",)

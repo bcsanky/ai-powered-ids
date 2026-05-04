@@ -13,6 +13,7 @@ INPUTS = [
     ("failure_modes", "failure_modes_check.csv"),
     ("provenance_policy", "provenance_policy_check.csv"),
     ("documentation", "documentation_consistency_check.csv"),
+    ("real_lab_runbook_docs", "real_lab_runbook_docs_check.csv"),
 ]
 
 
@@ -99,4 +100,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

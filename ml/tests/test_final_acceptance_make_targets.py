@@ -22,6 +22,7 @@ def test_all_required_makefile_targets_pass(tmp_path):
         + "\t$(MAKE) final-acceptance-failure-modes\n"
         + "\t$(MAKE) final-acceptance-provenance-policy\n"
         + "\t$(MAKE) final-acceptance-docs\n"
+        + "\t$(MAKE) final-acceptance-runbook-docs\n"
         + "\t$(MAKE) repo-hygiene-check\n"
         + "\t$(MAKE) final-acceptance-readiness\n"
         + "\t$(MAKE) final-acceptance-brief\n",
@@ -31,4 +32,3 @@ def test_all_required_makefile_targets_pass(tmp_path):
     result = run_check(makefile, tmp_path / "reports/final_acceptance")
 
     assert result["status"] == "PASS"
-

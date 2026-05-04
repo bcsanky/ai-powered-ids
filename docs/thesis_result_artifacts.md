@@ -266,6 +266,35 @@ Ez a blokk a meglévő real-lab mérés minőségét és értelmezhetőségét e
 | Mérési minőségi összefoglaló | `reports/measurement_quality/measurement_quality_summary.md` | MEASUREMENT_STRONG / USABLE_WITH_LIMITATIONS / WEAK / NOT_READY státusz | dolgozati döntéstámogatás |
 | Dolgozati quality megjegyzések | `reports/measurement_quality/thesis_measurement_quality_notes.md` | 6. fejezet korlátaihoz és hibaanalíziséhez használható rövid szöveg | kézi ellenőrzéssel beemelhető |
 
+## Beadási melléklet / submission bundle kimenetek
+
+Ez a blokk a beadási ZIP-csomag előállítását és ellenőrzését dokumentáló futási kimeneteket sorolja fel. Ezek nem mérési eredmények, hanem csomagolási és archiválási segédletek. A `reports/submission_bundle/` és `dist/submission/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Csomagolási candidate lista | `reports/submission_bundle/submission_candidates.md` | A policy alapján jelölt fájlok áttekintése | csomagolási QA |
+| Candidate validáció | `reports/submission_bundle/submission_candidate_validation.md` | Tiltott és érzékeny fájlok kizárásának dokumentálása | csomagolási QA |
+| Submission manifest | `reports/submission_bundle/submission_manifest.md` | ZIP-be kerülő fájlok és SHA256 hash-ek listája | beadási melléklet ellenőrzés |
+| ZIP riport | `reports/submission_bundle/submission_zip_report.md` | ZIP létrehozásának metaadatai | csomagolási QA |
+| ZIP inspection | `reports/submission_bundle/submission_zip_inspection.md` | ZIP tartalmi és biztonsági ellenőrzése | beadás előtti ellenőrzés |
+| Bundle riport | `reports/submission_bundle/submission_bundle_report.md` | READY_TO_ATTACH / READY_WITH_WARNINGS / NOT_READY státusz | beadás előtti döntéstámogatás |
+| Beadási ZIP | `dist/submission/ai_powered_ids_submission_bundle.zip` | Beadási mellékletként csatolható csomag | kézi ellenőrzés után csatolható |
+| ZIP README | `dist/submission/SUBMISSION_README.md` | A csomag tartalmának és korlátainak leírása | ZIP gyökér README |
+
+## Real-lab mérésnapi operátori dokumentumok
+
+Ez a blokk a tényleges lab mérés kézi, biztonságos és reprodukálható végrehajtását támogató dokumentumokat sorolja fel. Ezek dokumentációs segédletek, nem mérési eredmények. Gitben maradhatnak.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Mérésnapi runbook | `docs/real_lab_execution_day_runbook.md` | Teljes real-lab mérésnapi folyamat kézi végrehajtása | dokumentáció |
+| Scenario script | `docs/real_lab_scenario_script.md` | Kézzel követhető benign és attack scenario forgatókönyv | dokumentáció |
+| Operátori parancslap | `docs/real_lab_operator_command_sheet.md` | Parancsok sorrendje és változóhelyek | dokumentáció |
+| Minimum acceptance criteria | `docs/real_lab_minimum_acceptance_criteria.md` | Mérési elfogadási feltételek | dokumentáció |
+| After action review sablon | `docs/real_lab_after_action_review_template.md` | Mérés utáni kitölthető operátori összefoglaló | dokumentáció |
+| Troubleshooting guide | `docs/real_lab_troubleshooting_guide.md` | Mérésnapi hibakezelési segédlet | dokumentáció |
+| One-day execution plan | `docs/real_lab_one_day_execution_plan.md` | Egynapos mérési ütemterv | dokumentáció |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

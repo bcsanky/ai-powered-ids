@@ -16,6 +16,7 @@ def test_readiness_not_ready_on_any_fail(tmp_path):
     write_check(out / "failure_modes_check.csv", "FAIL")
     write_check(out / "provenance_policy_check.csv", "PASS")
     write_check(out / "documentation_consistency_check.csv", "PASS")
+    write_check(out / "real_lab_runbook_docs_check.csv", "PASS")
 
     result = run_check(out)
 
@@ -29,10 +30,10 @@ def test_readiness_ready_when_all_critical_checks_pass(tmp_path):
         "failure_modes_check.csv",
         "provenance_policy_check.csv",
         "documentation_consistency_check.csv",
+        "real_lab_runbook_docs_check.csv",
     ]:
         write_check(out / name, "PASS")
 
     result = run_check(out)
 
     assert result["readiness"] == "READY_FOR_REAL_LAB_RUN"
-

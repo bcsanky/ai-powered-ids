@@ -203,3 +203,40 @@ make final-measurement-quality
 ```
 
 A `reports/measurement_quality/` kimenetek futási riportok. Gitbe nem kerülnek, és nem helyettesítik sem a mérési provenance-t, sem a mérési manifestet.
+
+## Submission bundle szerepe
+
+A submission bundle nem mérés, és nem bizonyít önmagában mérési eredményt. A célja az, hogy a beadási mellékletbe kerülő forráskódot, konfigurációkat, dokumentációt, sablonokat és engedélyezett riportokat ellenőrzött ZIP-csomagba rendezze.
+
+Raw vagy érzékeny inputokat nem szabad automatikusan beadási csomagba tenni. Ide tartozik a Wazuh alert export, PCAP/PCAPNG állomány, Zeek raw log, titkos kulcs, tanúsítvány, `.env` fájl és redaction mapping. Ezeket külön adatkezelési döntéssel, szükség esetén anonimizálva kell kezelni.
+
+Verified provenance esetén a mérési riportok, manifestek és dolgozati integrációs anyagok beemelhetők a ZIP-be, ha a policy engedi. Provenance nélkül a csomag csak forráskódot, konfigurációt, dokumentációt, sablonokat és demonstrációs példákat tartalmazhat.
+
+Futtatás:
+
+```bash
+make final-submission-bundle
+```
+
+A kimenetek:
+
+- `dist/submission/ai_powered_ids_submission_bundle.zip`;
+- `dist/submission/SUBMISSION_README.md`;
+- `reports/submission_bundle/submission_manifest.md`;
+- `reports/submission_bundle/submission_zip_inspection.md`;
+- `reports/submission_bundle/submission_bundle_report.md`.
+
+## Mérésnapi operátori dokumentumok szerepe
+
+A `docs/real_lab_execution_day_runbook.md`, a `docs/real_lab_scenario_script.md` és a kapcsolódó operátori dokumentumok nem mérési eredmények. Ezek a tényleges mérés kézi, auditálható végrehajtását segítik.
+
+A scenario script nem ground truth. Ground truth csak a tényleges futás közben rögzített event marker start/end események exportja lehet, például a `data/lab/lab_ground_truth.csv`. A command sheet nem helyettesíti a measurement provenance fájlt, és nem bizonyítja önmagában, hogy a Wazuh `alerts.jsonl` vagy a `lab_features.csv` valódi lab futásból származik.
+
+A mérésnapi dokumentumok használata mellett is kötelező:
+
+- a Wazuh export valódi lab időablakból;
+- a feature input tényleges Zeek vagy flow forrásból;
+- a `final-real-measurement-package-with-provenance` futtatása;
+- a `final-measurement-quality` ellenőrzés;
+- a demo/sample/fixture inputok kizárása;
+- a tilos idegen IP szabály betartása.

@@ -152,3 +152,23 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Elkészült a `reports/final_submission_check/submission_artifact_plan.md`.
 - [ ] Elkészült a `reports/final_submission_check/biraloi_risk_questions.md`.
 - [ ] A `reports/final_submission_check/final_submission_readiness.md` státusza a mérési állapotnak megfelelő.
+
+## Beadási melléklet / submission bundle
+
+- [ ] Lefutott a `make final-submission-bundle`.
+- [ ] Elkészült a `reports/submission_bundle/submission_manifest.md`.
+- [ ] Elkészült a `dist/submission/ai_powered_ids_submission_bundle.zip`.
+- [ ] A `reports/submission_bundle/submission_zip_inspection.md` PASS státuszú.
+- [ ] A ZIP nem tartalmaz raw Wazuh alertet, PCAP/PCAPNG fájlt, Zeek raw logot vagy secret állományt.
+- [ ] Elkészült a `dist/submission/SUBMISSION_README.md`.
+- [ ] Runtime mérési riport csak verified real_lab provenance mellett került a csomagba.
+
+## Real-lab mérésnapi operátori dokumentumok
+
+- [ ] A `docs/real_lab_execution_day_runbook.md` át lett nézve.
+- [ ] A `docs/real_lab_scenario_script.md` át lett nézve, és minden támadó jellegű lépés saját izolált labra korlátozott.
+- [ ] A `docs/real_lab_operator_command_sheet.md` elő lett készítve a mérésnapi változókkal.
+- [ ] A `docs/real_lab_minimum_acceptance_criteria.md` elfogadási feltételei ismertek.
+- [ ] A `docs/real_lab_after_action_review_template.md` ki lett töltve a mérés után.
+- [ ] A `docs/real_lab_troubleshooting_guide.md` alapján a mérés közbeni hibák kezelve lettek.
+- [ ] Lefutott a `make final-acceptance-runbook-docs`.

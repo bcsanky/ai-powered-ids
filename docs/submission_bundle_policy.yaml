@@ -1,0 +1,75 @@
+include_groups:
+  source_code:
+    - ml/src/**
+    - infra/mlservice/**
+    - infra/docker-compose.yml
+    - Makefile
+    - requirements-dev.txt
+  tests:
+    - ml/tests/**
+  configs:
+    - experiments/final/**
+    - templates/lab/**
+  documentation:
+    - docs/**
+    - README.md
+    - reports/README.md
+    - results/README.md
+    - figures/README.md
+  examples_demo:
+    - examples/lab/**
+    - examples/scoring/**
+
+runtime_outputs_allowed_if_verified:
+  - reports/real_measurement/**
+  - reports/real_measurement_qa/**
+  - reports/measurement_quality/**
+  - reports/live_integration/**
+  - reports/thesis_integration/**
+  - reports/final_submission_check/**
+  - reports/final_acceptance/**
+  - reports/live_smoke/**
+  - reports/lab_session/**
+  - reports/wazuh_export/wazuh_export_summary.md
+  - reports/wazuh_export/wazuh_export_rule_summary.csv
+  - results/real_comparison/**
+  - results/wazuh_real/**
+  - results/ae_lab/**
+  - results/hybrid_real/**
+
+always_exclude:
+  - data/**
+  - raw/**
+  - artifacts/**
+  - .venv/**
+  - .venv39/**
+  - __pycache__/**
+  - .pytest_cache/**
+  - infra/wazuh/certs/**
+  - infra/wazuh/**/data/**
+  - "*.pcap"
+  - "*.pcapng"
+  - "*.pem"
+  - "*.key"
+  - "*.crt"
+  - "*.p12"
+  - "*.jks"
+  - ".env"
+  - ".env.*"
+  - reports/real_measurement_redacted/redaction_mapping.json
+
+sensitive_patterns:
+  - "alerts.json"
+  - "alerts.jsonl"
+  - "wazuh_export"
+  - "password"
+  - "secret"
+  - "token"
+  - "private_key"
+
+rules:
+  require_provenance_for_runtime_results: true
+  allow_examples_as_demo: true
+  allow_raw_inputs: false
+  allow_artifacts: false
+  allow_redaction_mapping: false

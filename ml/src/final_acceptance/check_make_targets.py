@@ -30,12 +30,14 @@ REQUIRED_TARGETS = [
     "thesis-check-inputs",
     "thesis-generate-chapter5",
     "thesis-generate-chapter6",
+    "final-acceptance-runbook-docs",
 ]
 EXPECTED_FINAL_ACCEPTANCE_SEQUENCE = [
     "final-acceptance-make-targets",
     "final-acceptance-failure-modes",
     "final-acceptance-provenance-policy",
     "final-acceptance-docs",
+    "final-acceptance-runbook-docs",
     "repo-hygiene-check",
     "final-acceptance-readiness",
     "final-acceptance-brief",
@@ -106,4 +108,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

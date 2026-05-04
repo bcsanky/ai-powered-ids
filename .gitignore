@@ -56,6 +56,7 @@ reports/final_acceptance/
 reports/final_submission_check/
 reports/live_smoke/
 reports/measurement_quality/
+reports/submission_bundle/
 reports/scored_events.jsonl
 
 # Generated result outputs
@@ -95,6 +96,7 @@ artifacts/
 
 # Build artifacts
 dist/
+dist/submission/
 build/
 *.egg-info/
 
