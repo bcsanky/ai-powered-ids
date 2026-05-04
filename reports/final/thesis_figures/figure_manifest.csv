@@ -6,3 +6,6 @@ reports/final/thesis_figures/comparison_false_positive_rate.png,results/final/co
 reports/final/thesis_figures/comparison_alert_count.png,results/final/comparison/fig_comparison_alert_count.png,6. fejezet,copied,Riasztásszám összehasonlítása.
 reports/final/thesis_figures/lab_timeline.png,reports/lab/lab_timeline.png,5. fejezet,copied,Lab/replay eseménysor idővonala.
 reports/final/thesis_figures/lab_risk_level_distribution.png,reports/lab/risk_level_distribution.png,5. fejezet,copied,Lab/replay kockázati szintek eloszlása.
+reports/final/thesis_figures/performance_latency_by_batch_size.png,reports/performance/latency_by_batch_size.png,6. fejezet: Teljesítménymérés,copied,Batch scoring késleltetés batch size szerint.
+reports/final/thesis_figures/performance_throughput_by_batch_size.png,reports/performance/throughput_by_batch_size.png,6. fejezet: Teljesítménymérés,copied,Batch scoring áteresztőképesség batch size szerint.
+reports/final/thesis_figures/performance_scoring_time_distribution.png,reports/performance/scoring_time_distribution.png,6. fejezet: Teljesítménymérés,copied,Batch scoring időeloszlás.

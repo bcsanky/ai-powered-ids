@@ -12,6 +12,7 @@ def test_collect_figures_writes_manifest_when_sources_are_missing(tmp_path):
         ae_context_root=tmp_path / "missing_ae_ctx",
         comparison_dir=tmp_path / "missing_comparison",
         lab_dir=tmp_path / "missing_lab",
+        performance_dir=tmp_path / "missing_performance",
     )
 
     manifest_path = tmp_path / "figures" / "figure_manifest.csv"
@@ -39,6 +40,7 @@ def test_collect_figures_copies_existing_files(tmp_path):
         ae_context_root=tmp_path / "missing_ae_ctx",
         comparison_dir=comparison,
         lab_dir=lab,
+        performance_dir=tmp_path / "missing_performance",
     )
 
     saved = pd.read_csv(tmp_path / "figures" / "figure_manifest.csv")

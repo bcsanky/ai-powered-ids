@@ -14,6 +14,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ae-context-root", default="results/final/final-ae-context-v1")
     parser.add_argument("--comparison-dir", default="results/final/comparison")
     parser.add_argument("--lab-dir", default="reports/lab")
+    parser.add_argument("--performance-dir", default="reports/performance")
     return parser.parse_args()
 
 
@@ -54,8 +55,10 @@ def collect_figures(
     ae_context_root: Path,
     comparison_dir: Path,
     lab_dir: Path,
+    performance_dir: Path | None = None,
 ) -> pd.DataFrame:
     output_dir.mkdir(parents=True, exist_ok=True)
+    performance_dir = performance_dir or Path("reports/performance")
     ae_minimal_run = latest_run_with_file(ae_minimal_root, "confusion_matrix.png")
     ae_context_run = latest_run_with_file(ae_context_root, "confusion_matrix.png")
 
@@ -102,6 +105,24 @@ def collect_figures(
             "5. fejezet",
             "Lab/replay kockázati szintek eloszlása.",
         ),
+        (
+            performance_dir / "latency_by_batch_size.png",
+            output_dir / "performance_latency_by_batch_size.png",
+            "6. fejezet: Teljesítménymérés",
+            "Batch scoring késleltetés batch size szerint.",
+        ),
+        (
+            performance_dir / "throughput_by_batch_size.png",
+            output_dir / "performance_throughput_by_batch_size.png",
+            "6. fejezet: Teljesítménymérés",
+            "Batch scoring áteresztőképesség batch size szerint.",
+        ),
+        (
+            performance_dir / "scoring_time_distribution.png",
+            output_dir / "performance_scoring_time_distribution.png",
+            "6. fejezet: Teljesítménymérés",
+            "Batch scoring időeloszlás.",
+        ),
     ]
 
     rows = [copy_or_mark_missing(source, target, section, note) for source, target, section, note in requested]
@@ -118,6 +139,7 @@ def main() -> None:
         ae_context_root=Path(args.ae_context_root),
         comparison_dir=Path(args.comparison_dir),
         lab_dir=Path(args.lab_dir),
+        performance_dir=Path(args.performance_dir),
     )
     copied = int((manifest["status"] == "copied").sum())
     missing = int((manifest["status"] == "missing").sum())

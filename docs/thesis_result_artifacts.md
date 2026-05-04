@@ -40,6 +40,9 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | SSH brute force esettanulmány | `reports/lab/case_study_ssh_bruteforce.md` | SSH brute force jellegű mintázat bemutatása | dolgozatba beemelhető |
 | Lab/replay scenario summary | `reports/lab/scenario_summary.csv` | Szcenáriónkénti kockázati összesítés | demonstrációs validáció, nem benchmark mérés |
 | Thesis figures manifest | `reports/final/thesis_figures/figure_manifest.csv` | Dolgozatba szánt ábrák forrásjegyzéke | dolgozatba beemelhető |
+| Teljesítménymérési eredménytábla | `reports/performance/benchmark_results.csv` | Batch scoring throughput és latency táblázat | teljesítménymérési eredmény, lokális/labor mérés |
+| Teljesítményriport Markdown formában | `reports/performance/performance_report.md` | Teljesítménymérési alfejezet forrása | dolgozatba beemelhető |
+| Teljesítményriport HTML formában | `reports/performance/performance_report.html` | Dashboard jellegű teljesítmény-összefoglaló | lokális/labor mérés |
 
 ## Ábrákhoz használható PNG állományok
 
@@ -67,6 +70,10 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Riasztásszám összehasonlítása | `results/final/comparison/fig_comparison_alert_count.png` | Riasztási mennyiség összehasonlítása | validált |
 | Lab/replay timeline ábra | `reports/lab/lab_timeline.png` | Kontrollált eseménysor időbeli szemléltetése az 5. fejezetben | dolgozatba beemelhető demonstrációs ábra |
 | Lab/replay kockázati eloszlás | `reports/lab/risk_level_distribution.png` | Kockázati szintek eloszlásának bemutatása | dolgozatba beemelhető demonstrációs ábra |
+| Teljesítménymérési késleltetés ábra | `reports/performance/latency_by_batch_size.png` | Batch size és p95 késleltetés bemutatása | dolgozatba beemelhető, lokális/labor mérés |
+| Teljesítménymérési throughput ábra | `reports/performance/throughput_by_batch_size.png` | Áteresztőképesség bemutatása esemény/másodpercben | dolgozatba beemelhető, lokális/labor mérés |
+| Scoring időeloszlás ábra | `reports/performance/scoring_time_distribution.png` | Átlagos scoring késleltetés összehasonlítása | dolgozatba beemelhető, lokális/labor mérés |
+| Dolgozatba rendezett performance ábrák | `reports/final/thesis_figures/performance_*.png` | Teljesítménymérési ábrák rendezett másolatai | dolgozatba beemelhető |
 
 ## Demonstrációs prototípuskimenetek
 

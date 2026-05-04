@@ -266,3 +266,20 @@ reports/final/thesis_figures/figure_manifest.csv
 ```
 
 Ezek demonstrációs validációs kimenetek. Nem helyettesítik a végleges mérési benchmarkot, és nem jelentenek natív Wazuh teljesítménymérést.
+
+## Teljesítménymérési kimenetek
+
+A batch scoring lokális/labor teljesítménymérési kimenetei a `reports/performance/` könyvtárban találhatók:
+
+```text
+reports/performance/benchmark_results.csv
+reports/performance/benchmark_summary.md
+reports/performance/system_info.json
+reports/performance/performance_report.md
+reports/performance/performance_report.html
+reports/performance/latency_by_batch_size.png
+reports/performance/throughput_by_batch_size.png
+reports/performance/scoring_time_distribution.png
+```
+
+Ezek a fájlok a batch scoring feldolgozási idő, késleltetés és áteresztőképesség lokális/labor mérését dokumentálják. Nem éles üzemi benchmarkot, nem natív Wazuh indexelési teljesítményt és nem teljes SIEM end-to-end mérést jelentenek.

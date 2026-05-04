@@ -439,3 +439,46 @@ reports/final/thesis_figures/figure_manifest.csv
 ```
 
 Ezek a kimenetek elsősorban az 5. fejezet implementációs és demonstrációs részeihez használhatók. A 6. fejezet benchmark jellegű összehasonlítása továbbra is a `results/final/` alatti validált futtatási könyvtárakra épül.
+
+## 14. Május 9-i teljesítménymérési lépések
+
+A május 9-i mérési réteg a meglévő batch scoring feldolgozási lánc lokális/labor teljesítményét vizsgálja. Nem indít új modelltanítást, nem épít új adatkészletet, és nem tekinthető éles üzemi vagy natív Wazuh teljesítménymérésnek.
+
+Benchmark futtatása:
+
+```bash
+make benchmark-scoring
+```
+
+Performance ábrák előállítása:
+
+```bash
+make plot-performance
+```
+
+Teljesítményriport készítése:
+
+```bash
+make generate-performance-report
+```
+
+Teljes május 9-i cél:
+
+```bash
+make final-day9
+```
+
+Fő kimenetek:
+
+```text
+reports/performance/benchmark_results.csv
+reports/performance/benchmark_summary.md
+reports/performance/system_info.json
+reports/performance/performance_report.md
+reports/performance/performance_report.html
+reports/performance/latency_by_batch_size.png
+reports/performance/throughput_by_batch_size.png
+reports/performance/scoring_time_distribution.png
+```
+
+A `collect-thesis-figures` cél a performance ábrákat is átmásolja a dolgozatba rendezett ábrakönyvtárba.
