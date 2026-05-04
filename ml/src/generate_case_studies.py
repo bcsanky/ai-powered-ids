@@ -4,7 +4,6 @@ import argparse
 import json
 import os
 from pathlib import Path
-from typing import Any
 
 os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
 
@@ -243,11 +242,9 @@ def save_timeline(df: pd.DataFrame, path: Path) -> None:
     ordered["_time"] = pd.to_datetime(ordered["timestamp"], errors="coerce")
     if ordered["_time"].notna().any():
         ordered = ordered.sort_values("_time")
-        x_values = ordered["_time"]
         xlabel = "Időpont"
     else:
         ordered = ordered.reset_index(drop=True)
-        x_values = ordered.index
         xlabel = "Eseménysorrend"
 
     scenarios = sorted(ordered["scenario"].unique())

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 
 from ml.src.scoring_runtime import AEScorer, determine_risk_level, select_threshold

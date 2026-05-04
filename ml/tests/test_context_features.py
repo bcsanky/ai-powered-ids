@@ -9,7 +9,7 @@ ML_SRC = Path(__file__).resolve().parents[1] / "src"
 if str(ML_SRC) not in sys.path:
     sys.path.insert(0, str(ML_SRC))
 
-from build_dataset import apply_context_features, apply_dev_sample, fit_context_statistics
+from build_dataset import apply_context_features, apply_dev_sample, fit_context_statistics  # noqa: E402
 
 
 def make_flow_df() -> pd.DataFrame:
