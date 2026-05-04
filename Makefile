@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid lab-templates lab-build-features-zeek lab-build-features-flow-csv lab-validate-real-inputs final-real-hybrid-zeek final-real-hybrid-flow-csv wazuh-export-opensearch wazuh-export-from-file wazuh-export-summary real-measurement-validate-bundle real-measurement-report real-measurement-manifest real-measurement-redact final-real-measurement-package final-real-measurement-package-zeek final-real-measurement-package-flow-csv real-measurement-preflight real-measurement-postrun-qa real-measurement-thesis-tables real-measurement-defense-notes final-real-measurement-thesis-ready final-real-measurement-package-with-qa repo-hygiene-audit check-no-demo-real-results real-measurement-provenance cleanup-generated-outputs-plan check-tracked-generated-outputs final-real-measurement-package-with-provenance repo-hygiene-check live-enrich-alerts live-write-opensearch live-dashboard-payload live-validate live-thesis-section final-live-integration final-live-integration-opensearch lab-session-doctor lab-session-plan lab-session-post-input-check lab-session-run-commands lab-session-summary lab-session-prep lab-session-after-capture lab-session-after-results score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid lab-templates lab-build-features-zeek lab-build-features-flow-csv lab-validate-real-inputs final-real-hybrid-zeek final-real-hybrid-flow-csv wazuh-export-opensearch wazuh-export-from-file wazuh-export-summary real-measurement-validate-bundle real-measurement-report real-measurement-manifest real-measurement-redact final-real-measurement-package final-real-measurement-package-zeek final-real-measurement-package-flow-csv real-measurement-preflight real-measurement-postrun-qa real-measurement-thesis-tables real-measurement-defense-notes final-real-measurement-thesis-ready final-real-measurement-package-with-qa repo-hygiene-audit check-no-demo-real-results real-measurement-provenance cleanup-generated-outputs-plan check-tracked-generated-outputs final-real-measurement-package-with-provenance repo-hygiene-check live-enrich-alerts live-write-opensearch live-dashboard-payload live-validate live-thesis-section final-live-integration final-live-integration-opensearch lab-session-doctor lab-session-plan lab-session-post-input-check lab-session-run-commands lab-session-summary lab-session-prep lab-session-after-capture lab-session-after-results thesis-check-inputs thesis-generate-chapter5 thesis-generate-chapter6 thesis-generate-summary-hu thesis-generate-summary-en thesis-generate-abstracts thesis-generate-figures-tables-plan thesis-generate-appendix-plan thesis-generate-update-package thesis-generate-defense-questions final-thesis-integration final-acceptance-make-targets final-acceptance-failure-modes final-acceptance-provenance-policy final-acceptance-docs final-acceptance-readiness final-acceptance-brief final-acceptance score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -45,6 +45,8 @@ ATTACKER_IP ?=
 TARGET_IP ?=
 WAZUH_MANAGER_IP ?=
 FEATURE_SOURCE ?= zeek
+THESIS_INTEGRATION_DIR ?= reports/thesis_integration
+FINAL_ACCEPTANCE_DIR ?= reports/final_acceptance
 
 LIVE_ENRICH_FLAGS :=
 ifeq ($(REQUIRE_PROVENANCE),true)
@@ -80,7 +82,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py ml/src/lab_capture/event_marker.py ml/src/lab_capture/generate_lab_templates.py ml/src/lab_features/common.py ml/src/lab_features/build_features_from_zeek_conn.py ml/src/lab_features/build_features_from_flow_csv.py ml/src/lab_features/validate_real_lab_inputs.py ml/src/wazuh_export/export_alerts_from_opensearch.py ml/src/wazuh_export/export_alerts_from_file.py ml/src/wazuh_export/summarize_wazuh_export.py ml/src/real_measurement/validate_measurement_bundle.py ml/src/real_measurement/generate_real_measurement_report.py ml/src/real_measurement/create_measurement_manifest.py ml/src/real_measurement/redact_measurement_outputs.py ml/src/real_measurement_qa/preflight_check.py ml/src/real_measurement_qa/postrun_quality_gate.py ml/src/real_measurement_qa/generate_thesis_tables.py ml/src/real_measurement_qa/generate_defense_notes.py ml/src/repo_hygiene/common.py ml/src/repo_hygiene/audit_generated_artifacts.py ml/src/repo_hygiene/check_no_demo_real_results.py ml/src/repo_hygiene/create_measurement_provenance.py ml/src/repo_hygiene/cleanup_generated_outputs_plan.py ml/src/repo_hygiene/check_tracked_generated_outputs.py ml/src/live_integration/enrich_wazuh_alerts.py ml/src/live_integration/write_enriched_alerts_to_opensearch.py ml/src/live_integration/generate_dashboard_payload.py ml/src/live_integration/validate_live_integration_outputs.py ml/src/live_integration/generate_live_integration_thesis_section.py ml/src/lab_session/common.py ml/src/lab_session/session_doctor.py ml/src/lab_session/create_session_plan.py ml/src/lab_session/scenario_marker_helper.py ml/src/lab_session/post_session_input_check.py ml/src/lab_session/generate_run_commands.py ml/src/lab_session/session_summary.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py ml/src/lab_capture/event_marker.py ml/src/lab_capture/generate_lab_templates.py ml/src/lab_features/common.py ml/src/lab_features/build_features_from_zeek_conn.py ml/src/lab_features/build_features_from_flow_csv.py ml/src/lab_features/validate_real_lab_inputs.py ml/src/wazuh_export/export_alerts_from_opensearch.py ml/src/wazuh_export/export_alerts_from_file.py ml/src/wazuh_export/summarize_wazuh_export.py ml/src/real_measurement/validate_measurement_bundle.py ml/src/real_measurement/generate_real_measurement_report.py ml/src/real_measurement/create_measurement_manifest.py ml/src/real_measurement/redact_measurement_outputs.py ml/src/real_measurement_qa/preflight_check.py ml/src/real_measurement_qa/postrun_quality_gate.py ml/src/real_measurement_qa/generate_thesis_tables.py ml/src/real_measurement_qa/generate_defense_notes.py ml/src/repo_hygiene/common.py ml/src/repo_hygiene/audit_generated_artifacts.py ml/src/repo_hygiene/check_no_demo_real_results.py ml/src/repo_hygiene/create_measurement_provenance.py ml/src/repo_hygiene/cleanup_generated_outputs_plan.py ml/src/repo_hygiene/check_tracked_generated_outputs.py ml/src/live_integration/enrich_wazuh_alerts.py ml/src/live_integration/write_enriched_alerts_to_opensearch.py ml/src/live_integration/generate_dashboard_payload.py ml/src/live_integration/validate_live_integration_outputs.py ml/src/live_integration/generate_live_integration_thesis_section.py ml/src/lab_session/common.py ml/src/lab_session/session_doctor.py ml/src/lab_session/create_session_plan.py ml/src/lab_session/scenario_marker_helper.py ml/src/lab_session/post_session_input_check.py ml/src/lab_session/generate_run_commands.py ml/src/lab_session/session_summary.py ml/src/thesis_integration/common.py ml/src/thesis_integration/check_thesis_inputs.py ml/src/thesis_integration/generate_chapter5_implementation_section.py ml/src/thesis_integration/generate_chapter6_results_section.py ml/src/thesis_integration/generate_chapter7_summary_hu.py ml/src/thesis_integration/generate_chapter8_summary_en.py ml/src/thesis_integration/generate_abstracts.py ml/src/thesis_integration/generate_figures_and_tables_plan.py ml/src/thesis_integration/generate_appendix_plan.py ml/src/thesis_integration/generate_thesis_update_package.py ml/src/thesis_integration/generate_defense_questions_from_results.py ml/src/final_acceptance/common.py ml/src/final_acceptance/check_make_targets.py ml/src/final_acceptance/check_expected_failure_modes.py ml/src/final_acceptance/check_provenance_policy.py ml/src/final_acceptance/check_documentation_consistency.py ml/src/final_acceptance/check_release_candidate_readiness.py ml/src/final_acceptance/generate_real_lab_execution_brief.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -324,6 +326,75 @@ lab-session-after-capture:
 
 lab-session-after-results:
 	$(MAKE) lab-session-summary
+
+thesis-check-inputs:
+	$(PYTHON) -m ml.src.thesis_integration.check_thesis_inputs --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-chapter5:
+	$(PYTHON) -m ml.src.thesis_integration.generate_chapter5_implementation_section --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-chapter6:
+	$(PYTHON) -m ml.src.thesis_integration.generate_chapter6_results_section --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-summary-hu:
+	$(PYTHON) -m ml.src.thesis_integration.generate_chapter7_summary_hu --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-summary-en:
+	$(PYTHON) -m ml.src.thesis_integration.generate_chapter8_summary_en --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-abstracts:
+	$(PYTHON) -m ml.src.thesis_integration.generate_abstracts --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-figures-tables-plan:
+	$(PYTHON) -m ml.src.thesis_integration.generate_figures_and_tables_plan --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-appendix-plan:
+	$(PYTHON) -m ml.src.thesis_integration.generate_appendix_plan --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-update-package:
+	$(PYTHON) -m ml.src.thesis_integration.generate_thesis_update_package --output-dir $(THESIS_INTEGRATION_DIR)
+
+thesis-generate-defense-questions:
+	$(PYTHON) -m ml.src.thesis_integration.generate_defense_questions_from_results --output-dir $(THESIS_INTEGRATION_DIR)
+
+final-thesis-integration:
+	$(MAKE) thesis-check-inputs
+	$(MAKE) thesis-generate-chapter5
+	$(MAKE) thesis-generate-chapter6
+	$(MAKE) thesis-generate-summary-hu
+	$(MAKE) thesis-generate-summary-en
+	$(MAKE) thesis-generate-abstracts
+	$(MAKE) thesis-generate-figures-tables-plan
+	$(MAKE) thesis-generate-appendix-plan
+	$(MAKE) thesis-generate-update-package
+	$(MAKE) thesis-generate-defense-questions
+
+final-acceptance-make-targets:
+	$(PYTHON) -m ml.src.final_acceptance.check_make_targets --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance-failure-modes:
+	$(PYTHON) -m ml.src.final_acceptance.check_expected_failure_modes --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance-provenance-policy:
+	$(PYTHON) -m ml.src.final_acceptance.check_provenance_policy --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance-docs:
+	$(PYTHON) -m ml.src.final_acceptance.check_documentation_consistency --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance-readiness:
+	$(PYTHON) -m ml.src.final_acceptance.check_release_candidate_readiness --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance-brief:
+	$(PYTHON) -m ml.src.final_acceptance.generate_real_lab_execution_brief --output-dir $(FINAL_ACCEPTANCE_DIR)
+
+final-acceptance:
+	$(MAKE) final-acceptance-make-targets
+	$(MAKE) final-acceptance-failure-modes
+	$(MAKE) final-acceptance-provenance-policy
+	$(MAKE) final-acceptance-docs
+	$(MAKE) repo-hygiene-check
+	$(MAKE) final-acceptance-readiness
+	$(MAKE) final-acceptance-brief
 
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto

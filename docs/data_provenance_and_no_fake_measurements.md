@@ -159,3 +159,11 @@ Fontos megkötések:
 - A scenario marker export csak akkor valid ground truth forrás, ha a markerek tényleges lab futás közben lettek rögzítve.
 - Eredménynek csak a provenance-ben rögzített inputokból számolt output tekinthető.
 - A session réteg nem futtat támadó parancsot, és nem hoz létre mérési inputot.
+
+## Final acceptance check szerepe
+
+A final acceptance check célja annak ellenőrzése, hogy a rendszer a tényleges lab mérés előtt konzisztens és védett állapotban van-e. Ez a réteg nem hoz létre mérési bemenetet, nem exportál Wazuh alertet, és nem számol metrikát.
+
+A failure mode ellenőrzések azt bizonyítják, hogy a rendszer hiányzó Wazuh export, hiányzó lab feature, demo input vagy provenance hiány esetén nem ad végleges READY státuszt. Ez azért fontos, mert a helyes hibázás ugyanúgy része a mérnöki megbízhatóságnak, mint a sikeres futás.
+
+A real-lab pipeline-nak input nélkül hibáznia kell, mert ellenkező esetben fennállna a veszélye, hogy üres vagy demonstrációs fájlokból látszólagos eredmény születik. Ugyanebből az okból a demo inputot real-lab inputként minden guard rétegnek el kell utasítania.

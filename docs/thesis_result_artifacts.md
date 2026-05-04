@@ -190,6 +190,40 @@ Ez a blokk a tényleges mérés végrehajtását támogató operátori segédlet
 | Futtatási parancslista | `reports/lab_session/run_commands.md` | A mérési pipeline kézi futtatási sorrendje | operátori segédlet |
 | Session összefoglaló | `reports/lab_session/session_summary.md` | A session után rendelkezésre álló inputok és outputok áttekintése | operátori összegzés |
 
+## Dolgozati fejezetintegrációs kimenetek
+
+Ez a blokk a tényleges mérés után előálló, Wordbe másolható szöveges segédanyagokat sorolja fel. Ezek csak verified real_lab provenance mellett használhatók végleges dolgozati eredményként. Ha nincs provenance, csak szerkezeti vagy draft segédanyagként értelmezhetők. A `reports/thesis_integration/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| 5. fejezet implementációs rész | `reports/thesis_integration/chapter5_implementation_generated.md` | Implementációs fejezetrész Wordbe illesztéshez | verified real_lab provenance mellett véglegesíthető |
+| 6. fejezet eredményrész | `reports/thesis_integration/chapter6_results_generated.md` | Eredmények és értékelés fejezetrész | verified real_lab provenance mellett véglegesíthető |
+| 6. fejezet táblázatai | `reports/thesis_integration/chapter6_tables.md` | Wordbe másolható metrikatáblák | mérési CSV-k alapján |
+| 6. fejezet korlátai | `reports/thesis_integration/chapter6_limitations.md` | Korlátok és érvényességi feltételek | dolgozatba beemelhető |
+| Kutatási kérdés válasza | `reports/thesis_integration/chapter6_research_question_answer.md` | 6. fejezet záró értékelése | metrikákból következtetve |
+| Magyar összegzés | `reports/thesis_integration/chapter7_osszegzes_generated.md` | 7. fejezet vázlata | kézi ellenőrzéssel beemelhető |
+| Angol Summary | `reports/thesis_integration/chapter8_summary_generated.md` | 8. fejezet vázlata | kézi ellenőrzéssel beemelhető |
+| Magyar absztrakt | `reports/thesis_integration/abstract_hu_generated.md` | Absztrakt vázlata | terjedelem kézi ellenőrzést igényel |
+| Angol abstract | `reports/thesis_integration/abstract_en_generated.md` | Abstract vázlata | terjedelem kézi ellenőrzést igényel |
+| Ábraterv | `reports/thesis_integration/figures_plan.md` | Dolgozatba kerülő ábrák listája | provenance alapján minősített |
+| Táblázatterv | `reports/thesis_integration/tables_plan.md` | Dolgozatba kerülő táblázatok listája | provenance alapján minősített |
+| Mellékletterv | `reports/thesis_integration/appendix_plan.md` | Beadási mellékletek előkészítése | érzékeny fájlok külön kezelendők |
+| Dolgozati frissítési csomag | `reports/thesis_integration/thesis_update_package.md` | Wordbe illesztési sorrend és ellenőrzések | kézi véglegesítést igényel |
+| Védési kérdések | `reports/thesis_integration/defense_questions_generated.md` | Védési felkészülési segédlet | metrikák alapján frissítendő |
+
+## Final acceptance és release-candidate ellenőrzések
+
+Ez a blokk a tényleges mérés előtti release-candidate ellenőrzéseket sorolja fel. Ezek nem mérési eredmények, hanem azt dokumentálják, hogy a rendszer konzisztens, védett és készen áll-e a valós lab mérés futtatására. A `reports/final_acceptance/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Makefile target ellenőrzés | `reports/final_acceptance/make_targets_check.md` | A mérési workflow célpontjainak ellenőrzése | release-candidate segédlet |
+| Elvárt hibamódok ellenőrzése | `reports/final_acceptance/failure_modes_check.md` | Hiányzó vagy tiltott inputok elutasításának dokumentálása | release-candidate segédlet |
+| Provenance policy ellenőrzés | `reports/final_acceptance/provenance_policy_check.md` | No-demo és futási output policy ellenőrzése | release-candidate segédlet |
+| Dokumentációs konzisztencia | `reports/final_acceptance/documentation_consistency_check.md` | Nem igazolt real-lab állítások kiszűrése | release-candidate segédlet |
+| Release-candidate readiness | `reports/final_acceptance/release_candidate_readiness.md` | READY_FOR_REAL_LAB_RUN / READY_WITH_WARNINGS / NOT_READY státusz | mérés előtti döntéstámogatás |
+| Real-lab execution brief | `reports/final_acceptance/real_lab_execution_brief.md` | Operátori mérési sorrend a tényleges lab futtatáshoz | mérésnapi segédlet |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

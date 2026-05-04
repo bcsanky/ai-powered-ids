@@ -51,6 +51,8 @@ reports/wazuh_export/
 reports/lab_input_validation/
 reports/live_integration/
 reports/lab_session/
+reports/thesis_integration/
+reports/final_acceptance/
 reports/scored_events.jsonl
 
 # Generated result outputs

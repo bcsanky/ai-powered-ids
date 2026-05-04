@@ -102,3 +102,30 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] A 6. fejezetbe történő beemelés a `thesis_readiness.md` alapján megtörtént.
 - [ ] A `repo-hygiene-audit` lefutott, és a cleanup terv át lett nézve.
 - [ ] A thesis_readiness READY státusza csak érvényes provenance mellett lett elfogadva.
+
+## Dolgozati fejezetintegráció
+
+- [ ] Lefutott a `make final-thesis-integration`.
+- [ ] Elkészült a `reports/thesis_integration/chapter5_implementation_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/chapter6_results_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/chapter7_osszegzes_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/chapter8_summary_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/abstract_hu_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/abstract_en_generated.md`.
+- [ ] Elkészült a `reports/thesis_integration/figures_plan.md`.
+- [ ] Elkészült a `reports/thesis_integration/tables_plan.md`.
+- [ ] Elkészült a `reports/thesis_integration/appendix_plan.md`.
+- [ ] Elkészült a `reports/thesis_integration/defense_questions_generated.md`.
+- [ ] A Wordbe beemelés megtörtént.
+- [ ] A metrikák, ábraszámok, táblázatszámok és hivatkozások kézi ellenőrzése megtörtént.
+
+## Final acceptance
+
+- [ ] Lefutott a `make final-acceptance`.
+- [ ] A `reports/final_acceptance/release_candidate_readiness.md` státusza READY_FOR_REAL_LAB_RUN vagy READY_WITH_WARNINGS.
+- [ ] Elkészült a `reports/final_acceptance/real_lab_execution_brief.md`.
+- [ ] A failure mode check sikeres.
+- [ ] Nincs tiltott dokumentációs állítás.
+- [ ] A tracked futási output guard sikeres.
+- [ ] A final acceptance után továbbra is lefutott a `make repo-hygiene-check`.
+- [ ] A final acceptance után továbbra is lefutott a `make final-validate`.
