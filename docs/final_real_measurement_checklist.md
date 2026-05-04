@@ -53,6 +53,8 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Lefutott a `make final-real-hybrid`.
 - [ ] Lefutott a `make real-measurement-validate-bundle`.
 - [ ] A bundle validáció státusza PASS.
+- [ ] Elkészült a `reports/real_measurement/measurement_provenance.json`.
+- [ ] Lefutott a `make check-no-demo-real-results`.
 - [ ] Lefutott a `make real-measurement-postrun-qa`.
 - [ ] A post-run QA státusza READY vagy READY_WITH_LIMITATIONS.
 - [ ] Elkészült a `results/wazuh_real/metrics_summary.csv`.
@@ -76,3 +78,5 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] A hibrid eredmény ugyanazon ground truth eseményeken értelmezhető.
 - [ ] A korlátok rögzítve vannak: lab mérés, nem hosszú idejű éles SOC-validáció.
 - [ ] A 6. fejezetbe történő beemelés a `thesis_readiness.md` alapján megtörtént.
+- [ ] A `repo-hygiene-audit` lefutott, és a cleanup terv át lett nézve.
+- [ ] A thesis_readiness READY státusza csak érvényes provenance mellett lett elfogadva.

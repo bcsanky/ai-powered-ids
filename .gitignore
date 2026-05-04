@@ -34,6 +34,17 @@ data/wazuh/alerts*.json
 data/wazuh/alerts*.jsonl
 raw/wazuh_export*.json
 reports/real_measurement_redacted/redaction_mapping.json
+reports/real_measurement_qa/*.md
+reports/real_measurement_qa/*.csv
+reports/real_measurement_qa/*.json
+reports/repo_hygiene/
+reports/real_measurement/
+reports/wazuh_export/
+reports/lab_input_validation/
+results/real_comparison/
+results/wazuh_real/
+results/ae_lab/
+results/hybrid_real/
 
 # Wazuh / OpenSearch generated data
 infra/wazuh/data/

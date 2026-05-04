@@ -8,8 +8,12 @@ from typing import Any
 
 import pandas as pd
 
+from ml.src.repo_hygiene.common import load_provenance, provenance_status_for_path, validate_provenance_payload
+
 
 DEFAULT_ROOTS = [
+    "examples/lab",
+    "examples/scoring",
     "data/lab",
     "data/wazuh",
     "data/processed/wazuh_real",
@@ -18,9 +22,14 @@ DEFAULT_ROOTS = [
     "results/ae_lab",
     "results/hybrid_real",
     "results/real_comparison",
+    "results/performance",
+    "reports/lab",
+    "reports/final",
+    "reports/performance",
     "reports/lab_input_validation",
     "reports/wazuh_export",
     "reports/real_measurement",
+    "figures/final",
 ]
 
 
@@ -57,14 +66,23 @@ def category_for(path: Path) -> str:
     return "validated_input"
 
 
-def include_in_submission(path: Path, category: str) -> tuple[bool, str]:
+def include_in_submission(path: Path, category: str, provenance_status: str) -> tuple[bool, str]:
+    text = path.as_posix()
     suffix = path.suffix.lower()
+    if text.startswith("examples/"):
+        return False, "Demonstrációs input; nem real-lab mérési eredmény."
+    if text.startswith("reports/lab/") or text.startswith("reports/final/"):
+        return False, "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
     if suffix in {".pcap", ".pcapng"}:
         return False, "Nagy nyers forgalmi állomány; külön kezelendő."
     if path.name.startswith("alerts") and suffix in {".json", ".jsonl"}:
         return False, "Wazuh alert export érzékeny adatot tartalmazhat."
     if "redaction_mapping" in path.name:
         return False, "Anonimizálási mapping érzékeny adat."
+    if text.startswith("reports/real_measurement") or text.startswith("results/real_comparison"):
+        if provenance_status == "verified_real_lab":
+            return True, "Provenance alapján real-lab méréshez köthető eredményfájl."
+        return False, "Provenance hiányában nem kerülhet real-lab beadási csomagba."
     if category in {"metric", "figure", "report", "metadata"}:
         return True, "Dolgozati melléklethez használható eredményfájl."
     return False, "Input vagy köztes állomány; szükség szerint külön mellékelhető."
@@ -78,6 +96,8 @@ def iter_files(root: Path, relative_root: Path) -> list[Path]:
 
 def build_manifest(root: Path) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
+    provenance = load_provenance(root / "reports/real_measurement/measurement_provenance.json")
+    validate_provenance_payload(provenance)
     output_manifest_names = {
         "measurement_manifest.csv",
         "measurement_manifest.md",
@@ -90,13 +110,15 @@ def build_manifest(root: Path) -> pd.DataFrame:
             if rel_path.name in output_manifest_names:
                 continue
             category = category_for(rel_path)
-            include, note = include_in_submission(rel_path, category)
+            provenance_status = provenance_status_for_path(rel_path, provenance)
+            include, note = include_in_submission(rel_path, category, provenance_status)
             rows.append(
                 {
                     "relative_path": rel_path.as_posix(),
                     "file_size_bytes": path.stat().st_size,
                     "sha256": sha256_file(path),
                     "category": category,
+                    "provenance_status": provenance_status,
                     "include_in_submission": include,
                     "note": note,
                 }
@@ -108,6 +130,7 @@ def build_manifest(root: Path) -> pd.DataFrame:
             "file_size_bytes",
             "sha256",
             "category",
+            "provenance_status",
             "include_in_submission",
             "note",
         ],
@@ -118,8 +141,8 @@ def write_markdown(df: pd.DataFrame, path: Path) -> None:
     lines = [
         "# Real-lab mérési manifest",
         "",
-        "| relative_path | file_size_bytes | sha256 | category | include_in_submission | note |",
-        "|---|---:|---|---|---|---|",
+        "| relative_path | file_size_bytes | sha256 | category | provenance_status | include_in_submission | note |",
+        "|---|---:|---|---|---|---|---|",
     ]
     for _, row in df.iterrows():
         lines.append(
@@ -130,6 +153,7 @@ def write_markdown(df: pd.DataFrame, path: Path) -> None:
                     str(row["file_size_bytes"]),
                     str(row["sha256"]),
                     str(row["category"]),
+                    str(row["provenance_status"]),
                     str(row["include_in_submission"]),
                     str(row["note"]),
                 ]

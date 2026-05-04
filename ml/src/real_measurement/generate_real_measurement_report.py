@@ -8,6 +8,8 @@ from typing import Any
 
 import pandas as pd
 
+from ml.src.repo_hygiene.common import load_provenance, validate_provenance_payload
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -17,6 +19,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hybrid-metrics", default="results/hybrid_real/metrics_summary.csv")
     parser.add_argument("--input-validation", default="reports/lab_input_validation/input_validation_report.md")
     parser.add_argument("--wazuh-summary", default="reports/wazuh_export/wazuh_export_summary.md")
+    parser.add_argument("--provenance", default="reports/real_measurement/measurement_provenance.json")
     parser.add_argument("--output-dir", default="reports/real_measurement")
     return parser.parse_args()
 
@@ -120,6 +123,42 @@ def optional_section(path: Path, title: str) -> list[str]:
     return [f"## {title}", "", text.strip(), ""]
 
 
+def provenance_lines(path: Path) -> tuple[list[str], bool]:
+    provenance = load_provenance(path)
+    valid, errors = validate_provenance_payload(provenance)
+    if provenance is None:
+        return (
+            [
+                "## Adateredet és provenance",
+                "",
+                "Figyelmeztetés: provenance fájl hiányzik, ezért az eredmények nem használhatók végleges real-lab bizonyítékként.",
+                "",
+            ],
+            False,
+        )
+    lines = [
+        "## Adateredet és provenance",
+        "",
+        f"- measurement_source: `{provenance.get('measurement_source', 'nincs adat')}`",
+        f"- ground_truth_path: `{provenance.get('ground_truth_path', 'nincs adat')}`",
+        f"- ground_truth_sha256: `{provenance.get('ground_truth_sha256', 'nincs adat')}`",
+        f"- lab_features_path: `{provenance.get('lab_features_path', 'nincs adat')}`",
+        f"- lab_features_sha256: `{provenance.get('lab_features_sha256', 'nincs adat')}`",
+        f"- wazuh_alerts_path: `{provenance.get('wazuh_alerts_path', 'nincs adat')}`",
+        f"- wazuh_alerts_sha256: `{provenance.get('wazuh_alerts_sha256', 'nincs adat')}`",
+        "",
+    ]
+    if not valid:
+        lines.extend(
+            [
+                "Figyelmeztetés: a provenance fájl nem érvényes, ezért az eredmények nem használhatók végleges real-lab bizonyítékként.",
+                "Hibák: " + "; ".join(errors),
+                "",
+            ]
+        )
+    return lines, valid
+
+
 def generate_report(
     *,
     comparison_path: Path,
@@ -128,6 +167,7 @@ def generate_report(
     hybrid_metrics_path: Path,
     input_validation_path: Path,
     wazuh_summary_path: Path,
+    provenance_path: Path,
     output_dir: Path,
 ) -> dict[str, Path]:
     comparison = read_required_csv(comparison_path)
@@ -142,9 +182,12 @@ def generate_report(
         metric_change_text(comparison, "false_positive_rate", "FPR", lower_is_better=True),
         metric_change_text(comparison, "alert_count", "Riasztásszám", lower_is_better=True),
     ]
+    provenance_section, has_valid_provenance = provenance_lines(provenance_path)
+    title = "# Valós lab-alapú Wazuh+AE eredmények" if has_valid_provenance else "# Lab-alapú Wazuh+AE eredmények provenance nélkül"
     thesis_lines = [
-        "# Valós lab-alapú Wazuh+AE eredmények",
+        title,
         "",
+        *provenance_section,
         "## Mérési cél",
         "A mérés célja annak ellenőrzése, hogy ugyanazon címkézett lab eseményeken hogyan viszonyul egymáshoz a Wazuh-only szabályalapú baseline, az AE-Minimal offline lab pontozás és a hibrid Wazuh+AE döntés.",
         "",
@@ -211,6 +254,7 @@ def main() -> None:
         hybrid_metrics_path=Path(args.hybrid_metrics),
         input_validation_path=Path(args.input_validation),
         wazuh_summary_path=Path(args.wazuh_summary),
+        provenance_path=Path(args.provenance),
         output_dir=Path(args.output_dir),
     )
     for path in outputs.values():

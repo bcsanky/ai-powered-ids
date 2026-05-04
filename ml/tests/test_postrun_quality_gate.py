@@ -5,6 +5,7 @@ import json
 import pandas as pd
 
 from ml.src.real_measurement_qa.postrun_quality_gate import run_quality_gate
+from ml.src.repo_hygiene.create_measurement_provenance import create_provenance
 
 
 def write_csv(path, rows):
@@ -12,7 +13,14 @@ def write_csv(path, rows):
     pd.DataFrame(rows).to_csv(path, index=False)
 
 
-def create_postrun_bundle(root, *, hybrid_f1=0.7, include_comparison=True):
+def create_postrun_bundle(root, *, hybrid_f1=0.7, include_comparison=True, with_provenance=True):
+    ground_truth = root / "data/lab/lab_ground_truth.csv"
+    lab_features = root / "data/lab/lab_features.csv"
+    wazuh_alerts = root / "data/wazuh/alerts.jsonl"
+    write_csv(ground_truth, [{"event_id": "e1", "label": "benign"}, {"event_id": "e2", "label": "attack"}])
+    write_csv(lab_features, [{"event_id": "e1"}, {"event_id": "e2"}])
+    wazuh_alerts.parent.mkdir(parents=True, exist_ok=True)
+    wazuh_alerts.write_text('{"timestamp":"2026-05-04T10:00:00Z"}\n', encoding="utf-8")
     metrics = {
         "precision": 0.5,
         "recall": 0.5,
@@ -56,6 +64,13 @@ def create_postrun_bundle(root, *, hybrid_f1=0.7, include_comparison=True):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("ok\n", encoding="utf-8")
     write_csv(root / "reports/real_measurement/measurement_manifest.csv", [{"relative_path": "x", "sha256": "abc"}])
+    if with_provenance:
+        create_provenance(
+            ground_truth=ground_truth,
+            lab_features=lab_features,
+            wazuh_alerts=wazuh_alerts,
+            output=root / "reports/real_measurement/measurement_provenance.json",
+        )
 
 
 def test_postrun_quality_gate_ready_for_consistent_metrics(tmp_path):
@@ -70,6 +85,14 @@ def test_postrun_quality_gate_ready_for_consistent_metrics(tmp_path):
 
 def test_postrun_quality_gate_not_ready_without_comparison(tmp_path):
     create_postrun_bundle(tmp_path, include_comparison=False)
+
+    result = run_quality_gate(tmp_path, tmp_path / "reports/real_measurement_qa")
+
+    assert result["status"] == "NOT_READY"
+
+
+def test_postrun_quality_gate_not_ready_without_provenance(tmp_path):
+    create_postrun_bundle(tmp_path, with_provenance=False)
 
     result = run_quality_gate(tmp_path, tmp_path / "reports/real_measurement_qa")
 

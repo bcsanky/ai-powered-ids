@@ -46,6 +46,7 @@ def test_report_does_not_claim_improvement_without_metric_improvement(tmp_path):
         hybrid_metrics_path=hybrid,
         input_validation_path=tmp_path / "missing.md",
         wazuh_summary_path=tmp_path / "missing2.md",
+        provenance_path=tmp_path / "missing_provenance.json",
         output_dir=tmp_path / "reports/real_measurement",
     )
 
@@ -71,6 +72,7 @@ def test_report_uses_cautious_improvement_sentence(tmp_path):
         hybrid_metrics_path=hybrid,
         input_validation_path=tmp_path / "missing.md",
         wazuh_summary_path=tmp_path / "missing2.md",
+        provenance_path=tmp_path / "missing_provenance.json",
         output_dir=tmp_path / "reports/real_measurement",
     )
 

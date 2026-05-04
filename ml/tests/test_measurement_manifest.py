@@ -29,7 +29,8 @@ def test_measurement_manifest_hashes_and_submission_flags(tmp_path):
     alert_row = manifest[manifest["relative_path"] == "data/wazuh/alerts.jsonl"].iloc[0]
     expected_hash = hashlib.sha256(metrics.read_bytes()).hexdigest()
     assert metric_row["sha256"] == expected_hash
-    assert bool(metric_row["include_in_submission"]) is True
+    assert metric_row["provenance_status"] == "missing_provenance"
+    assert bool(metric_row["include_in_submission"]) is False
     assert bool(alert_row["include_in_submission"]) is False
     assert outputs["markdown"].exists()
     assert outputs["json"].exists()

@@ -8,6 +8,8 @@ from typing import Any
 
 import pandas as pd
 
+from ml.src.repo_hygiene.common import load_provenance, validate_provenance_payload
+
 
 REQUIRED_INPUTS = [
     "data/lab/lab_ground_truth.csv",
@@ -144,6 +146,16 @@ def validate_measurement_bundle(root: Path, output_dir: Path) -> dict[str, Any]:
     numeric_values = [int(value) for value in n_values.values() if value is not None and not pd.isna(value)]
     same_n = len(numeric_values) == 3 and len(set(numeric_values)) == 1
     rows.append(check_row("n_samples_consistency", "PASS" if same_n else "FAIL", json.dumps(n_values)))
+
+    provenance = load_provenance(root / "reports/real_measurement/measurement_provenance.json")
+    valid_provenance, provenance_errors = validate_provenance_payload(provenance)
+    rows.append(
+        check_row(
+            "measurement_provenance",
+            "PASS" if valid_provenance else "WARN",
+            "verified_real_lab" if valid_provenance else "; ".join(provenance_errors),
+        )
+    )
 
     overall_status = "PASS" if all(row["status"] != "FAIL" for row in rows) else "FAIL"
     output_dir.mkdir(parents=True, exist_ok=True)

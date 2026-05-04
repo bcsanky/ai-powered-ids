@@ -8,6 +8,8 @@ from typing import Any
 
 import pandas as pd
 
+from ml.src.repo_hygiene.common import load_provenance, validate_provenance_payload
+
 
 EXPECTED_CONFIGURATIONS = [
     "Wazuh-only",
@@ -223,6 +225,20 @@ def check_label_coverage(metric_frames: list[pd.DataFrame | None]) -> dict[str, 
     return qa_row("label_coverage", "Metrikai konzisztencia", "FAIL", "nem igazolható benign és attack esemény is")
 
 
+def check_provenance(root: Path) -> dict[str, str]:
+    provenance = load_provenance(root / "reports/real_measurement/measurement_provenance.json")
+    valid, errors = validate_provenance_payload(provenance)
+    if valid:
+        return qa_row("measurement_provenance", "Adateredet", "PASS", "verified_real_lab provenance rendelkezésre áll")
+    return qa_row(
+        "measurement_provenance",
+        "Adateredet",
+        "FAIL",
+        "Az eredmények metrikailag értelmezhetők lehetnek, de provenance hiányában nem tekinthetők végleges real-lab dolgozati eredménynek.",
+        "; ".join(errors),
+    )
+
+
 def readiness_status(rows: list[dict[str, str]]) -> str:
     if any(row["status"] == "FAIL" for row in rows):
         return "NOT_READY"
@@ -274,7 +290,7 @@ def write_thesis_readiness(answer: dict[str, Any], output_path: Path, status: st
         "## Értelmezés",
     ]
     if status == "NOT_READY":
-        lines.append("A real-lab eredmények jelen állapotban nem emelhetők be végleges mérési eredményként.")
+        lines.append("Az eredmények jelen állapotban nem emelhetők be végleges real-lab mérési eredményként.")
     elif improved:
         lines.append("A vizsgált lab mérés alapján a legjobb hibrid konfigurációnál F1 javulás figyelhető meg a Wazuh-only baseline-hoz képest.")
     else:
@@ -303,6 +319,7 @@ def run_quality_gate(root: Path, output_dir: Path) -> dict[str, Any]:
         read_csv(root / "results/hybrid_real/metrics_summary.csv"),
     ]
     rows.append(check_label_coverage(metric_frames))
+    rows.append(check_provenance(root))
     status = readiness_status(rows)
     answer = compute_research_answer(comparison)
     answer["thesis_readiness_status"] = status

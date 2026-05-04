@@ -62,6 +62,9 @@ def test_bundle_validation_pass(tmp_path):
     assert result["overall_status"] == "PASS"
     assert result["summary"].exists()
     assert result["report"].exists()
+    summary = pd.read_csv(result["summary"])
+    provenance_row = summary[summary["check"] == "measurement_provenance"].iloc[0]
+    assert provenance_row["status"] == "WARN"
 
 
 def test_bundle_validation_reports_fail(tmp_path):

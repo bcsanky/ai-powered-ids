@@ -2,6 +2,8 @@
 
 Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely futtatási könyvtárak, CSV állományok és PNG ábrák használhatók a diplomamunka 6. fejezetében. A felsorolt eredmények dokumentált konfigurációval, azonos futtatási beállítások mellett reprodukálhatók.
 
+Fontos adateredeti megkötés: a `reports/lab`, `reports/final` és `examples/lab` tartalma demonstrációs vagy offline jellegű, ezért nem használható real-lab mérési eredményként. Real-lab eredmény csak `reports/real_measurement/measurement_provenance.json` megléte és `verified_real_lab` provenance státusz esetén emelhető be a dolgozat mérési eredményei közé.
+
 ## Végleges futtatási könyvtárak
 
 | Mérési ág | Futtatási könyvtár | Státusz |
