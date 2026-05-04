@@ -1,10 +1,15 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
 
 BASELINE ?= stat
 PYTHON ?= python3
 CONFIG ?= experiments/experiment.yaml
 DATA_DIR ?= data/processed
 RESULTS_DIR ?= results
+WAZUH_ALERTS ?= data/wazuh/alerts.jsonl
+WAZUH_GROUND_TRUTH ?= data/lab/lab_ground_truth.csv
+WAZUH_WORK_DIR ?= data/processed/wazuh_real
+WAZUH_RESULTS_DIR ?= results/wazuh_real
+WAZUH_WINDOW_SECONDS ?= 60
 
 dataset:
 	$(PYTHON) ml/src/build_dataset.py --config $(CONFIG)
@@ -32,7 +37,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -66,6 +71,16 @@ final-rule-proxy:
 
 final-hybrid:
 	$(PYTHON) -m ml.src.hybrid_eval --ae-root results/final/final-ae-minimal-v1 --rule-root results/final/final-rule-proxy-v1 --output-dir results/final/final-hybrid-v1
+
+wazuh-parse-alerts:
+	$(PYTHON) -m ml.src.wazuh_baseline.parse_wazuh_alerts --input $(WAZUH_ALERTS) --output $(WAZUH_WORK_DIR)/alerts_parsed.csv
+
+wazuh-correlate:
+	$(PYTHON) -m ml.src.wazuh_baseline.build_ground_truth --input $(WAZUH_GROUND_TRUTH) --output $(WAZUH_WORK_DIR)/lab_ground_truth_validated.csv
+	$(PYTHON) -m ml.src.wazuh_baseline.correlate_alerts --ground-truth $(WAZUH_WORK_DIR)/lab_ground_truth_validated.csv --alerts $(WAZUH_WORK_DIR)/alerts_parsed.csv --output $(WAZUH_WORK_DIR)/wazuh_correlated.csv --window-seconds $(WAZUH_WINDOW_SECONDS)
+
+wazuh-eval-real:
+	$(PYTHON) -m ml.src.wazuh_baseline.evaluate_wazuh_baseline --input $(WAZUH_WORK_DIR)/wazuh_correlated.csv --results-dir $(WAZUH_RESULTS_DIR)
 
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto
