@@ -2,7 +2,7 @@
 
 A szakdolgozat végleges mérési folyamata a projektben rögzített parancsokra, a `Makefile` célokra, az `ml/src/build_dataset.py`, `ml/src/train_ae.py` és `ml/src/eval.py` belépési pontokra, valamint az `experiments/final/` alatti végleges konfigurációkra épül.
 
-A cél egy reprodukálható mérési lánc kialakítása, amelyben az autoencoder-alapú konfigurációk, a statisztikai viszonyítási alap (baseline), a Wazuh-stílusú baseline és a tervezett hibrid kiértékelés egységesen dokumentált eredményfájlokat állít elő.
+A cél egy reprodukálható mérési lánc kialakítása, amelyben az autoencoder-alapú konfigurációk, a statisztikai viszonyítási alap (baseline), a szabályalapú proxy baseline, a natív Wazuh exporttal futtatható opcionális baseline és az offline hibrid kiértékelés egységesen dokumentált eredményfájlokat állít elő.
 
 ## 1. Szükséges bemeneti adatok
 
@@ -35,7 +35,7 @@ dev_sample:
 
 A `dev_sample` kizárólag technikai validációra szolgál. Bekapcsolt állapotban az adatépítés a tisztítás után, de a tanító, validációs, kalibrációs és teszt adatrészekre bontás előtt determinisztikus mintavételt végez a `random_seed` alapján, és lehetőség szerint megőrzi mind a benign, mind a támadó osztályt. Az így készült gyors futtathatósági ellenőrzés eredményei nem használhatók végleges szakdolgozati mérési eredményként.
 
-A Wazuh baseline külön bemenetet igényel: egy Wazuh vagy Wazuh-szerű exportot, amely tartalmazza a valós címkét és a Wazuh riasztási vagy predikciós mezőit. Támogatott formátumok a prototípus jelen változatában az `ml/src/eval.py` alapján:
+A natív Wazuh baseline külön bemenetet igényel: egy Wazuh exportot, amely tartalmazza a valós címkét és a Wazuh riasztási vagy predikciós mezőit. Támogatott formátumok a prototípus jelen változatában az `ml/src/eval.py` alapján:
 
 ```text
 .parquet
@@ -162,9 +162,9 @@ python3 -m ml.src.eval \
 
 A baseline a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot, majd a validációs pontszámok megadott kvantilise szerint választ küszöböt.
 
-## 6. Wazuh baseline kiértékelési parancs
+## 6. Natív Wazuh baseline kiértékelési parancs
 
-A Wazuh baseline kiértékelését a meglévő `ml/src/eval.py` támogatja a következő argumentumokkal:
+A natív Wazuh baseline kiértékelését a meglévő `ml/src/eval.py` támogatja a következő argumentumokkal:
 
 ```bash
 python3 -m ml.src.eval \
@@ -185,28 +185,72 @@ wazuh_alerts.csv
 wazuh_alerts.jsonl
 ```
 
-A Wazuh baseline eredményeinek értelmezésekor jelezni kell, hogy ez riasztás- vagy logorientált baseline, míg az AE-Minimal CIC-IDS2017 flow jellemzőkön tanul.
+A natív Wazuh baseline eredményeinek értelmezésekor jelezni kell, hogy ez riasztás- vagy logorientált baseline, míg az AE-Minimal CIC-IDS2017 flow jellemzőkön tanul. Ha nincs megfelelő címkézett Wazuh export, ez az ág nem tekinthető validált mérési eredménynek.
 
-## 7. Tervezett hibrid kiértékelési lépés
+## 7. Szabályalapú proxy baseline
 
-A hibrid kiértékelés tervezett elem. A projektben nincs külön hibrid kiértékelő modul, és az `ml/src/eval.py` nem tartalmaz külön hibrid fúziós módot.
+Ha nem áll rendelkezésre címkézett natív Wazuh export, a mérési lánc egy kontrollált, flow-alapú szabályproxy baseline-t használ. Ez nem natív Wazuh teljesítménymérés, hanem Wazuh-szerű szabályalapú export, amely a meglévő `ml/src/eval.py --baseline wazuh` kiértékelési útvonalon futtatható.
 
-A tervezett hibrid lépés célja az AE predikciók és a Wazuh predikciók összekapcsolása egy stabil esemény- vagy flow-azonosító alapján. A kezdeti döntési logika:
+A proxy export előállítása:
 
-```text
-hybrid_alert = ae_prediction == 1 OR wazuh_prediction == 1
+```bash
+python3 -m ml.src.create_rule_proxy_export \
+  --data-dir data/processed/final/ae_minimal \
+  --output-dir data/processed/final/rule_proxy \
+  --threshold-quantile 0.95
 ```
 
-A későbbi hibrid kiértékelő bemenete várhatóan az AE és Wazuh `predictions.csv` állománya lesz, kimenete pedig a többi mérési ággal azonos szerkezetű `results/final/final-hybrid-v1/` eredménykönyvtárba kerülhet. A szakdolgozatban ezt a lépést addig tervezett hibrid értékelésként kell megnevezni, amíg a megfelelő implementáció és validált kimenet nem készül el.
+Kiértékelés:
 
-## 8. Elvárt eredményfájlok
+```bash
+python3 -m ml.src.eval \
+  --baseline wazuh \
+  --data-dir data/processed/final/rule_proxy \
+  --results-dir results/final/final-rule-proxy-v1 \
+  --wazuh-input data/processed/final/rule_proxy/wazuh_like_rule_eval.csv
+```
+
+Makefile cél:
+
+```bash
+make final-rule-proxy
+```
+
+A szabályproxy pontszáma soronként a legnagyobb abszolút standardizált numerikus jellemzőérték. A küszöb a validációs adatrész pontszámeloszlásának 0,95 kvantilise, így a teszt címkéi nem vesznek részt a szabály illesztésében.
+
+## 8. Offline hibrid kiértékelési lépés
+
+A hibrid kiértékelés az AE-Minimal predikciókat és a rule_proxy predikciókat kombinálja. A döntési logika:
+
+```text
+hybrid_pred = ae_pred == 1 OR rule_pred == 1
+```
+
+A hibrid pontszám a min-max normalizált AE-pontszám és a min-max normalizált rule_proxy pontszám maximuma. A kiértékelés azonos teszthalmaz-sorrendet feltételez az AE-Minimal és rule_proxy `predictions.csv` fájlokban; ez kontrollált offline mérés, nem éles eseménykorreláció.
+
+Futtatás:
+
+```bash
+make final-hybrid
+```
+
+Közvetlen parancs:
+
+```bash
+python3 -m ml.src.hybrid_eval \
+  --ae-root results/final/final-ae-minimal-v1 \
+  --rule-root results/final/final-rule-proxy-v1 \
+  --output-dir results/final/final-hybrid-v1
+```
+
+## 9. Elvárt eredményfájlok
 
 Az alábbi eredményfájlok szolgálnak a szakdolgozati mérés alapjául. Nem minden fájlt ugyanaz a script állít elő minden konfiguráció esetén.
 
 | Fájl | Előállító lépés | Tartalom | Megjegyzés |
 |---|---|---|---|
-| `metrics_summary.csv` | AE tanítás és baseline kiértékelés | Fő mérőszámok: precision, recall, F1, ROC-AUC, mintaszámok, küszöbinformációk | Az összehasonlító táblázatok elsődleges forrása. |
-| `predictions.csv` | AE tanítás és baseline kiértékelés | Mintaszintű pontszámok, címkék és predikciók | Alert count és részletes hibaelemzés számítható belőle. |
+| `metrics_summary.csv` | AE tanítás, baseline kiértékelés és hibrid kiértékelés | Fő mérőszámok: precision, recall, F1, ROC-AUC, mintaszámok, küszöbinformációk | Az összehasonlító táblázatok elsődleges forrása. |
+| `predictions.csv` | AE tanítás, baseline kiértékelés és hibrid kiértékelés | Mintaszintű pontszámok, címkék és predikciók | Alert count és részletes hibaelemzés számítható belőle. |
 | `threshold_curve.csv` | AE tanítás és baseline kiértékelés | Küszöbértékekhez tartozó precision, recall és F1 | Küszöbérzékenységi elemzéshez. |
 | `top_feature_errors.csv` | AE tanítás | Jellemzőcsoportonkénti rekonstrukciós hiba | Autoencoder magyarázhatósági kiegészítés; baseline kiértékelés nem állítja elő. |
 | `confusion_matrix.png` | Baseline kiértékelés és AE ábragenerálás | Konfúziós mátrix ábra | Baseline futtatásokhoz az `eval.py`, AE futtatásokhoz a `plot_final_results.py` állítja elő. |
@@ -217,7 +261,7 @@ Az alábbi eredményfájlok szolgálnak a szakdolgozati mérés alapjául. Nem m
 
 Az AE tanítás CSV-alapú eredményeket és modellfájlokat ment. A baseline kiértékelés ezen felül több PNG ábrát is előállít. Az AE eredményekhez a `plot_final_results.py` készíti el a `confusion_matrix.png`, `score_distribution.png`, `threshold_curve.png`, `roc_curve.png` és `top_feature_frequency.png` ábrákat a futtatási eredménykönyvtárban.
 
-## 9. Május 4-i értékelési és validációs lépések
+## 10. Május 4-6. értékelési és validációs lépések
 
 A május 4-i kiegészítések célja, hogy a szakdolgozati értékelés metrikái, ábrái és összehasonlító táblázatai egységes formában álljanak elő. A metrikaszámítás az AE tanításban és a baseline kiértékelésben azonos kiegészítő mezőket tartalmaz:
 
@@ -281,7 +325,13 @@ make final-day5
 
 Ezt a célt csak akkor célszerű indítani, ha rendelkezésre áll a teljes AE-Context tanításhoz szükséges idő és számítási erőforrás.
 
-## 10. Kapcsolat a szakdolgozati ábrákkal és táblázatokkal
+A május 6-i cél nem indít új AE-Minimal vagy AE-Context teljes tanítást; csak a szabályproxy exportot, a proxy baseline kiértékelést, a hibrid offline kiértékelést és az összehasonlítást frissíti:
+
+```bash
+make final-day6
+```
+
+## 11. Kapcsolat a szakdolgozati ábrákkal és táblázatokkal
 
 A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 
@@ -298,4 +348,4 @@ A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 | Végleges összehasonlító táblázat | `results/final/comparison/metrics_comparison.md` | A fő konfigurációk egységes metrikáinak szakdolgozatba átemelhető táblázata. |
 | Végleges összehasonlító ábrák | `results/final/comparison/fig_comparison_*.png` | Precision/recall/F1, false positive rate és alert count összehasonlítása. |
 
-A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a Wazuh logalapú baseline és a tervezett hibrid fúzió eltérő adatmodellre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű éles üzemi IDS teljesítménygarancia megfogalmazása.
+A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a szabályalapú proxy baseline, az opcionális natív Wazuh baseline és az offline hibrid fúzió eltérő adatmodellre és eltérő feltételezésekre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű éles üzemi IDS teljesítménygarancia megfogalmazása.

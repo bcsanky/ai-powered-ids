@@ -1,0 +1,20 @@
+experiment_id: final-rule-proxy-v1
+title: "Final rule-based proxy baseline"
+
+random_seed: 42
+
+dataset:
+  data_dir: data/processed/final/ae_minimal
+
+baseline:
+  type: rule_proxy
+  method: max_abs_standardized_feature_rule
+  threshold_quantile: 0.95
+
+paths:
+  output_dir: data/processed/final/rule_proxy
+  results_dir: results/final/final-rule-proxy-v1
+
+notes:
+  - "Kontrollált szabályalapú proxy baseline."
+  - "Nem natív Wazuh teljesítménymérés."

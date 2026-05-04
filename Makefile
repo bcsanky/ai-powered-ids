@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-day4 final-day5
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid final-day4 final-day5 final-day6
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -32,7 +32,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -60,6 +60,13 @@ final-plot-ae-context:
 final-compare:
 	$(PYTHON) -m ml.src.compare_final_results --results-root results/final --output-dir results/final/comparison
 
+final-rule-proxy:
+	$(PYTHON) -m ml.src.create_rule_proxy_export --data-dir data/processed/final/ae_minimal --output-dir data/processed/final/rule_proxy --threshold-quantile 0.95
+	$(PYTHON) -m ml.src.eval --baseline wazuh --data-dir data/processed/final/rule_proxy --results-dir results/final/final-rule-proxy-v1 --wazuh-input data/processed/final/rule_proxy/wazuh_like_rule_eval.csv
+
+final-hybrid:
+	$(PYTHON) -m ml.src.hybrid_eval --ae-root results/final/final-ae-minimal-v1 --rule-root results/final/final-rule-proxy-v1 --output-dir results/final/final-hybrid-v1
+
 final-day4:
 	$(MAKE) final-validate
 	$(MAKE) final-plot-ae-minimal
@@ -76,4 +83,10 @@ final-day5:
 	$(MAKE) train-ae CONFIG=experiments/final/ae_context.yaml
 	$(MAKE) final-plot-ae-context
 	$(MAKE) final-plot-ae-minimal
+	$(MAKE) final-compare
+
+final-day6:
+	$(MAKE) final-validate
+	$(MAKE) final-rule-proxy
+	$(MAKE) final-hybrid
 	$(MAKE) final-compare

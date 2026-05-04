@@ -11,6 +11,7 @@ results/final/
   final-ae-minimal-v1/
   final-ae-context-v1/
   final-baseline-stat-v1/
+  final-rule-proxy-v1/
   final-baseline-wazuh-v1/
   final-hybrid-v1/
 ```
@@ -85,7 +86,7 @@ Nem elvárt fájl:
 
 ### `results/final/final-baseline-wazuh-v1/`
 
-A Wazuh vagy Wazuh-szerű exportált riasztások baseline kiértékelésének eredményei.
+A natív Wazuh exportált riasztások baseline kiértékelésének eredményei. Ez a könyvtár csak akkor tartalmaz validált mérési eredményt, ha rendelkezésre áll megfelelő címkézett Wazuh export.
 
 Elvárt fájlok:
 
@@ -101,23 +102,44 @@ Nem elvárt fájl:
 
 - `top_feature_errors.csv`, mivel ez a baseline nem autoencoder modellből származó jellemző-rekonstrukciós hibát mér.
 
-### `results/final/final-hybrid-v1/`
+### `results/final/final-rule-proxy-v1/`
 
-A hibrid AE + Wazuh kiértékelés eredményei. Ez a lépés tervezett implementációhoz kötött, ezért a könyvtár csak akkor tartalmaz végleges eredményeket, ha a hibrid kiértékelési folyamat már elkészült és validált.
+A szabályalapú proxy baseline eredményei. Ez kontrollált, flow-alapú Wazuh-szerű szabályproxy, nem natív Wazuh teljesítménymérés.
 
-Elvárt fájlok a hibrid implementáció elkészülte után:
+Elvárt fájlok:
 
 - `metrics_summary.csv`
 - `predictions.csv`
-- `threshold_curve.csv`, ha a hibrid döntés küszöbfüggő pontszámot is használ
+- `threshold_curve.csv`
+- `threshold_curve.png`
+- `confusion_matrix.csv`
 - `confusion_matrix.png`
-- `score_distribution.png`, ha hibrid pontszám is rendelkezésre áll
-- `roc_curve.png`, ha folytonos hibrid pontszám alapján értelmezhető
+- `score_distribution.png`
+- `roc_curve.png`
+- `run_metadata.json`
+
+Nem elvárt fájl:
+
+- `top_feature_errors.csv`, mivel ez a baseline nem autoencoder modellből származó jellemző-rekonstrukciós hibát mér.
+
+### `results/final/final-hybrid-v1/`
+
+A hibrid AE + rule_proxy kiértékelés eredményei. Ez kontrollált offline kiértékelés, amely az AE-Minimal és a szabályalapú proxy baseline predikcióit azonos teszthalmaz-sorrend mellett kombinálja.
+
+Elvárt fájlok:
+
+- `metrics_summary.csv`
+- `predictions.csv`
+- `confusion_matrix.csv`
+- `confusion_matrix.png`
+- `score_distribution.png`
+- `roc_curve.png`
 - `run_metadata.json`
 
 Opcionális vagy nem alkalmazható fájl:
 
 - `top_feature_errors.csv`, csak akkor releváns, ha a hibrid eredményben az AE rekonstrukciós hibák magyarázati célból továbbvezetésre kerülnek.
+- `threshold_curve.csv`, mivel a jelenlegi hibrid döntés fix unióalapú szabályt használ.
 
 ## A szakdolgozatban felhasznált fájlok
 
@@ -170,6 +192,7 @@ Példák:
 - `fig_ae_minimal_score_distribution.png`
 - `fig_ae_minimal_threshold_curve.png`
 - `fig_baseline_stat_confusion_matrix.png`
+- `fig_rule_proxy_confusion_matrix.png`
 - `fig_baseline_wazuh_roc_curve.png`
 - `fig_hybrid_confusion_matrix.png`
 
@@ -193,7 +216,7 @@ A május 4-i összehasonlító gyűjtőlépés a `results/final/comparison/` kö
 - `fig_comparison_false_positive_rate.png`
 - `fig_comparison_alert_count.png`
 
-A névben a konfiguráció legyen kisbetűs, aláhúzással tagolt, és egyezzen a végleges mérési konfiguráció rövid nevével: `ae_minimal`, `ae_context`, `baseline_stat`, `baseline_wazuh`, `hybrid`.
+A névben a konfiguráció legyen kisbetűs, aláhúzással tagolt, és egyezzen a végleges mérési konfiguráció rövid nevével: `ae_minimal`, `ae_context`, `baseline_stat`, `rule_proxy`, `baseline_wazuh`, `hybrid`.
 
 ## Reprodukálhatósági megjegyzés
 

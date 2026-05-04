@@ -20,8 +20,9 @@ CONFIGS = [
     ("ae_minimal", "final-ae-minimal-v1"),
     ("ae_context", "final-ae-context-v1"),
     ("baseline_stat", "final-baseline-stat-v1"),
-    ("baseline_wazuh", "final-baseline-wazuh-v1"),
+    ("rule_proxy", "final-rule-proxy-v1"),
     ("hybrid", "final-hybrid-v1"),
+    ("baseline_wazuh_real", "final-baseline-wazuh-v1"),
 ]
 
 OUTPUT_COLUMNS = [

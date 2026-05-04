@@ -34,15 +34,25 @@ execution_order:
     commands:
       eval: "python3 -m ml.src.eval --baseline stat --data-dir data/processed/final/ae_minimal --results-dir results/final/final-baseline-stat-v1"
 
+  - experiment_id: final-rule-proxy-v1
+    config: experiments/final/baseline_rule_proxy.yaml
+    stage: baseline
+    description: "Kontrollált flow-alapú szabályproxy, nem natív Wazuh teljesítménymérés."
+    commands:
+      export: "python3 -m ml.src.create_rule_proxy_export --data-dir data/processed/final/ae_minimal --output-dir data/processed/final/rule_proxy --threshold-quantile 0.95"
+      eval: "python3 -m ml.src.eval --baseline wazuh --data-dir data/processed/final/rule_proxy --results-dir results/final/final-rule-proxy-v1 --wazuh-input data/processed/final/rule_proxy/wazuh_like_rule_eval.csv"
+
   - experiment_id: final-baseline-wazuh-v1
     config: experiments/final/baseline_wazuh.yaml
-    stage: baseline
+    stage: optional_baseline
     commands:
       eval: "python3 -m ml.src.eval --baseline wazuh --data-dir data/processed/final/wazuh --results-dir results/final/final-baseline-wazuh-v1"
 
   - experiment_id: final-hybrid-v1
     config: experiments/final/hybrid.yaml
     stage: hybrid
+    commands:
+      eval: "python3 -m ml.src.hybrid_eval --ae-root results/final/final-ae-minimal-v1 --rule-root results/final/final-rule-proxy-v1 --output-dir results/final/final-hybrid-v1"
 
 comparison_outputs:
   root_dir: "results/final"
@@ -53,4 +63,4 @@ comparison_outputs:
 
 notes:
   - "This manifest is intentionally orchestration-only; current ML entrypoints consume the per-experiment YAML files directly."
-  - "The Wazuh and hybrid stages require exported Wazuh predictions before they can be fully executed."
+  - "Native Wazuh evaluation requires a labelled Wazuh export; without it, the rule_proxy stage is a controlled flow-based proxy baseline."

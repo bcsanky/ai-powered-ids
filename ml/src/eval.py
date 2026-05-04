@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
 
 import joblib
 import matplotlib.pyplot as plt

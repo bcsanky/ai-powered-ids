@@ -20,6 +20,8 @@ A végleges laboratóriumi prototípus egy reprodukálható kísérleti rendszer
 - Három küszöbölési stratégia: fix küszöb, validációs percentilis alapú küszöb és kalibrációs halmazon optimalizált F1-küszöb.
 - Statisztikai viszonyítási alap (baseline), amely a tanítóhalmaz középpontjától mért távolság alapján képez anomáliapontszámot.
 - Wazuh-stílusú baseline, amely exportált Wazuh riasztásokat vagy Wazuh-szerű predikciós mezőket hasonlít össze a címkézett adatokkal.
+- Szabályalapú proxy baseline, amely kontrollált offline kiértékelésben Wazuh-szerű exportot állít elő a feldolgozott CIC-IDS2017 flow adatokból.
+- Offline hibrid kiértékelés, amely az AE-Minimal és a szabályalapú proxy baseline predikcióit azonos teszthalmaz-sorrend mellett kombinálja.
 - Eredményfájlok, mérőszámok, AE ábrák és összehasonlító ábrák előállítása a szakdolgozati értékeléshez.
 
 A laboratóriumi prototípus a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható mérési láncon, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
@@ -33,8 +35,9 @@ A szakdolgozati prototípus lezárásáig az alábbi elemek tartoznak a megvaló
 - Az `ae_minimal` konfiguráció teljes futtatása, beleértve az adatépítést, a modell tanítását, a küszöbök számítását és a tesztkiértékelést.
 - Az `ae_context` konfiguráció futtatása egyszerű, timestamp nélküli kontextusjellemzőkkel.
 - A `baseline_stat` konfiguráció futtatása és eredményeinek összehasonlítása az autoencoder eredményeivel.
-- A `baseline_wazuh` konfiguráció előkészítése Wazuh vagy Wazuh-szerű exportált predikciók kiértékelésére.
-- A `hybrid` konfiguráció tervezési szintű rögzítése, amely az AE és Wazuh predikciók kombinálásának módját írja le.
+- A `rule_proxy` konfiguráció futtatása kontrollált, flow-alapú szabályproxyként.
+- A `baseline_wazuh` konfiguráció előkészítése natív Wazuh vagy Wazuh-szerű exportált predikciók kiértékelésére, ha ilyen címkézett export rendelkezésre áll.
+- A `hybrid` konfiguráció futtatása offline kiértékelésként, az AE-Minimal és a rule_proxy predikciók kombinálásával.
 - A fő mérőszámok táblázatos exportja: precision, recall, F1, false positive rate, confusion matrix és alert count.
 - A szakdolgozathoz felhasználható ábrák és táblázatok előállítása: küszöbgörbe, ROC-görbe, pontszámeloszlás, konfúziós mátrix, legfontosabb jellemzők gyakorisága és összehasonlító metrikaábrák, ahol értelmezhető.
 - A kísérleti lépések rövid futtatási dokumentációja és az eredmények értelmezése.
@@ -51,6 +54,8 @@ Nem cél mély Wazuh szabálykészlet-fejlesztés vagy egyedi Wazuh szabályfejl
 
 Nem cél a CIC-IDS2017 flow jellemzőinek teljes megfeleltetése valós Wazuh logmezőknek. A két reprezentáció eltérő adatmodellt használ: a CIC-IDS2017 hálózati flow-jellemzőket tartalmaz, míg a Wazuh esemény- és logorientált adatokat kezel.
 
+Nem állítjuk, hogy a szabályalapú proxy baseline natív Wazuh teljesítménymérés lenne. Ez kontrollált, flow-alapú proxy, amely a Wazuh-szerű kiértékelési útvonal használhatóságát és egy egyszerű szabályalapú referencia viselkedését mutatja be.
+
 Nem valósítunk meg nagy skálájú teljesítménytesztet, magas rendelkezésre állású üzemeltetést, jogosultságkezelési auditot vagy éles üzemi megerősítést. Ezek fontos mérnöki feladatok, de túlmutatnak a szakdolgozat kísérleti fókuszán.
 
 ## 5. A végleges összehasonlított konfigurációk
@@ -66,6 +71,12 @@ Ez a konfiguráció nem tekinthető fejlett IDS-nek, de hasznos referenciaérté
 A `baseline_wazuh` a Wazuh vagy Wazuh-szerű riasztási eredmények kiértékelésére szolgál. A bemenet egy exportált fájl, amely tartalmazza a valós címkét, valamint a Wazuh riasztási vagy predikciós mezőit.
 
 A cél nem annak állítása, hogy a Wazuh natívan ugyanazokat a CIC-IDS2017 flow jellemzőket használja, mint az autoencoder, hanem egy szabályalapú vagy riasztásalapú baseline beemelése az összehasonlításba. Az eredmények értelmezésénél figyelembe kell venni a logalapú és flow-alapú adatmodell közötti eltérést.
+
+### rule_proxy
+
+A `rule_proxy` egy szabályalapú proxy baseline. A feldolgozott AE-Minimal adatok numerikus jellemzőin soronként a legnagyobb abszolút standardizált értéket használja pontszámként. A küszöb a validációs adatrész 0,95 kvantilise alapján áll elő, ezért a teszt címkéi nem vesznek részt a szabály illesztésében.
+
+A kimenet Wazuh-szerű szabályalapú export, amely tartalmaz riasztási mezőket, például `wazuh_alert`, `is_alert`, `y_pred`, `rule_level` és `score`. Ez kontrollált offline kiértékelés, nem natív Wazuh teljesítménymérés.
 
 ### ae_minimal
 
@@ -95,9 +106,13 @@ Ez a megközelítés lehetőséget ad annak bemutatására, hogyan bővíthető 
 
 ### hybrid
 
-A `hybrid` konfiguráció az autoencoder és a Wazuh riasztások kombinálásának tervezett irányát írja le. A legegyszerűbb döntési szabály szerint akkor keletkezik riasztás, ha az AE vagy a Wazuh komponens támadást jelez. Egy későbbi implementációban a pontszámok normalizált kombinációja vagy súlyozott döntési logika is alkalmazható.
+A `hybrid` konfiguráció az AE-Minimal és a szabályalapú proxy baseline predikcióit kombinálja kontrollált offline kiértékelésben. A döntési szabály szerint akkor keletkezik riasztás, ha az AE-Minimal vagy a rule_proxy komponens támadást jelez:
 
-A szakdolgozatban a hibrid konfiguráció elsősorban architekturális és módszertani elemként jelenik meg. Teljes értékű összehasonlítása csak akkor végezhető el, ha az AE predikciók és a Wazuh riasztások stabil esemény- vagy flow-azonosító alapján összekapcsolhatók.
+```text
+hybrid_pred = ae_pred == 1 OR rule_pred == 1
+```
+
+A hibrid pontszám a normalizált AE-pontszám és a normalizált rule_proxy pontszám maximuma. Fontos korlát, hogy ez a hibrid kiértékelés azonos teszthalmaz-sorrendre épül, nem éles eseménykorreláció.
 
 ## 6. Mérőszámok
 

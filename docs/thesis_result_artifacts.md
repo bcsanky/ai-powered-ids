@@ -1,6 +1,6 @@
 # Dolgozatba beemelhető eredményjegyzék
 
-Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely futtatási könyvtárak, CSV állományok és PNG ábrák használhatók a diplomamunka 6. fejezetében. A felsorolt eredmények a konfiguráció és a kód alapján reprodukálható futtatásokból származnak.
+Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely futtatási könyvtárak, CSV állományok és PNG ábrák használhatók a diplomamunka 6. fejezetében. A felsorolt eredmények dokumentált konfigurációval, azonos futtatási beállítások mellett reprodukálhatók.
 
 ## Végleges futtatási könyvtárak
 
@@ -9,8 +9,9 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | AE-Minimal | `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/` | validált |
 | AE-Context | `results/final/final-ae-context-v1/ae_v1_20260504_131741/` | validált |
 | Statisztikai baseline | `results/final/final-baseline-stat-v1/baseline_stat_20260504_120120/` | validált |
-| Wazuh baseline | nincs végleges futtatási könyvtár | hiányzik |
-| Hibrid konfiguráció | nincs végleges futtatási könyvtár | tervezett |
+| Szabályalapú proxy baseline | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/` | validált |
+| Hibrid konfiguráció | `results/final/final-hybrid-v1/hybrid_20260504_144659/` | validált, offline proxy-alapú |
+| Natív Wazuh baseline | nincs végleges futtatási könyvtár | hiányzik |
 | Összehasonlító eredmények | `results/final/comparison/` | validált |
 
 ## Táblázatokhoz használható CSV állományok
@@ -20,12 +21,15 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | AE-Minimal fő metrikák | `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/metrics_summary.csv` | AE-Minimal mérőszámok bemutatása | validált |
 | AE-Context fő metrikák | `results/final/final-ae-context-v1/ae_v1_20260504_131741/metrics_summary.csv` | AE-Context mérőszámok bemutatása | validált |
 | Statisztikai baseline fő metrikák | `results/final/final-baseline-stat-v1/baseline_stat_20260504_120120/metrics_summary.csv` | Egyszerű statisztikai baseline összehasonlítása | validált |
-| Végleges összehasonlító táblázat | `results/final/comparison/metrics_comparison.csv` | AE-Minimal, AE-Context és baseline_stat egységes összehasonlítása | validált |
+| Szabályalapú proxy baseline fő metrikák | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/metrics_summary.csv` | Kontrollált flow-alapú szabályproxy összehasonlítása | validált |
+| Hibrid fő metrikák | `results/final/final-hybrid-v1/hybrid_20260504_144659/metrics_summary.csv` | AE-Minimal és rule_proxy offline kombinációjának értékelése | validált, offline proxy-alapú |
+| Végleges összehasonlító táblázat | `results/final/comparison/metrics_comparison.csv` | AE-Minimal, AE-Context, baseline_stat, rule_proxy és hybrid egységes összehasonlítása | validált |
 | Dolgozatba közvetlenül átemelhető Markdown táblázat | `results/final/comparison/metrics_comparison.md` | Összehasonlító táblázat a 6. fejezethez | validált |
 | AE-Minimal mintaszintű eredmények | `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/predictions.csv` | Riasztásszám és hibás besorolások elemzése | validált |
 | AE-Context mintaszintű eredmények | `results/final/final-ae-context-v1/ae_v1_20260504_131741/predictions.csv` | Riasztásszám és hibás besorolások elemzése | validált |
-| Wazuh baseline metrikák | `results/final/final-baseline-wazuh-v1/<run>/metrics_summary.csv` | Wazuh vagy Wazuh-szerű kiértékelés | hiányzik |
-| Hibrid metrikák | `results/final/final-hybrid-v1/<run>/metrics_summary.csv` | AE és Wazuh eredmények kombinált kiértékelése | tervezett |
+| Rule_proxy mintaszintű eredmények | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/predictions.csv` | Riasztásszám és hibás besorolások elemzése | validált |
+| Hibrid mintaszintű eredmények | `results/final/final-hybrid-v1/hybrid_20260504_144659/predictions.csv` | AE és szabályproxy kombinált döntéseinek elemzése | validált, offline proxy-alapú |
+| Natív Wazuh baseline metrikák | `results/final/final-baseline-wazuh-v1/<run>/metrics_summary.csv` | Natív Wazuh export kiértékelése | hiányzik |
 
 ## Ábrákhoz használható PNG állományok
 
@@ -41,6 +45,13 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | AE-Context küszöbgörbe | `results/final/final-ae-context-v1/ae_v1_20260504_131741/threshold_curve.png` | Küszöbválasztás hatásának bemutatása | validált |
 | AE-Context ROC-görbe | `results/final/final-ae-context-v1/ae_v1_20260504_131741/roc_curve.png` | Detektálási képesség vizuális értékelése | validált |
 | AE-Context magyarázó jellemzők | `results/final/final-ae-context-v1/ae_v1_20260504_131741/top_feature_frequency.png` | Rekonstrukciós hiba magyarázhatósági kiegészítése | validált |
+| Rule_proxy konfúziós mátrix | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/confusion_matrix.png` | Szabályproxy predikciós hibáinak szemléltetése | validált |
+| Rule_proxy pontszámeloszlás | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/score_distribution.png` | Rule_proxy pontszámeloszlás bemutatása | validált |
+| Rule_proxy küszöbgörbe | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/threshold_curve.png` | Szabályproxy küszöbérzékenységének bemutatása | validált |
+| Rule_proxy ROC-görbe | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/roc_curve.png` | Szabályproxy pontszám alapú vizuális értékelése | validált |
+| Hibrid konfúziós mátrix | `results/final/final-hybrid-v1/hybrid_20260504_144659/confusion_matrix.png` | Hibrid döntés predikciós hibáinak szemléltetése | validált, offline proxy-alapú |
+| Hibrid pontszámeloszlás | `results/final/final-hybrid-v1/hybrid_20260504_144659/score_distribution.png` | Hibrid pontszámeloszlás bemutatása | validált, offline proxy-alapú |
+| Hibrid ROC-görbe | `results/final/final-hybrid-v1/hybrid_20260504_144659/roc_curve.png` | Hibrid pontszám alapú vizuális értékelése | validált, offline proxy-alapú |
 | Precision, recall és F1 összehasonlítása | `results/final/comparison/fig_comparison_precision_recall_f1.png` | Konfigurációk fő metrikáinak összehasonlítása | validált |
 | Hamis pozitív arány összehasonlítása | `results/final/comparison/fig_comparison_false_positive_rate.png` | Üzemeltetési terheléshez kapcsolódó hibaarány bemutatása | validált |
 | Riasztásszám összehasonlítása | `results/final/comparison/fig_comparison_alert_count.png` | Riasztási mennyiség összehasonlítása | validált |
@@ -52,12 +63,13 @@ Validált konfigurációk:
 - `ae_minimal`
 - `ae_context`
 - `baseline_stat`
+- `rule_proxy`
+- `hybrid` kontrollált offline, proxy-alapú kiértékelésként
 
 Hiányzó vagy tervezett konfigurációk:
 
-- `baseline_wazuh`: még nem validált, mert nem áll rendelkezésre megfelelő címkézett Wazuh vagy Wazuh-szerű export, amelyből a `metrics_summary.csv` előállítható lenne.
-- `hybrid`: még nem validált, mert nincs végleges hibrid kiértékelő lépés és nincs stabil összekapcsolási kulcs az AE predikciók és a Wazuh riasztások között.
+- `baseline_wazuh_real`: még nem validált, mert nem áll rendelkezésre megfelelő címkézett natív Wazuh export, amelyből a `metrics_summary.csv` előállítható lenne.
 
 ## Beemelési megjegyzés
 
-A diplomamunka 6. fejezetében az AE-Minimal, AE-Context és statisztikai baseline eredmények szerepeltethetők validált mérési eredményként. A Wazuh baseline és a hibrid konfiguráció csak akkor kerülhet be mérési eredményként, ha később létrejön hozzájuk validált `metrics_summary.csv`, `predictions.csv` és futtatási metaadat.
+A diplomamunka 6. fejezetében az AE-Minimal, AE-Context, statisztikai baseline, rule_proxy és offline hibrid eredmények szerepeltethetők validált mérési eredményként. A rule_proxy kontrollált, flow-alapú szabályproxy, nem natív Wazuh teljesítménymérés. A hibrid eredmény az AE-Minimal és a rule_proxy azonos sorrendű teszthalmaz-predikcióinak offline kombinációja, nem éles eseménykorreláció. Natív Wazuh mérés csak akkor kerülhet be eredményként, ha később létrejön hozzá validált `metrics_summary.csv`, `predictions.csv` és futtatási metaadat.
