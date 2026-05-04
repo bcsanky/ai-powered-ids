@@ -229,3 +229,16 @@ Minden végleges eredményhez meg kell őrizni a kapcsolódó konfigurációt, a
 - szükség esetén a modellfájl és a küszöbértékeket tartalmazó fájl.
 
 Az eredmények összehasonlításakor azonos adathalmazverziót, azonos tanító, validációs, kalibrációs és teszt adatrészekre bontást, valamint dokumentált random seedet kell használni. A végleges konfigurációkban a random seed értéke `42`.
+
+## Demonstrációs riportkimenetek
+
+A május 7-i prototípus-réteg a végleges mérési eredményektől elkülönített, kis méretű demonstrációs riportokat is előállíthat:
+
+```text
+reports/scored_events.jsonl
+reports/final/security_report.md
+reports/final/security_report.html
+reports/final/dashboard_summary.csv
+```
+
+Ezek a fájlok a scoring szolgáltatás, a batch scoring és a szakértői jelentés bemutatását szolgálják. Nem helyettesítik a `results/final/` alatti validált mérési eredményeket, és nem tekintendők külön benchmark futásnak. A dolgozatban felhasználhatók az implementációs feldolgozási lánc szemléltetésére, ha egyértelműen demonstrációs kimenetként szerepelnek.

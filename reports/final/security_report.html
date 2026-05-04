@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="hu">
+<head><meta charset="utf-8"><title>Szakértői biztonsági összefoglaló</title><style>body{font-family:Arial,sans-serif;max-width:1100px;margin:2rem auto;line-height:1.5;}code{background:#f2f2f2;padding:0.1rem 0.25rem;}br{line-height:1.35;}</style></head>
+<body># Szakértői biztonsági összefoglaló<br>
+<br>
+Futtatás dátuma: 2026-05-04 15:26:22<br>
+<br>
+## Validált konfigurációk<br>
+<br>
+AE-Minimal, AE-Context, Statisztikai baseline, Szabályalapú proxy baseline, Offline hibrid<br>
+<br>
+## Fő összehasonlító metrikák<br>
+<br>
+| configuration | status | precision | recall | f1 | false_positive_rate | alert_count |<br>
+| --- | --- | --- | --- | --- | --- | --- |<br>
+| AE-Minimal | ok | 0.6203 | 1.0000 | 0.7657 | 1.0000 | 448628.0000 |<br>
+| AE-Context | ok | 0.6203 | 1.0000 | 0.7657 | 1.0000 | 448626.0000 |<br>
+| Statisztikai baseline | ok | 0.5147 | 0.0320 | 0.0603 | 0.0493 | 17305.0000 |<br>
+| Szabályalapú proxy baseline | ok | 0.5253 | 0.0334 | 0.0628 | 0.0493 | 17690.0000 |<br>
+| Offline hibrid | ok | 0.6203 | 1.0000 | 0.7657 | 1.0000 | 448628.0000 |<br>
+| Natív Wazuh baseline | missing |  |  |  |  |  |<br>
+<br>
+## AE-Minimal és AE-Context összevetése<br>
+<br>
+Az AE-Context F1 értéke az AE-Minimal eredményéhez képest gyakorlatilag azonos.<br>
+<br>
+## Baseline és hibrid státusz<br>
+<br>
+- Statisztikai baseline: ok<br>
+- Szabályalapú proxy baseline: ok<br>
+- Offline hibrid: ok<br>
+- Natív Wazuh baseline: missing<br>
+<br>
+## Legmagasabb kockázatú pontozott események<br>
+<br>
+| event_id | risk_level | anomaly_score | threshold_name | threshold_value | ml_alert | rule_flag | rule_level | reason |<br>
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |<br>
+| demo-005 | critical | 0.4536 | f1_optimum | 0.0002 | True | True | 10 | Szabályalapú jelzés és ML riasztás egyszerre jelentkezett. |<br>
+| demo-004 | critical | 0.4483 | f1_optimum | 0.0002 | True | True | 5 | Szabályalapú jelzés és ML riasztás egyszerre jelentkezett. |<br>
+| demo-006 | critical | 0.4030 | f1_optimum | 0.0002 | True | True | 10 | Szabályalapú jelzés és ML riasztás egyszerre jelentkezett. |<br>
+| demo-001 | high | 0.4490 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |<br>
+| demo-002 | high | 0.4453 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |<br>
+| demo-003 | high | 0.1691 | f1_optimum | 0.0002 | True | False | 0 | Az anomáliapontszám jelentősen meghaladja a kiválasztott küszöböt. |<br>
+<br>
+## Korlátok<br>
+<br>
+- A mérés CIC-IDS2017 flow-alapú adatokon történt.<br>
+- A Wazuh logorientált adatmodellje és a CIC flow jellemzői között szerkezeti eltérés van.<br>
+- A rule_proxy kontrollált flow-alapú szabályproxy, nem natív Wazuh teljesítménymérés.<br>
+- A hibrid eredmény offline, azonos teszthalmaz-sorrenden alapuló kiértékelés.<br>
+- A riport szakdolgozati demonstrációs összefoglaló, nem éles SOC incidensjelentés.<br>
+</body>
+</html>

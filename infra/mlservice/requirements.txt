@@ -2,3 +2,8 @@ fastapi
 uvicorn[standard]
 pydantic
 pyyaml
+pandas
+numpy
+scikit-learn
+joblib
+pyarrow

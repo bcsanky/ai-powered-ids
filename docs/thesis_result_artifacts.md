@@ -30,6 +30,10 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Rule_proxy mintaszintű eredmények | `results/final/final-rule-proxy-v1/baseline_wazuh_20260504_144645/predictions.csv` | Riasztásszám és hibás besorolások elemzése | validált |
 | Hibrid mintaszintű eredmények | `results/final/final-hybrid-v1/hybrid_20260504_144659/predictions.csv` | AE és szabályproxy kombinált döntéseinek elemzése | validált, offline proxy-alapú |
 | Natív Wazuh baseline metrikák | `results/final/final-baseline-wazuh-v1/<run>/metrics_summary.csv` | Natív Wazuh export kiértékelése | hiányzik |
+| Pontozott demonstrációs események | `reports/scored_events.jsonl` | Scoring feldolgozási lánc bemutatása az 5. fejezetben | demonstrációs kimenet, nem mérési benchmark |
+| Szakértői jelentés Markdown formában | `reports/final/security_report.md` | Riportkészítési prototípus bemutatása az 5. fejezetben | dolgozatba beemelhető demonstrációs kimenet |
+| Szakértői jelentés HTML formában | `reports/final/security_report.html` | Dashboard jellegű összefoglaló bemutatása | demonstrációs kimenet |
+| Dashboard összefoglaló CSV | `reports/final/dashboard_summary.csv` | Fő metrikák riportoldali összesítése | demonstrációs kimenet, nem mérési benchmark |
 
 ## Ábrákhoz használható PNG állományok
 
@@ -55,6 +59,17 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Precision, recall és F1 összehasonlítása | `results/final/comparison/fig_comparison_precision_recall_f1.png` | Konfigurációk fő metrikáinak összehasonlítása | validált |
 | Hamis pozitív arány összehasonlítása | `results/final/comparison/fig_comparison_false_positive_rate.png` | Üzemeltetési terheléshez kapcsolódó hibaarány bemutatása | validált |
 | Riasztásszám összehasonlítása | `results/final/comparison/fig_comparison_alert_count.png` | Riasztási mennyiség összehasonlítása | validált |
+
+## Demonstrációs prototípuskimenetek
+
+A scoring szolgáltatás, a batch scoring és a szakértői jelentés a diplomamunka 5. fejezetében az implementált prototípus működését szemlélteti. Ezek a kimenetek a validált AE-Minimal modellre és az összehasonlító eredménytáblára épülnek, de nem helyettesítik a 6. fejezet mérési benchmark táblázatait.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Batch scoring eredmény | `reports/scored_events.jsonl` | Eseményszintű pontozás bemutatása | demonstrációs kimenet |
+| Szakértői riport | `reports/final/security_report.md` | Implementációs fejezetben bemutatható riport | dolgozatba beemelhető |
+| HTML riport | `reports/final/security_report.html` | Dashboard jellegű megjelenítés demonstrálása | demonstrációs kimenet |
+| Dashboard CSV | `reports/final/dashboard_summary.csv` | Riportoldali metrikaösszesítés | demonstrációs kimenet, nem mérési benchmark |
 
 ## Validált és hiányzó konfigurációk
 

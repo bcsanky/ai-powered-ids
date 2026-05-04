@@ -1,0 +1,7 @@
+event_id,destination_port,flow_duration,total_fwd_packets,total_backward_packets,flow_bytes_per_sec,flow_packets_per_sec,protocol,rule_flag,rule_level
+demo-001,80,12345,10,8,1200.5,15.2,6,false,0
+demo-002,443,28500,18,20,3400.0,24.0,6,false,0
+demo-003,65000,900,4,1,56000.0,180.0,6,false,0
+demo-004,53,300,3,3,800.0,30.0,17,true,5
+demo-005,22,7500,40,12,9500.0,95.0,6,true,10
+demo-006,3389,4200,70,6,22000.0,140.0,6,true,10

@@ -349,3 +349,43 @@ A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 | Végleges összehasonlító ábrák | `results/final/comparison/fig_comparison_*.png` | Precision/recall/F1, false positive rate és alert count összehasonlítása. |
 
 A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a szabályalapú proxy baseline, az opcionális natív Wazuh baseline és az offline hibrid fúzió eltérő adatmodellre és eltérő feltételezésekre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű éles üzemi IDS teljesítménygarancia megfogalmazása.
+
+## 12. Május 7-i demonstrációs scoring és riportlépések
+
+A május 7-i kiegészítés célja, hogy a validált AE-Minimal modellre építve bemutatható prototípus-réteg készüljön a diplomamunka implementációs fejezetéhez. Ez nem indít új autoencoder tanítást, hanem a meglévő modellfájlt, preprocess állományt és küszöbfájlt használja pontozásra.
+
+A FastAPI scoring szolgáltatás `/score` végpontja nem fix mintaértéket ad vissza. Ha a modell, preprocess vagy küszöbfájl nem érhető el, a `/health` válaszban a `model_loaded: false` státusz jelenik meg, a `/score` pedig hibával tér vissza. Így a szolgáltatás nem állít elő félrevezető anomáliapontszámot hiányzó modell mellett.
+
+A parancssori batch scoring ugyanazt a modellalapú pontozási logikát használja:
+
+```bash
+make score-sample-events
+```
+
+Elvárt kimenet:
+
+```text
+reports/scored_events.jsonl
+```
+
+A szakértői jelentés és dashboard összefoglaló előállítása:
+
+```bash
+make generate-security-report
+```
+
+Elvárt kimenetek:
+
+```text
+reports/final/security_report.md
+reports/final/security_report.html
+reports/final/dashboard_summary.csv
+```
+
+A teljes május 7-i demonstrációs cél:
+
+```bash
+make final-day7
+```
+
+Ez a `final-validate`, `score-sample-events` és `generate-security-report` lépéseket futtatja. A cél nem épít új adatkészletet, nem indít AE-Minimal vagy AE-Context tanítást, és nem módosítja a végleges mérési eredményeket. A riport demonstrációs és dolgozati összefoglaló célú; nem éles SOC incidensjelentés és nem új benchmark mérés.

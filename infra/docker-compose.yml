@@ -8,6 +8,9 @@ services:
     volumes:
       - ../experiments:/app/experiments
       - ../ml:/app/ml
+      - ../artifacts:/app/artifacts:ro
+      - ../data:/app/data:ro
+      - ../results:/app/results:ro
     restart: unless-stopped
 
   wazuh.manager:

@@ -1,0 +1,41 @@
+# Implementációs jegyzetek a diplomamunkához
+
+Ez a dokumentum összefoglalja, hogy a prototípus mely komponensei írhatók le a diplomamunka implementációs és eredményfejezeteiben.
+
+## Implementált komponensek
+
+- Adatépítés CIC-IDS2017 flow adatokból, konfigurálható YAML fájlok alapján.
+- AE-Minimal autoencoder mérési ág minimális flow jellemzőkészlettel.
+- AE-Context autoencoder mérési ág egyszerű, timestamp nélküli kontextusjellemzőkkel.
+- Statisztikai baseline a tanítóhalmaz középpontjától mért távolság alapján.
+- Szabályalapú proxy baseline, ha nincs címkézett natív Wazuh export.
+- Offline hibrid kiértékelés az AE-Minimal és a rule_proxy predikcióinak uniójával.
+- FastAPI scoring szolgáltatás AE-Minimal modellalapú pontozással.
+- Batch scoring parancssori feldolgozás JSONL és CSV bemenetre.
+- Szakértői riport és dashboard jellegű összefoglaló.
+
+## 5. fejezetben leírható témák
+
+- A Wazuh komponensek és az ML szolgáltatás szerepe a rendszerarchitektúrában.
+- Az adatépítési folyamat és a jellemzőképzés.
+- Az autoencoder tanítási és küszöbválasztási folyamata.
+- A FastAPI scoring végpont működése és hibakezelése hiányzó modell esetén.
+- A batch scoring célja és bemeneti/kimeneti sémája.
+- A szakértői jelentés szerepe mint demonstrációs riportkészítési réteg.
+
+## 6. fejezetben leírható témák
+
+- AE-Minimal, AE-Context, baseline_stat, rule_proxy és hybrid összehasonlítása.
+- Precision, recall, F1, hamis pozitív arány, riasztásszám és ROC-AUC értelmezése.
+- Konfúziós mátrixok, pontszámeloszlások és ROC-görbék bemutatása.
+- A kontextusjellemzők hatásának óvatos értelmezése.
+- A rule_proxy és hibrid eredmények lehatárolása: ezek kontrollált offline kiértékelések, nem natív Wazuh teljesítménymérések.
+
+## Korlátok és lehatárolások
+
+- A mérés CIC-IDS2017 flow-alapú adathalmazon történt.
+- A Wazuh logorientált adatai és a CIC-IDS2017 flow jellemzői között adatmodellbeli eltérés van.
+- A rule_proxy kontrollált flow-alapú szabályproxy, nem natív Wazuh futtatás.
+- A hibrid kiértékelés azonos teszthalmaz-sorrenden alapul, nem éles eseménykorreláció.
+- A scoring szolgáltatás laboratóriumi prototípus-réteg, nem éles üzemi SOC rendszer.
+- A szakértői riport demonstrációs összefoglaló, nem éles incidensjelentés.
