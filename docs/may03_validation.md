@@ -3,7 +3,7 @@
 Validáció dátuma: 2026-05-03  
 Branch: `thesis/final`
 
-A május 3-i végleges kísérleti beállítás futtathatósági ellenőrzése során nem történt autoencoder modell-, tanítási vagy kiértékelési logika-módosítás. A későbbi dokumentált állapot szerint az `ml/src/build_dataset.py` timestamp nélküli AE-Context feature engineeringgel bővült, de ez nem változtatja meg az itt rögzített AE-Minimal tréning státuszát.
+A május 3-i végleges kísérleti beállítás futtathatósági ellenőrzése során a final konfigurációk, a fő Python belépési pontok, az AE-Minimal adatépítés, az AE-Minimal tanítás és a statisztikai baseline futtathatósága került ellenőrzésre. A későbbi lokális validáció alapján a teljes AE-Minimal tanítás sikeresen befejeződött, és létrejöttek a hozzá tartozó artifact és result könyvtárak.
 
 ## Lefuttatott parancsok
 
@@ -38,6 +38,7 @@ Ellenőrzött konfigurációk:
 
 - `experiments/final/ae_context.yaml`
 - `experiments/final/ae_minimal.yaml`
+- `experiments/final/ae_minimal_smoke.yaml`
 - `experiments/final/baseline_stat.yaml`
 - `experiments/final/baseline_wazuh.yaml`
 - `experiments/final/final_experiment.yaml`
@@ -97,17 +98,51 @@ Létrejött fő kimeneti fájlok:
 make train-ae CONFIG=experiments/final/ae_minimal.yaml
 ```
 
-Eredmény: elindult, de a futás nem fejeződött be a validációs körben.
+Eredmény: a későbbi lokális futtatás sikeresen befejeződött teljes AE-Minimal konfigurációval.
 
-Megfigyelés:
+Ellenőrzött artifact könyvtár:
 
-- A parancs elindult a final AE-Minimal konfigurációval.
-- A folyamat több percig futott látható Python vagy konfigurációs hiba nélkül.
-- A validációs futás felhasználói megszakítással leállt, mielőtt a `train_ae.py` létrehozta volna az időbélyeges artifact és result könyvtárakat.
-- Nem jött létre `artifacts/final/final-ae-minimal-v1/` alatti modell artifact.
-- Nem jött létre `results/final/final-ae-minimal-v1/ae_v1_YYYYMMDD_HHMMSS/` alatti AE eredménykönyvtár.
+```text
+artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/
+```
 
-Nyitott állapot: a teljes AE-Minimal tréning futásideje a teljes CIC-IDS2017 adatkészleten hosszú; a sikeres befejezés külön, megszakítás nélküli futtatást igényel.
+Ellenőrzött result könyvtár:
+
+```text
+results/final/final-ae-minimal-v1/ae_v1_20260504_113852/
+```
+
+A futás `run_metadata.json` állománya alapján:
+
+- `run_id`: `20260504_113852`
+- `experiment_id`: `final-ae-minimal-v1`
+- `rows_train`: `1589922`
+- `rows_val`: `340698`
+- `rows_calib`: `448628`
+- `rows_test`: `448628`
+- `artifact_dir`: `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852`
+- `result_dir`: `results/final/final-ae-minimal-v1/ae_v1_20260504_113852`
+
+A mentett `train_config.json` alapján a futás teljes adatos final konfigurációval készült:
+
+- `dev_sample.enabled`: `false`
+- `dev_sample.max_rows_total`: `null`
+- `random_seed`: `42`
+
+Létrejött artifact fájlok:
+
+- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/model.joblib`
+- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/history.json`
+- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/thresholds.json`
+- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/train_config.json`
+
+Létrejött eredményfájlok:
+
+- `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/metrics_summary.csv`
+- `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/predictions.csv`
+- `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/threshold_curve.csv`
+- `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/top_feature_errors.csv`
+- `results/final/final-ae-minimal-v1/ae_v1_20260504_113852/run_metadata.json`
 
 ### Statisztikai baseline kiértékelés
 
@@ -162,13 +197,33 @@ Az implementált context feature-ök:
 - `packet_ratio`
 - `bytes_packets_ratio`
 
-Ez továbbra sem jelent időablakos, hostalapú vagy CTI-alapú context feature engineeringet. A május 3-i validáció fókusza az AE-Minimal adatépítés, a statisztikai baseline és az alap futtathatóság volt; az AE-Minimal tréning teljes befejezése továbbra sem igazolt ebben a validációs körben.
+Ez továbbra sem jelent időablakos, hostalapú vagy CTI-alapú context feature engineeringet.
+
+Az AE-Context dataset build lokálisan lefutott, és létrejött a következő metaadatfájl:
+
+```text
+data/processed/final/ae_context/dataset_metadata.json
+```
+
+A rögzített context metaadatok:
+
+- `context_enabled`: `true`
+- `context_features`:
+  - `destination_port_frequency`
+  - `protocol_frequency`
+  - `is_rare_destination_port`
+  - `packet_ratio`
+  - `bytes_packets_ratio`
+- `context_fit_split`: `train`
+- `unknown_context_frequency`: `0.0`
+
+Az AE-Context gyakorisági feature-ök train splitből illesztett statisztikákon alapulnak; a validation, calibration és test splitben ismeretlen portok vagy protokollok `0.0` gyakoriságot kapnak.
 
 ## Nyitva maradt hiba vagy feladat
 
-- A teljes `make train-ae CONFIG=experiments/final/ae_minimal.yaml` futás nem fejeződött be ebben a validációs körben, mert a futás felhasználói megszakítással leállt.
-- Ez alapján nem igazolt még a final AE-Minimal modell artifactok és AE eredményfájlok tényleges létrejötte.
-- Javasolt következő lépés: a tréninget hosszabb, megszakítás nélküli futtatási ablakban újraindítani, vagy később külön validációs/profilozási lépésben mérni a teljes futásidőt.
+- A hibrid kiértékelő pipeline továbbra is tervezett elem; külön hibrid kiértékelő modul és validált hibrid eredmény még nem áll rendelkezésre.
+- A Wazuh baseline végleges kiértékeléséhez címkézett Wazuh vagy Wazuh-szerű export szükséges.
+- Az AE-Context tanítási futás teljes befejezése külön validációs körben rögzíthető, ha a context konfiguráció eredményei is bekerülnek az összehasonlításba.
 
 ## Összegzés
 
@@ -179,15 +234,20 @@ Sikeresen validált elemek:
 - Fő Python belépési pontok fordíthatósága.
 - CIC-IDS2017 raw adat elérhetősége.
 - Final AE-Minimal dataset build.
+- Final AE-Minimal autoencoder tréning teljes befejezése.
+- Final AE-Minimal artifact fájlok létrejötte.
+- Final AE-Minimal eredményfájlok létrejötte.
+- AE-Context dataset build és context metaadatok létrejötte.
 - Final statisztikai baseline kiértékelés és ábragenerálás.
 
-Nem lezárt elem:
+Nem lezárt elemek:
 
-- Final AE-Minimal autoencoder tréning teljes befejezése és artifact/result fájljainak létrejötte.
+- Hibrid kiértékelés implementációja és validált kimenete.
+- Wazuh baseline végleges futtatása megfelelő exportált bemenettel.
 
 ## Git hygiene update
 
-A generált `results/final/` alatti mérési fájlok nem maradnak verziókezelve. Ezek futtatási artefaktok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
+A generált `artifacts/` és `results/final/` alatti mérési fájlok nem maradnak verziókezelve, mert a `.gitignore` kizárja ezeket az útvonalakat. Ezek futtatási artefaktok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például modelleket, küszöböket, predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
 
 A repository-ban a hosszú távon karbantartandó elemek maradnak verziókezelve:
 
