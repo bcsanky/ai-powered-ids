@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-day4
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-day4 final-day5
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -68,4 +68,12 @@ final-day4:
 	else \
 		echo "Skipping AE-Context plot: no run directory found under results/final/final-ae-context-v1"; \
 	fi
+	$(MAKE) final-compare
+
+final-day5:
+	$(MAKE) final-validate
+	$(MAKE) dataset CONFIG=experiments/final/ae_context.yaml
+	$(MAKE) train-ae CONFIG=experiments/final/ae_context.yaml
+	$(MAKE) final-plot-ae-context
+	$(MAKE) final-plot-ae-minimal
 	$(MAKE) final-compare

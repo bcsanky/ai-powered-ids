@@ -102,7 +102,6 @@ Az `ae_minimal_smoke.yaml` konfiguráció csak a mérési lánc futtathatóság�
 Elvárt fő kimeneti gyökerek:
 
 ```text
-artifacts/final/final-ae-minimal-v1/
 results/final/final-ae-minimal-v1/
 ```
 
@@ -138,7 +137,6 @@ Elvárt fő kimeneti gyökerek:
 
 ```text
 data/processed/final/ae_context/
-artifacts/final/final-ae-context-v1/
 results/final/final-ae-context-v1/
 ```
 
@@ -274,6 +272,14 @@ make final-day4
 ```
 
 Ez a `final-validate`, `final-plot-ae-minimal` és `final-compare` lépéseket futtatja. Az AE-Context ábragenerálást csak akkor kapcsolja be, ha már van AE-Context eredménykönyvtár.
+
+A `final-day4` gyors validációs és ábrafrissítő cél: nem épít új adatkészletet és nem indít új autoencoder tanítást. A `final-day5` ezzel szemben hosszú futtatási cél, amely az AE-Context adatépítést, teljes tanítást, AE ábragenerálást és összehasonlítást egymás után futtatja:
+
+```bash
+make final-day5
+```
+
+Ezt a célt csak akkor célszerű indítani, ha rendelkezésre áll a teljes AE-Context tanításhoz szükséges idő és számítási erőforrás.
 
 ## 10. Kapcsolat a szakdolgozati ábrákkal és táblázatokkal
 

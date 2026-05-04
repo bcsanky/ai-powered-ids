@@ -103,7 +103,7 @@ Eredmény: a későbbi lokális futtatás sikeresen befejeződött teljes AE-Min
 Ellenőrzött modellkimeneti könyvtár:
 
 ```text
-artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/
+final-ae-minimal-v1/ae_v1_20260504_113852/
 ```
 
 Ellenőrzött result könyvtár:
@@ -120,7 +120,7 @@ A futás `run_metadata.json` állománya alapján:
 - `rows_val`: `340698`
 - `rows_calib`: `448628`
 - `rows_test`: `448628`
-- `artifact_dir`: `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852`
+- modellkimeneti könyvtár: `final-ae-minimal-v1/ae_v1_20260504_113852`
 - `result_dir`: `results/final/final-ae-minimal-v1/ae_v1_20260504_113852`
 
 A mentett `train_config.json` alapján a futás teljes adatos final konfigurációval készült:
@@ -131,10 +131,10 @@ A mentett `train_config.json` alapján a futás teljes adatos final konfiguráci
 
 Létrejött modellkimeneti fájlok:
 
-- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/model.joblib`
-- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/history.json`
-- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/thresholds.json`
-- `artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/train_config.json`
+- `model.joblib`
+- `history.json`
+- `thresholds.json`
+- `train_config.json`
 
 Létrejött eredményfájlok:
 
@@ -247,7 +247,7 @@ Nem lezárt elemek:
 
 ## Git hygiene update
 
-Az automatikusan előállított `artifacts/` és `results/final/` alatti mérési fájlok nem maradnak verziókezelve, mert a `.gitignore` kizárja ezeket az útvonalakat. Ezek futtatási kimeneti állományok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például modelleket, küszöböket, predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
+Az automatikusan előállított modellkimeneti és `results/final/` alatti mérési fájlok nem maradnak verziókezelve, mert a `.gitignore` kizárja ezeket az útvonalakat. Ezek futtatási kimeneti állományok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például modelleket, küszöböket, predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
 
 A repository-ban a hosszú távon karbantartandó elemek maradnak verziókezelve:
 
