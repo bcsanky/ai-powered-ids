@@ -176,3 +176,16 @@ Sikeresen validált elemek:
 Nem lezárt elem:
 
 - Final AE-Minimal autoencoder tréning teljes befejezése és artifact/result fájljainak létrejötte.
+
+## Git hygiene update
+
+A generált `results/final/` alatti mérési fájlok nem maradnak verziókezelve. Ezek futtatási artefaktok, amelyek egy adott mérési futás konkrét kimeneteit tartalmazzák, például predikciókat, metrikákat, ábrákat és futtatási metaadatokat.
+
+A repository-ban a hosszú távon karbantartandó elemek maradnak verziókezelve:
+
+- konfigurációk,
+- dokumentációk,
+- futtatási leírások,
+- validációs jegyzőkönyvek.
+
+A végleges mérési eredmények a szakdolgozati ZIP mellékletben adhatók át, nem pedig a Git repository részeként. Ez nem érinti a reprodukálhatóságot, mert a szükséges parancsok, konfigurációk és leírások továbbra is a repository-ban maradnak, így az eredmények azonos bemeneti adatok mellett újrafuttathatók.

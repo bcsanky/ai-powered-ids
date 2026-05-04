@@ -1,5 +1,5 @@
 experiment_id: final-ae-context-v1
-title: "Final AE context-compatible feature set"
+title: "Final AE context feature set"
 
 random_seed: 42
 
@@ -21,7 +21,11 @@ split:
   attack_test_ratio: 0.50
 
 features:
-  set_name: context_v1_current_compatible
+  set_name: context_v1
+  context_enabled: true
+  context:
+    rare_destination_port_threshold: 0.001
+    bytes_packets_epsilon: 0.000000001
   numeric:
     - destination_port
     - flow_duration
@@ -29,6 +33,12 @@ features:
     - total_backward_packets
     - flow_bytes_per_sec
     - flow_packets_per_sec
+  context_generated_numeric:
+    - destination_port_frequency
+    - protocol_frequency
+    - is_rare_destination_port
+    - packet_ratio
+    - bytes_packets_ratio
   categorical:
     - protocol
   drop_if_missing_all:
@@ -38,19 +48,6 @@ features:
     - total_backward_packets
     - flow_bytes_per_sec
     - flow_packets_per_sec
-
-context_features_todo:
-  status: "planned"
-  reason: "Kept out of features.numeric so this config remains executable with current ml/src/build_dataset.py."
-  planned_numeric:
-    - src_flow_count_1m
-    - src_flow_count_5m
-    - src_unique_dst_port_count_1m
-    - src_unique_dst_port_count_5m
-    - dst_port_hit_count_1m
-    - dst_port_hit_count_5m
-    - src_bytes_sum_1m
-    - src_packets_sum_1m
 
 preprocess:
   scaler: standard

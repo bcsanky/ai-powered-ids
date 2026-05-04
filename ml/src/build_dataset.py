@@ -19,6 +19,14 @@ BENIGN_LABELS = {
     "normal",
 }
 
+CONTEXT_FEATURES = [
+    "destination_port_frequency",
+    "protocol_frequency",
+    "is_rare_destination_port",
+    "packet_ratio",
+    "bytes_packets_ratio",
+]
+
 
 def read_config(path: str) -> dict:
     with open(path, "r", encoding="utf-8") as f:
@@ -75,6 +83,67 @@ def fill_categorical(df: pd.DataFrame, categorical_cols: list[str]) -> pd.DataFr
             df[col] = "unknown"
         df[col] = df[col].fillna("unknown").astype(str)
     return df
+
+
+def build_context_features(
+    df: pd.DataFrame,
+    rare_destination_port_threshold: float,
+    bytes_packets_epsilon: float,
+) -> pd.DataFrame:
+    required = {
+        "destination_port",
+        "protocol",
+        "total_fwd_packets",
+        "total_backward_packets",
+        "flow_bytes_per_sec",
+        "flow_packets_per_sec",
+    }
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(
+            "Context feature készítéshez hiányzó oszlopok: "
+            + ", ".join(missing)
+        )
+
+    if rare_destination_port_threshold < 0:
+        raise ValueError("A rare_destination_port_threshold nem lehet negatív.")
+    if bytes_packets_epsilon <= 0:
+        raise ValueError("A bytes_packets_epsilon pozitív kell legyen.")
+
+    out = df.copy()
+
+    destination_port_frequency = out["destination_port"].map(
+        out["destination_port"].value_counts(normalize=True)
+    )
+    protocol_frequency = out["protocol"].map(
+        out["protocol"].value_counts(normalize=True)
+    )
+
+    backward_packets = np.maximum(
+        out["total_backward_packets"].to_numpy(dtype=np.float64),
+        1.0,
+    )
+    packets_per_sec = np.maximum(
+        out["flow_packets_per_sec"].to_numpy(dtype=np.float64),
+        bytes_packets_epsilon,
+    )
+
+    out["destination_port_frequency"] = destination_port_frequency.astype(float)
+    out["protocol_frequency"] = protocol_frequency.astype(float)
+    out["is_rare_destination_port"] = (
+        out["destination_port_frequency"] < rare_destination_port_threshold
+    ).astype(int)
+    out["packet_ratio"] = (
+        out["total_fwd_packets"].to_numpy(dtype=np.float64) / backward_packets
+    )
+    out["bytes_packets_ratio"] = (
+        out["flow_bytes_per_sec"].to_numpy(dtype=np.float64) / packets_per_sec
+    )
+
+    out = out.replace([np.inf, -np.inf], np.nan)
+    out = out.dropna(subset=CONTEXT_FEATURES)
+
+    return out
 
 def validate_ratio_sum(name: str, values: list[float], expected: float = 1.0, tol: float = 1e-9) -> None:
     total = sum(values)
@@ -247,8 +316,12 @@ def main():
     output_dir = Path(cfg["dataset"]["output_dir"])
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    numeric_cols = cfg["features"]["numeric"]
-    categorical_cols = cfg["features"]["categorical"]
+    features_cfg = cfg["features"]
+    numeric_cols = list(features_cfg["numeric"])
+    categorical_cols = list(features_cfg["categorical"])
+    context_enabled = bool(features_cfg.get("context_enabled", False))
+    context_cfg = features_cfg.get("context", {})
+    context_features = list(CONTEXT_FEATURES) if context_enabled else []
     seed = cfg["random_seed"]
 
     print("Nyers CSV-k beolvasása...")
@@ -260,6 +333,19 @@ def main():
     print("Tisztítás...")
     df = clean_numeric_columns(df, numeric_cols)
     df = fill_categorical(df, categorical_cols)
+
+    if context_enabled:
+        print("Context feature-ök készítése...")
+        df = build_context_features(
+            df,
+            rare_destination_port_threshold=float(
+                context_cfg.get("rare_destination_port_threshold", 0.001)
+            ),
+            bytes_packets_epsilon=float(
+                context_cfg.get("bytes_packets_epsilon", 1e-9)
+            ),
+        )
+        numeric_cols = numeric_cols + context_features
 
     used_cols = numeric_cols + categorical_cols + ["label", "is_benign", "source_file"]
     df = df[used_cols].copy()
@@ -309,6 +395,8 @@ def main():
         "rows_test_benign": int((test_df["is_benign"] == 1).sum()),
         "numeric_features": numeric_cols,
         "categorical_features": categorical_cols,
+        "context_enabled": context_enabled,
+        "context_features": context_features,
         "seed": seed,
         "preprocess_file": str(preprocess_path),
         "versioned_preprocess_file": str(versioned_preprocess_path),

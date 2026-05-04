@@ -91,9 +91,15 @@ Megjegyzés: az aktuális `train_ae.py` minden futtatásnál időbélyeges alkö
 
 ## 4. AE-Context tanítási parancs
 
-Az AE-Context jelenleg opcionális mérési ág. A repository aktuális kódja alapján a valódi kontextusfeature-ök még nem részei az adatépítő pipeline implementációjának. Ezért az `experiments/final/ae_context.yaml` konfiguráció futtatható, de jelenleg a minimális feature-készlettel kompatibilis változatként kezelendő.
+Az AE-Context mérési ág a minimális CIC-IDS2017 flow feature-ök mellett egyszerű, timestamp nélküli context feature-öket is használ. Az `experiments/final/ae_context.yaml` konfigurációban a `features.context_enabled: true` kapcsoló aktiválja ezeket a generált numerikus jellemzőket:
 
-Futtatás, amennyiben a cél az opcionális, jelenlegi kóddal kompatibilis AE-Context mérés:
+- `destination_port_frequency`
+- `protocol_frequency`
+- `is_rare_destination_port`
+- `packet_ratio`
+- `bytes_packets_ratio`
+
+Futtatás:
 
 ```bash
 make dataset CONFIG=experiments/final/ae_context.yaml
@@ -115,7 +121,7 @@ artifacts/final/final-ae-context-v1/
 results/final/final-ae-context-v1/
 ```
 
-Fontos értelmezési szabály: amíg a kontextusfeature-ök nincsenek implementálva az adatépítő kódban, az AE-Context eredmény nem állítható be tényleges kontextusmodellezésként. Ebben az állapotban opcionális, kontrollkonfigurációként használható.
+Fontos értelmezési szabály: az AE-Context nem használ timestamphez kötött időablakos aggregációkat. A jelenlegi context feature engineering gyakorisági és arányalapú, ezért stabilan futtatható a meglévő CIC-IDS2017 flow adatokon.
 
 ## 5. Statisztikai baseline kiértékelési parancs
 
@@ -241,6 +247,7 @@ PY
 
 ```bash
 make dataset CONFIG=experiments/final/ae_minimal.yaml
+make dataset CONFIG=experiments/final/ae_context.yaml
 make train-ae CONFIG=experiments/final/ae_minimal.yaml
 make final-eval-stat
 ```

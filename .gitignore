@@ -49,6 +49,15 @@ Thumbs.db
 # Jupyter / experiments
 .ipynb_checkpoints/
 
+# Generated experiment outputs
+artifacts/
+results/final/**
+!results/final/
+!results/final/.gitkeep
+!results/final/**/
+!results/final/**/notes.md
+!results/final/**/selected_run.md
+
 # Build artifacts
 dist/
 build/
