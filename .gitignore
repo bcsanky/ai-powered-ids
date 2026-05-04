@@ -32,6 +32,8 @@ data/lab/*.pcap
 data/lab/*.pcapng
 data/wazuh/alerts*.json
 data/wazuh/alerts*.jsonl
+raw/wazuh_export*.json
+reports/real_measurement_redacted/redaction_mapping.json
 
 # Wazuh / OpenSearch generated data
 infra/wazuh/data/

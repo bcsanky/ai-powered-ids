@@ -23,6 +23,8 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 
 - [ ] A lab időablakra szűrt Wazuh alert export elkészült.
 - [ ] Az export útvonala: `data/wazuh/alerts.jsonl` vagy `data/wazuh/alerts.json`.
+- [ ] Az export metaadata elkészült: `data/wazuh/alerts_export_metadata.json` vagy `data/wazuh/alerts_file_export_metadata.json`.
+- [ ] A Wazuh export összefoglaló elkészült: `reports/wazuh_export/wazuh_export_summary.md`.
 - [ ] Az export tartalmaz timestamp, rule id, rule level és IP mezőket, ha ezek elérhetők.
 - [ ] A Wazuh alert érkezését legalább egy ismert teszteseménnyel ellenőriztem.
 
@@ -47,11 +49,17 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 ## Teljes mérési lánc
 
 - [ ] Lefutott a `make final-real-hybrid`.
+- [ ] Lefutott a `make real-measurement-validate-bundle`.
+- [ ] A bundle validáció státusza PASS.
 - [ ] Elkészült a `results/wazuh_real/metrics_summary.csv`.
 - [ ] Elkészült a `results/ae_lab/metrics_summary.csv`.
 - [ ] Elkészült a `results/hybrid_real/metrics_summary.csv`.
 - [ ] Elkészült a `results/real_comparison/metrics_comparison.md`.
 - [ ] Elkészültek a `results/real_comparison/*.png` ábrák.
+- [ ] Elkészült a `reports/real_measurement/real_lab_results_report.md`.
+- [ ] Elkészült a `reports/real_measurement/thesis_real_lab_section.md`.
+- [ ] Elkészült a `reports/real_measurement/measurement_manifest.md`.
+- [ ] Szükség esetén elkészült az anonimizált riport: `reports/real_measurement_redacted/`.
 
 ## Dolgozatba emelés
 

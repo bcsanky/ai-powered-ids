@@ -128,6 +128,21 @@ Ez a blokk azokat az állományokat és dokumentumokat rögzíti, amelyek a `fin
 | Lab támadásszimulációs runbook | `docs/lab_attack_scenarios_runbook.md` | Valós lab mérés előkészítése és reprodukálása | dolgozatba beemelhető háttérdokumentáció |
 | Valós mérési checklist | `docs/final_real_measurement_checklist.md` | Mérési előfeltételek és kimenetek ellenőrzése | dolgozatba beemelhető háttérdokumentáció |
 
+## Valódi lab mérési csomag és dolgozati riport
+
+Ez a blokk a tényleges real-lab futtatás után előálló ellenőrző, riport- és csomagolási állományokat rögzíti. A `data/wazuh/*metadata.json` állományok jelszót nem tartalmazhatnak, de környezeti URL-t, indexmintát vagy mérési időablakot tartalmazhatnak, ezért beadás előtt tartalmi ellenőrzésük szükséges.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Wazuh export összefoglaló | `reports/wazuh_export/wazuh_export_summary.md` | A natív Wazuh alert export ellenőrző leírása | tényleges Wazuh export után áll elő |
+| Wazuh rule summary | `reports/wazuh_export/wazuh_export_rule_summary.csv` | Rule azonosítók és előfordulások táblázatos összesítése | tényleges Wazuh export után áll elő |
+| Bundle validációs riport | `reports/real_measurement/bundle_validation_report.md` | Annak ellenőrzése, hogy a real-lab mérési csomag teljes-e | tényleges mérés után beemelendő |
+| Real-lab eredményriport | `reports/real_measurement/real_lab_results_report.md` | Mérnöki értékelés a Wazuh-only, AE-only és hibrid eredményekről | dolgozatba beemelhető, ha a mérés lefutott |
+| Dolgozati real-lab szakasz | `reports/real_measurement/thesis_real_lab_section.md` | Közvetlenül a 6. fejezetbe illeszthető real-lab eredményszöveg | dolgozatba beemelhető, ha a mérés lefutott |
+| Mérési manifest CSV | `reports/real_measurement/measurement_manifest.csv` | Beadási melléklet fájljegyzéke SHA256 hash-ekkel | archiválási és beadási ellenőrzés |
+| Mérési manifest Markdown | `reports/real_measurement/measurement_manifest.md` | Ember által olvasható mérési csomagjegyzék | archiválási és beadási ellenőrzés |
+| Anonimizált real-lab riportok | `reports/real_measurement_redacted/` | IP-címek és hostnevek eltávolítása után mellékelhető riportok | opcionális, érzékeny adatok esetén szükséges |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:
