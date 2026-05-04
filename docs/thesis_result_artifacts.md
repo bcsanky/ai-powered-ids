@@ -177,6 +177,19 @@ Ez a blokk a Wazuh alert exportból induló, AE-Minimal scoringgal és hibrid pr
 | Live integration dolgozati szakasz | `reports/live_integration/thesis_live_integration_section.md` | 5. fejezetbe illeszthető integrációs leírás | verified real-lab provenance mellett használható |
 | Live integration védési jegyzet | `reports/live_integration/live_integration_defense_notes.md` | Védési kérdés-válasz segédlet az integrációs lánchoz | mérési csomag után frissítendő |
 
+## Lab session orchestration és operátori naplózás
+
+Ez a blokk a tényleges mérés végrehajtását támogató operátori segédleteket sorolja fel. Ezek nem mérési eredmények, hanem a real-lab futás reprodukálhatóságát és auditálhatóságát támogató futási kimenetek. Gitbe nem kerülnek automatikusan, futási outputként kezelendők.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Session doctor riport | `reports/lab_session/session_doctor_report.md` | Mérés előtti környezet- és modul-ellenőrzés dokumentálása | operátori segédlet |
+| Session terv | `reports/lab_session/session_plan.md` | Tervezett szcenáriók és szükséges kimenetek rögzítése | operátori segédlet |
+| Operátori parancsnapló sablon | `reports/lab_session/operator_command_log_template.md` | Mérés közbeni kézi parancsnapló vezetése | operátori segédlet |
+| Post-session input check | `reports/lab_session/post_session_input_check.md` | A tényleges inputok meglétének ellenőrzése a pipeline előtt | operátori ellenőrzés |
+| Futtatási parancslista | `reports/lab_session/run_commands.md` | A mérési pipeline kézi futtatási sorrendje | operátori segédlet |
+| Session összefoglaló | `reports/lab_session/session_summary.md` | A session után rendelkezésre álló inputok és outputok áttekintése | operátori összegzés |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

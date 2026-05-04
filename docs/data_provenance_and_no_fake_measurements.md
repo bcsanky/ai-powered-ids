@@ -147,3 +147,15 @@ A `reports/*`, `results/*` és `figures/final/*` alatti mérési outputok nem ke
 - szükség esetén anonimizált beadási melléklet.
 
 Gitben lévő demo input nem bizonyít kutatási eredményt. Kutatási eredményként csak verified real_lab provenance-hez kötött, tényleges lab futásból számolt metrika, ábra vagy riport használható.
+
+## Lab session dokumentumok szerepe
+
+A `reports/lab_session/` alatti session doctor riportok, session tervek, operátori naplósablonok és session összefoglalók nem mérési eredmények. Ezek a tényleges lab futás végrehajtását teszik reprodukálhatóbbá és auditálhatóbbá.
+
+Fontos megkötések:
+
+- A session plan nem helyettesíti a ground truth állományt.
+- Az operátori napló nem helyettesíti a Wazuh exportot vagy a flow/Zeek bemenetet.
+- A scenario marker export csak akkor valid ground truth forrás, ha a markerek tényleges lab futás közben lettek rögzítve.
+- Eredménynek csak a provenance-ben rögzített inputokból számolt output tekinthető.
+- A session réteg nem futtat támadó parancsot, és nem hoz létre mérési inputot.

@@ -20,6 +20,7 @@ SCAN_PATTERNS = [
     "reports/performance/**/*",
     "reports/scored_events.jsonl",
     "reports/real_measurement_qa/preflight_*",
+    "reports/lab_session/**/*",
     "reports/live_integration/**/*",
     "results/performance/**/*",
     "figures/final/**/*",

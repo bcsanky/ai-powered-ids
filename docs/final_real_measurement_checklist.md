@@ -12,6 +12,11 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 
 ## Ground truth
 
+- [ ] Lefutott a `make lab-session-prep`.
+- [ ] Elkészült a `reports/lab_session/session_plan.md`.
+- [ ] Elkészült a `reports/lab_session/operator_command_log_template.md`, és a mérés közben kitöltésre került.
+- [ ] A szcenáriók start/end markerei a `scenario_marker_helper` használatával rögzültek.
+- [ ] A `reports/lab_session/run_commands.md` parancslista alapján történt a pipeline előkészítése.
 - [ ] Minden szcenáriónál használtam az `event_marker.py start` parancsot.
 - [ ] Minden szcenáriónál használtam az `event_marker.py end` parancsot.
 - [ ] Nincs lezáratlan esemény a `data/lab/session_events.json` fájlban.
@@ -46,6 +51,7 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Lefutott a `make lab-validate-real-inputs`.
 - [ ] Elkészült a `reports/lab_input_validation/input_validation_report.md`.
 - [ ] Elkészült a `reports/lab_input_validation/input_validation_summary.csv`.
+- [ ] Lefutott a `make lab-session-after-capture`, és a post-session input check PASS státuszt adott.
 
 ## Teljes mérési lánc
 
@@ -82,6 +88,8 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Elkészült a `reports/live_integration/thesis_live_integration_section.md`.
 - [ ] OpenSearchbe írás megtörtént, ha dashboard demó szükséges.
 - [ ] Az integrációs kimenet nem lett benchmarkként értelmezve.
+- [ ] Lefutott a `make lab-session-after-results`.
+- [ ] Elkészült a `reports/lab_session/session_summary.md`.
 
 ## Dolgozatba emelés
 
