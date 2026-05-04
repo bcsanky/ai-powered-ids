@@ -34,6 +34,32 @@ Opcionális oszlopok:
 
 ## Teljes futtatási parancs
 
+A bemeneti sablonok előállítása:
+
+```bash
+make lab-templates
+```
+
+Ha Zeek `conn.log` áll rendelkezésre, a lab feature fájl és a teljes összehasonlítás egyben futtatható:
+
+```bash
+make final-real-hybrid-zeek \
+  WAZUH_ALERTS=data/wazuh/alerts.jsonl \
+  LAB_GROUND_TRUTH=data/lab/lab_ground_truth.csv \
+  LAB_ZEEK_CONN=data/lab/zeek/conn.log
+```
+
+Ha általános flow CSV áll rendelkezésre:
+
+```bash
+make final-real-hybrid-flow-csv \
+  WAZUH_ALERTS=data/wazuh/alerts.jsonl \
+  LAB_GROUND_TRUTH=data/lab/lab_ground_truth.csv \
+  LAB_FLOW_CSV=data/lab/flows.csv
+```
+
+A már előállított `data/lab/lab_features.csv` fájl esetén a teljes lab-alapú Wazuh+AE kiértékelés továbbra is közvetlenül futtatható:
+
 A teljes lab-alapú Wazuh+AE kiértékelés egy Makefile célból futtatható:
 
 ```bash

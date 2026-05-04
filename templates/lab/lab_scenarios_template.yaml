@@ -1,0 +1,29 @@
+scenarios:
+  - name: benign_ssh_login
+    label: benign
+    attack_type: ""
+    description: "Sikeres, engedélyezett SSH belépés saját lab gépre."
+  - name: benign_package_update
+    label: benign
+    attack_type: ""
+    description: "Csomaglista frissítése vagy csomagtelepítés saját lab gépen."
+  - name: port_scan
+    label: attack
+    attack_type: port_scan
+    description: "Kontrollált port scan saját izolált lab célgépen."
+  - name: ssh_failed_logins
+    label: attack
+    attack_type: ssh_failed_logins
+    description: "Néhány szándékosan sikertelen SSH belépési kísérlet saját teszt userrel."
+  - name: ssh_bruteforce
+    label: attack
+    attack_type: ssh_bruteforce
+    description: "Korlátozott, izolált lab brute force jellegű SSH eseménysor."
+  - name: file_integrity_change
+    label: attack
+    attack_type: file_integrity_change
+    description: "Wazuh FIM által figyelt tesztfájl kontrollált módosítása."
+  - name: privilege_change
+    label: attack
+    attack_type: privilege_change
+    description: "Saját lab user jogosultságváltozásának kontrollált tesztje."

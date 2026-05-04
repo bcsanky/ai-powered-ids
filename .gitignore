@@ -26,6 +26,13 @@ docker-data/
 volumes/
 data/
 
+# Raw lab measurement inputs
+data/lab/zeek/
+data/lab/*.pcap
+data/lab/*.pcapng
+data/wazuh/alerts*.json
+data/wazuh/alerts*.jsonl
+
 # Wazuh / OpenSearch generated data
 infra/wazuh/data/
 infra/wazuh/indexer/data/

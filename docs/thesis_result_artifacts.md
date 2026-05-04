@@ -112,6 +112,22 @@ Ez a blokk a natív Wazuh alert exporttal, lab ground truth eseményekkel és AE
 | Valós lab riasztásszám ábra | `results/real_comparison/fig_alert_count.png` | Riasztási mennyiség összehasonlítása | bemenetfüggő |
 | Valós lab TTD ábra | `results/real_comparison/fig_mean_ttd.png` | Átlagos Wazuh-alapú detektálási idő összehasonlítása, ha rendelkezésre áll | opcionális, Wazuh TTD szükséges |
 
+## Valódi lab input-előállítás és validáció
+
+Ez a blokk azokat az állományokat és dokumentumokat rögzíti, amelyek a `final-real-hybrid` mérési lánc valós lab bemeneteinek előállításához, ellenőrzéséhez és reprodukálásához szükségesek. A `templates/lab` alatti sablonok verziókezelésben tarthatók. A `data/lab` és `data/wazuh` alatti tényleges mérési állományok méretük és környezetfüggő jellegük miatt jellemzően nem kerülnek Git verziókezelésbe, hanem a beadási mellékletben vagy helyi mérési könyvtárban őrizhetők meg.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Ground truth CSV sablon | `templates/lab/lab_ground_truth_template.csv` | Lab eseményablakok kézi ellenőrzéséhez és kitöltéséhez | verziókezelésben megtartható sablon |
+| Lab feature CSV sablon | `templates/lab/lab_features_template.csv` | AE-Minimal kompatibilis lab feature struktúra bemutatása | verziókezelésben megtartható sablon |
+| Lab szcenárió sablon | `templates/lab/lab_scenarios_template.yaml` | Mérési szcenáriók előzetes tervezése | verziókezelésben megtartható sablon |
+| Event marker state fájl | `data/lab/session_events.json` | Folyamatban lévő lab eseményrögzítés állapota | lokális mérési állomány, Gitből kizárva |
+| Valós lab ground truth | `data/lab/lab_ground_truth.csv` | Címkézett lab eseményablakok a Wazuh+AE méréshez | lokális mérési állomány, beadási mellékletbe tehető |
+| Valós lab feature fájl | `data/lab/lab_features.csv` | AE-Minimal lab scoring bemenete | lokális mérési állomány, beadási mellékletbe tehető |
+| Lab input validációs jelentés | `reports/lab_input_validation/input_validation_report.md` | Bemeneti konzisztencia ellenőrzésének dokumentálása | csak tényleges mérés után beemelendő |
+| Lab támadásszimulációs runbook | `docs/lab_attack_scenarios_runbook.md` | Valós lab mérés előkészítése és reprodukálása | dolgozatba beemelhető háttérdokumentáció |
+| Valós mérési checklist | `docs/final_real_measurement_checklist.md` | Mérési előfeltételek és kimenetek ellenőrzése | dolgozatba beemelhető háttérdokumentáció |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

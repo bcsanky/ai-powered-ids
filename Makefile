@@ -1,4 +1,4 @@
-.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
+.PHONY: dataset clean-data train-ae eval final-ae-minimal final-eval-stat final-validate final-plot-ae-minimal final-plot-ae-context final-compare final-rule-proxy final-hybrid wazuh-parse-alerts wazuh-correlate wazuh-eval-real lab-ae-validate-features lab-ae-score lab-ae-eval hybrid-real-eval real-compare real-plot final-real-hybrid lab-templates lab-build-features-zeek lab-build-features-flow-csv lab-validate-real-inputs final-real-hybrid-zeek final-real-hybrid-flow-csv score-sample-events score-lab-events generate-security-report generate-case-studies benchmark-scoring plot-performance generate-performance-report export-performance-artifacts collect-thesis-figures final-day4 final-day5 final-day6 final-day7 final-day8 final-day9 final-day10-performance
 
 BASELINE ?= stat
 PYTHON ?= python3
@@ -16,6 +16,11 @@ LAB_AE_RESULTS_DIR ?= results/ae_lab
 HYBRID_REAL_RESULTS_DIR ?= results/hybrid_real
 REAL_COMPARISON_DIR ?= results/real_comparison
 HYBRID_WEIGHTED_THRESHOLD ?= 0.5
+LAB_SESSION_STATE ?= data/lab/session_events.json
+LAB_GROUND_TRUTH ?= data/lab/lab_ground_truth.csv
+LAB_ZEEK_CONN ?= data/lab/zeek/conn.log
+LAB_FLOW_CSV ?= data/lab/flows.csv
+LAB_INPUT_VALIDATION_DIR ?= reports/lab_input_validation
 
 dataset:
 	$(PYTHON) ml/src/build_dataset.py --config $(CONFIG)
@@ -43,7 +48,7 @@ final-eval-stat:
 
 final-validate:
 	$(PYTHON) -c 'import yaml; from pathlib import Path; [yaml.safe_load(open(p, encoding="utf-8")) for p in sorted(Path("experiments/final").glob("*.yaml"))]; print("Final YAML configs OK")'
-	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
+	$(PYTHON) -m py_compile ml/src/build_dataset.py ml/src/train_ae.py ml/src/eval.py ml/src/plot_final_results.py ml/src/compare_final_results.py ml/src/create_rule_proxy_export.py ml/src/hybrid_eval.py ml/src/scoring_runtime.py ml/src/score_events.py ml/src/generate_security_report.py ml/src/generate_case_studies.py ml/src/benchmark_scoring.py ml/src/plot_performance_results.py ml/src/generate_performance_report.py ml/src/export_performance_outputs.py ml/src/collect_thesis_figures.py ml/src/wazuh_baseline/build_ground_truth.py ml/src/wazuh_baseline/parse_wazuh_alerts.py ml/src/wazuh_baseline/correlate_alerts.py ml/src/wazuh_baseline/evaluate_wazuh_baseline.py ml/src/lab_ae_eval/validate_lab_features.py ml/src/lab_ae_eval/score_lab_features.py ml/src/lab_ae_eval/evaluate_ae_lab.py ml/src/hybrid_real/evaluate_hybrid_real.py ml/src/hybrid_real/compare_real_results.py ml/src/hybrid_real/plot_real_comparison.py ml/src/lab_capture/event_marker.py ml/src/lab_capture/generate_lab_templates.py ml/src/lab_features/common.py ml/src/lab_features/build_features_from_zeek_conn.py ml/src/lab_features/build_features_from_flow_csv.py ml/src/lab_features/validate_real_lab_inputs.py infra/mlservice/app/config.py infra/mlservice/app/schemas.py infra/mlservice/app/scoring.py infra/mlservice/app/main.py
 	$(PYTHON) -m pytest ml/tests
 
 final-plot-ae-minimal:
@@ -116,6 +121,28 @@ final-real-hybrid:
 	$(MAKE) hybrid-real-eval
 	$(MAKE) real-compare
 	$(MAKE) real-plot
+
+lab-templates:
+	$(PYTHON) -m ml.src.lab_capture.generate_lab_templates
+
+lab-build-features-zeek:
+	$(PYTHON) -m ml.src.lab_features.build_features_from_zeek_conn --conn-log $(LAB_ZEEK_CONN) --ground-truth $(LAB_GROUND_TRUTH) --output $(LAB_FEATURES)
+
+lab-build-features-flow-csv:
+	$(PYTHON) -m ml.src.lab_features.build_features_from_flow_csv --flow-csv $(LAB_FLOW_CSV) --ground-truth $(LAB_GROUND_TRUTH) --output $(LAB_FEATURES)
+
+lab-validate-real-inputs:
+	$(PYTHON) -m ml.src.lab_features.validate_real_lab_inputs --ground-truth $(LAB_GROUND_TRUTH) --features $(LAB_FEATURES) --wazuh-alerts $(WAZUH_ALERTS) --output-dir $(LAB_INPUT_VALIDATION_DIR)
+
+final-real-hybrid-zeek:
+	$(MAKE) lab-build-features-zeek
+	$(MAKE) lab-validate-real-inputs
+	$(MAKE) final-real-hybrid
+
+final-real-hybrid-flow-csv:
+	$(MAKE) lab-build-features-flow-csv
+	$(MAKE) lab-validate-real-inputs
+	$(MAKE) final-real-hybrid
 
 score-sample-events:
 	$(PYTHON) -m ml.src.score_events --input examples/scoring/sample_events.jsonl --output reports/scored_events.jsonl --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --thresholds-auto
