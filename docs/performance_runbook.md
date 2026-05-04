@@ -2,7 +2,9 @@
 
 ## Cél
 
-A teljesítménymérés célja a meglévő AE-Minimal batch scoring feldolgozási lánc lokális/labor vizsgálata. A mérés a feldolgozási időt, a késleltetést, az áteresztőképességet és a hibás események számát rögzíti. Nem éles üzemi benchmark, nem natív Wazuh indexelési teljesítménymérés, és nem teljes SIEM end-to-end mérés.
+A teljesítménymérés célja a meglévő AE-Minimal batch scoring feldolgozási lánc lokális/labor vizsgálata. A mérés a feldolgozási időt, a késleltetést, az áteresztőképességet, a processz CPU-időt, a platformfüggően elérhető memóriaértékeket és a hibás események számát rögzíti. Nem éles üzemi benchmark, nem natív Wazuh indexelési teljesítménymérés, és nem teljes SIEM end-to-end mérés.
+
+Az eredeti event/perc terhelési célok helyett a prototípus jelen állapotában batch scoring/inference teljesítménymérés készült. A mérés 100, 500, 1000, 5000 és 10000 esemény feldolgozását vizsgálja több batch size mellett. Ez a mérés a scoring komponens feldolgozási költségét mutatja, nem a teljes SIEM/Wazuh end-to-end terhelhetőségét.
 
 ## Előfeltételek
 
@@ -22,7 +24,7 @@ make benchmark-scoring
 
 A target a következő beállításokat használja:
 
-- eseményszámok: `100`, `500`, `1000`, `5000`
+- eseményszámok: `100`, `500`, `1000`, `5000`, `10000`
 - batch size értékek: `1`, `10`, `50`, `100`
 - ismétlések száma: `3`
 
@@ -72,6 +74,10 @@ reports/performance/performance_report.html
 - `p50_latency_ms`, `p95_latency_ms`, `p99_latency_ms`: percentilis késleltetések.
 - `failed_events`: hibával zárult pontozási kísérletek száma.
 - `model_load_time_s`: egyszer mért modellbetöltési idő.
+- `process_cpu_time_s`: processz CPU-idő.
+- `cpu_time_per_event_ms`: CPU-idő eseményenként.
+- `memory_rss_mb_before`, `memory_rss_mb_after`, `memory_rss_delta_mb`: RSS memóriaértékek, ahol elérhetők.
+- `peak_memory_mb`: csúcsmemória, ahol elérhető.
 
 ## Dolgozati felhasználás
 
@@ -84,3 +90,6 @@ A teljesítménymérési ábrák és riport a diplomamunka 5. fejezetében a pro
 - Nem hosszú idejű éles üzemi terhelés.
 - Nem natív Wazuh indexelési teljesítmény.
 - Batch scoring mérés, nem teljes SIEM end-to-end benchmark.
+- Nem event/perc alapú replay mérés.
+- A CPU mérés processz CPU-időt mutat, nem teljes rendszer CPU százalékot.
+- A memóriaértékek RSS / delta / csúcsmemória jellegűek, ahol az adott platformon elérhetők.

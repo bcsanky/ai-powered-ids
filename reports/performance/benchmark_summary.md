@@ -4,11 +4,11 @@ A mérés a meglévő AE-Minimal scoring lánc lokális/labor teljesítményét 
 
 ## Fő eredmények
 
-- Legjobb áteresztőképesség: 405.51 esemény/másodperc, batch size 50, eseményszám 100.
-- Legalacsonyabb p95 késleltetés: 2.7938 ms, batch size 10, eseményszám 100.
+- Legjobb áteresztőképesség: 415.65 esemény/másodperc, batch size 100, eseményszám 500.
+- Legalacsonyabb p95 késleltetés: 2.5994 ms, batch size 100, eseményszám 500.
 - Hibás események összesen: 0.
-- Legalacsonyabb CPU-idő eseményenként: 2.4661 ms.
-- Legnagyobb mért csúcsmemória: 147.9062 MB.
+- Legalacsonyabb CPU-idő eseményenként: 2.4057 ms.
+- Legnagyobb mért csúcsmemória: 154.4844 MB.
 
 ## Erőforrás-mérés
 

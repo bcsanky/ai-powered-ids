@@ -77,7 +77,7 @@ generate-case-studies:
 	$(PYTHON) -m ml.src.generate_case_studies --scored-events reports/lab/lab_scored_events.jsonl --output-dir reports/lab
 
 benchmark-scoring:
-	$(PYTHON) -m ml.src.benchmark_scoring --input examples/lab/lab_events.jsonl --output-dir reports/performance --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --event-counts 100 500 1000 5000 --batch-sizes 1 10 50 100 --repeats 3
+	$(PYTHON) -m ml.src.benchmark_scoring --input examples/lab/lab_events.jsonl --output-dir reports/performance --model-root artifacts/final/final-ae-minimal-v1 --preprocess data/processed/final/ae_minimal/preprocess.pkl --event-counts 100 500 1000 5000 10000 --batch-sizes 1 10 50 100 --repeats 3
 
 plot-performance:
 	$(PYTHON) -m ml.src.plot_performance_results --input reports/performance/benchmark_results.csv --output-dir reports/performance

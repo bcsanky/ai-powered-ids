@@ -48,11 +48,11 @@ Ezek az események nem natív Wazuh exportból származó bizonyítékok, és ne
 
 ## Teljesítménymérés korlátok
 
-A teljesítménymérés lokális/labor batch scoring mérés. A benchmark a meglévő AE-Minimal modellt és előfeldolgozót használja, és nem indít új tanítást. Az események ismétlése determinisztikus, és kizárólag a feldolgozási kapacitás mérésére szolgál.
+A teljesítménymérés lokális/labor batch scoring/inference mérés. A benchmark a meglévő AE-Minimal modellt és előfeldolgozót használja, és nem indít új tanítást. Az események ismétlése determinisztikus, és kizárólag a feldolgozási kapacitás mérésére szolgál. Ez nem event/perc alapú replay mérés, hanem a scoring komponens 100, 500, 1000, 5000 és 10000 eseményre mért feldolgozási költségének vizsgálata.
 
 Az eredmények hardver- és környezetfüggők. Nem tartalmaznak natív Wazuh indexelést, dashboard terhelést, hosszú idejű stressztesztet, hálózati késleltetést vagy többfelhasználós SOC munkafolyamatot. Ezért nem szabad éles üzemi teljesítménygaranciaként értelmezni őket.
 
-A CPU-használat processz CPU-időként értelmezendő, nem teljes gépszintű terhelésként. A memóriahasználati értékek platformfüggők: ahol psutil elérhető, RSS alapú értékek rögzíthetők, Unix/Linux környezetben pedig csúcsmemória is mérhető. Ha valamelyik memóriaérték nem áll rendelkezésre, az nem érvényteleníti a latency és throughput mérést, de a memóriaelemzést korlátozza.
+A CPU-használat processz CPU-időként értelmezendő, nem teljes gépszintű CPU százalékként. A memóriahasználati értékek platformfüggők: ahol psutil elérhető, RSS alapú értékek rögzíthetők, Unix/Linux környezetben pedig csúcsmemória is mérhető. Ha valamelyik memóriaérték nem áll rendelkezésre, az nem érvényteleníti a latency és throughput mérést, de a memóriaelemzést korlátozza.
 
 ## Etikai és adatvédelmi megfontolások
 

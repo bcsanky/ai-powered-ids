@@ -80,6 +80,8 @@ Ez a dokumentum rögzíti, hogy a validált mérési eredmények közül mely fu
 | Kompatibilis throughput ábra | `figures/final/throughput.png` | Végleges néven hivatkozható áteresztőképességi ábra | dolgozatba beemelhető |
 | Dolgozatba rendezett performance ábrák | `reports/final/thesis_figures/performance_*.png` | Teljesítménymérési ábrák rendezett másolatai | dolgozatba beemelhető |
 
+Megjegyzés: a teljesítménymérési eredmények batch scoring/inference mérések. Az eredeti event/perc terhelési célok helyett a prototípus jelen változata 100, 500, 1000, 5000 és 10000 esemény feldolgozási idejét vizsgálja több batch size mellett. Ez nem teljes SIEM/Wazuh end-to-end terhelhetőségi mérés.
+
 ## Demonstrációs prototípuskimenetek
 
 A scoring szolgáltatás, a batch scoring és a szakértői jelentés a diplomamunka 5. fejezetében az implementált prototípus működését szemlélteti. Ezek a kimenetek a validált AE-Minimal modellre és az összehasonlító eredménytáblára épülnek, de nem helyettesítik a 6. fejezet mérési benchmark táblázatait.

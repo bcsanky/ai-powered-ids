@@ -176,19 +176,21 @@ A dolgozatban felhasználható ábrák:
 
 ## 6.8 Teljesítménymérés
 
-A batch scoring komponens lokális/labor teljesítménymérése 100, 500, 1000 és 5000 eseményen, valamint 1, 10, 50 és 100 batch size beállítással készült. A mérés három ismétlést használt, és nem indított új modell-tanítást. A bemeneti események determinisztikus ismétlése kizárólag a feldolgozási kapacitás mérésére szolgált.
+A batch scoring komponens lokális/labor teljesítménymérése 100, 500, 1000, 5000 és 10000 eseményen, valamint 1, 10, 50 és 100 batch size beállítással készült. A mérés három ismétlést használt, és nem indított új modell-tanítást. A bemeneti események determinisztikus ismétlése kizárólag a feldolgozási kapacitás mérésére szolgált.
+
+Az eredeti event/perc terhelési célok helyett a prototípus jelen állapotában batch scoring/inference teljesítménymérés készült. Ez a mérés a scoring komponens feldolgozási költségét mutatja, nem a teljes SIEM/Wazuh end-to-end terhelhetőségét.
 
 A fő eredmények:
 
 | Mutató | Érték |
 |---|---:|
-| Legjobb mért áteresztőképesség | 399,04 esemény/másodperc |
-| Ehhez tartozó batch size | 1 |
-| Ehhez tartozó eseményszám | 100 |
-| Legalacsonyabb p95 késleltetés | 2,7723 ms |
+| Legjobb mért áteresztőképesség | 394,18 esemény/másodperc |
+| Ehhez tartozó batch size | 100 |
+| Ehhez tartozó eseményszám | 500 |
+| Legalacsonyabb p95 késleltetés | 3,2856 ms |
 | Hibás események összesen | 0 |
 
-A teljesítményriport összesített táblázata alapján az esemény/másodperc értékek a vizsgált környezetben nagyságrendileg 338 és 399 között mozogtak. A mérés CPU-időt, CPU-idő/esemény értéket, valamint platformfüggően elérhető memória RSS és csúcsmemória adatokat is rögzít. Az eredmények lokális hardver- és környezetfüggő mérések, nem éles üzemi teljesítménygaranciák, és nem tartalmazzák a teljes SIEM indexelési vagy incidenskezelési lánc költségét.
+A teljesítményriport összesített táblázata alapján az esemény/másodperc értékek a vizsgált környezetben nagyságrendileg 288 és 394 között mozogtak. A mérés CPU-időt, CPU-idő/esemény értéket, valamint platformfüggően elérhető memória RSS és csúcsmemória adatokat is rögzít. A CPU-idő processz CPU-időként értelmezendő, nem teljes rendszer CPU százalékként. A végleges futásban a CPU-idő és a csúcsmemória oszlopok kitöltődtek, míg a közvetlen RSS delta mezők az adott környezetben üresen maradtak. Az eredmények lokális hardver- és környezetfüggő mérések, nem éles üzemi teljesítménygaranciák, és nem tartalmazzák a teljes SIEM indexelési vagy incidenskezelési lánc költségét.
 
 A dolgozatban felhasználható ábrák:
 
@@ -216,7 +218,9 @@ A hibrid kiértékelés offline proxy-alapú, és azonos teszthalmaz-sorrendet f
 
 A lab/replay demonstráció kis elemszámú kontrollált eseménysor. A port scan és SSH brute force jellegű minták bemutatják a scoring lánc működését, de önmagukban nem bizonyítanak éles üzemi detektálási teljesítményt.
 
-A teljesítménymérés lokális hardver- és környezetfüggő batch scoring mérés. Nem tartalmaz natív Wazuh indexelést, dashboard terhelést, hosszú idejű stressztesztet vagy többfelhasználós SOC munkafolyamatot.
+A teljesítménymérés lokális hardver- és környezetfüggő batch scoring mérés. Nem event/perc alapú replay mérés, nem tartalmaz natív Wazuh indexelést, dashboard terhelést, hosszú idejű stressztesztet vagy többfelhasználós SOC munkafolyamatot.
+
+A 6.5 teljesítményértékelés, a 6.6 hibaanalízis és a 6.7 korlátok végleges számozását a Word-dokumentum tartalomjegyzéke szerint kell igazítani.
 
 További korlátok:
 

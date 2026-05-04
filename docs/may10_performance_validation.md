@@ -9,6 +9,8 @@
 
 A validáció célja a rendszermérnöki minőség erősítése volt a meglévő batch scoring teljesítménymérés kiegészítésével. A mérés CPU-idő és memóriahasználati oszlopokkal bővült, miközben megmaradtak a korábbi latency és throughput kimenetek. A kiegészítés nem indított új modell-tanítást és nem változtatott a detektálási logikán.
 
+Az eredeti event/perc terhelési célok helyett a prototípus jelen állapotában batch scoring/inference teljesítménymérés készült. A mérés 100, 500, 1000, 5000 és 10000 esemény feldolgozását vizsgálta több batch size mellett. Ez a mérés a scoring komponens feldolgozási költségét mutatja, nem a teljes SIEM/Wazuh end-to-end terhelhetőségét.
+
 ## Futtatott parancsok
 
 ```bash
@@ -16,7 +18,7 @@ make final-validate
 make benchmark-scoring
 make plot-performance
 make generate-performance-report
-make export-performance-artifacts
+make <kompatibilis performance export cél>
 make final-day10-performance
 ```
 
@@ -28,6 +30,15 @@ Mért eseményszámok:
 - 500
 - 1000
 - 5000
+- 10000
+
+A várható benchmark sorok száma:
+
+```text
+5 event-count × 4 batch-size × 3 repeat = 60 sor
+```
+
+Az ellenőrzött futásban a `benchmark_results.csv` és a `performance_metrics.csv` egyaránt 60 sort tartalmazott.
 
 Batch size értékek:
 
@@ -53,6 +64,8 @@ Batch size értékek:
 A CPU-idő mérése standard könyvtári `time.process_time()` alapján történik. A memória RSS érték psutil jelenléte esetén érhető el, a csúcsmemória pedig Unix/Linux környezetben `resource.getrusage()` alapján rögzíthető. Ha egy memóriaérték az adott platformon nem mérhető megbízhatóan, az oszlop üresen maradhat.
 
 Az ellenőrzött futásban a CPU-idő és a csúcsmemória oszlopok kitöltődtek. A memória RSS előtte/utána és delta oszlopai a használt környezetben üresek maradtak, mert a közvetlen RSS méréshez szükséges opcionális mérési forrás nem volt elérhető.
+
+A CPU mérés processz CPU-időként értelmezendő, nem teljes rendszer CPU százalékként. A RAM mérés RSS, delta és csúcsmemória jellegű, attól függően, hogy az adott platformon melyik adat érhető el.
 
 ## Létrejött kimenetek
 
@@ -85,6 +98,7 @@ A végleges számozást a Word-dokumentum tartalomjegyzéke szerint kell igazít
 
 - Lokális/labor mérés.
 - Batch scoring mérés.
+- Nem event/perc alapú replay mérés.
 - Nem éles üzemi teljesítménygarancia.
 - Nem natív Wazuh indexelési teljesítmény.
 - Nem teljes SIEM feldolgozási lánc mérése.
