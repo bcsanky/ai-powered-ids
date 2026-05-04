@@ -187,7 +187,7 @@ Megjegyzés: a futás közben a Matplotlib ideiglenes cache könyvtárra vonatko
 
 ## AE-Context státusz
 
-Az `AE-Context` a prototípus jelen változatában már nem pusztán kompatibilis konfiguráció: az adatépítő pipeline egyszerű, timestamp nélküli context feature-öket tud előállítani. Ezek port- és protokollgyakoriságon, ritka célport jelzőn, valamint forgalmi arányokon alapulnak.
+Az `AE-Context` a prototípus jelen változatában már nem pusztán kompatibilis konfiguráció: az adatépítési folyamat egyszerű, timestamp nélküli context feature-öket tud előállítani. Ezek port- és protokollgyakoriságon, ritka célport jelzőn, valamint forgalmi arányokon alapulnak.
 
 Az implementált context feature-ök:
 
@@ -221,7 +221,7 @@ Az AE-Context gyakorisági feature-ök train splitből illesztett statisztikáko
 
 ## Nyitva maradt hiba vagy feladat
 
-- A hibrid kiértékelő pipeline továbbra is tervezett elem; külön hibrid kiértékelő modul és validált hibrid eredmény még nem áll rendelkezésre.
+- A hibrid kiértékelési folyamat továbbra is tervezett elem; külön hibrid kiértékelő modul és validált hibrid eredmény még nem áll rendelkezésre.
 - A Wazuh baseline végleges kiértékeléséhez címkézett Wazuh vagy Wazuh-szerű export szükséges.
 - Az AE-Context tanítási futás teljes befejezése külön validációs körben rögzíthető, ha a context konfiguráció eredményei is bekerülnek az összehasonlításba.
 

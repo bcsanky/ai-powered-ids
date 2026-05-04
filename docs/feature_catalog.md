@@ -1,6 +1,6 @@
 # Feature katalógus
 
-A feature-katalógus a szakdolgozati prototípus implementált feature-készletét foglalja össze. A nyers feature-ök leírása az `experiments/experiment.yaml` konfiguráció és az `ml/src/schema.py` oszlopkanonizáló modul alapján történik; az előállított context feature-ök implementációja az `ml/src/build_dataset.py` adatépítő pipeline-ban található. A katalógus a megvalósítási fejezet számára mutatja be, milyen bemeneti változókat használ az autoencoder alapú anomáliadetektálás, hogyan történik az előfeldolgozás, és milyen szerepet töltenek be ezek a jellemzők az IDS értékelésében.
+A feature-katalógus a szakdolgozati prototípus implementált feature-készletét foglalja össze. A nyers feature-ök leírása az `experiments/experiment.yaml` konfiguráció és az `ml/src/schema.py` oszlopkanonizáló modul alapján történik; az előállított context feature-ök implementációja az `ml/src/build_dataset.py` adatépítési folyamatban található. A katalógus a megvalósítási fejezet számára mutatja be, milyen bemeneti változókat használ az autoencoder alapú anomáliadetektálás, hogyan történik az előfeldolgozás, és milyen szerepet töltenek be ezek a jellemzők az IDS értékelésében.
 
 A prototípus jelen változata a CIC-IDS2017 adathalmaz flow-szintű mezőire épül. Az `AE-Minimal` konfiguráció a lenti hét alapjellemzőt használja. Az `AE-Context` konfiguráció ugyanezekből az alapjellemzőkből indul ki, és `features.context_enabled: true` esetén további, timestampet nem igénylő, determinisztikusan számított context feature-öket is előállít. A gyakorisági context statisztikák kizárólag a train splitből illeszkednek, majd ezek kerülnek alkalmazásra a train, validation, calibration és test splitre.
 
@@ -21,9 +21,9 @@ A prototípus jelen változata a CIC-IDS2017 adathalmaz flow-szintű mezőire é
 
 ## Implementációs megjegyzések
 
-Az oszlopnevek feldolgozása az `ml/src/schema.py` modulban definiált aliaslista alapján történik. A pipeline először normalizálja az oszlopneveket, majd a CIC-IDS2017 eredeti mezőit a kanonikus feature-nevekre nevezi át. Ez lehetővé teszi, hogy az eltérő írásmódú CSV oszlopnevek, például szóközös vagy aláhúzásos változatok, ugyanarra a belső feature-névre képeződjenek le.
+Az oszlopnevek feldolgozása az `ml/src/schema.py` modulban definiált aliaslista alapján történik. Az adatfeldolgozási lánc először normalizálja az oszlopneveket, majd a CIC-IDS2017 eredeti mezőit a kanonikus feature-nevekre nevezi át. Ez lehetővé teszi, hogy az eltérő írásmódú CSV oszlopnevek, például szóközös vagy aláhúzásos változatok, ugyanarra a belső feature-névre képeződjenek le.
 
-A numerikus feature-ök esetén a pipeline explicit numerikus konverziót végez. A nem értelmezhető értékek hiányzó értékké alakulnak, az infinities értékek szintén hiányzó értékként kezelődnek, majd a hiányos sorok a numerikus feature-ök alapján kiesnek. A skálázás `StandardScaler` segítségével történik, és az előfeldolgozó kizárólag a tanítóhalmazon illeszkedik.
+A numerikus feature-ök esetén az adatfeldolgozási lánc explicit numerikus konverziót végez. A nem értelmezhető értékek hiányzó értékké alakulnak, az infinities értékek szintén hiányzó értékként kezelődnek, majd a hiányos sorok a numerikus feature-ök alapján kiesnek. A skálázás `StandardScaler` segítségével történik, és az előfeldolgozó kizárólag a tanítóhalmazon illeszkedik.
 
 A `protocol` kategorikus feature one-hot encodinggal kerül a modell bemenetére. Az ismeretlen kategóriák kezelése `ignore`, ami biztosítja, hogy a validációs, kalibrációs vagy teszt adatokban megjelenő új protokollértékek ne okozzanak futási hibát.
 

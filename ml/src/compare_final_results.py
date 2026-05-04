@@ -39,6 +39,8 @@ OUTPUT_COLUMNS = [
     "f1",
     "false_positive_rate",
     "false_negative_rate",
+    "true_positive_rate",
+    "true_negative_rate",
     "alert_count",
     "roc_auc",
     "n_samples",
@@ -162,6 +164,14 @@ def complete_metrics(row: pd.Series, config_name: str, run_dir: Path) -> dict:
     if false_negative_rate is None:
         false_negative_rate = safe_rate(fn, attack_total)
 
+    true_positive_rate = numeric_or_none(value_or_none(row, "true_positive_rate"))
+    if true_positive_rate is None:
+        true_positive_rate = safe_rate(tp, attack_total)
+
+    true_negative_rate = numeric_or_none(value_or_none(row, "true_negative_rate"))
+    if true_negative_rate is None:
+        true_negative_rate = safe_rate(tn, benign_total)
+
     alert_count = int_or_none(value_or_none(row, "alert_count"))
     if alert_count is None and tp is not None and fp is not None:
         alert_count = tp + fp
@@ -193,6 +203,8 @@ def complete_metrics(row: pd.Series, config_name: str, run_dir: Path) -> dict:
         "f1": numeric_or_none(value_or_none(row, "f1")),
         "false_positive_rate": false_positive_rate,
         "false_negative_rate": false_negative_rate,
+        "true_positive_rate": true_positive_rate,
+        "true_negative_rate": true_negative_rate,
         "alert_count": alert_count,
         "roc_auc": numeric_or_none(value_or_none(row, "roc_auc")),
         "n_samples": n_samples,
@@ -282,8 +294,8 @@ def save_precision_recall_f1(df: pd.DataFrame, output_dir: Path) -> None:
     ax.bar(x - width, plot_df["precision"], width=width, label="Precision")
     ax.bar(x, plot_df["recall"], width=width, label="Recall")
     ax.bar(x + width, plot_df["f1"], width=width, label="F1")
-    ax.set_title("Precision, recall and F1")
-    ax.set_ylabel("Metric value")
+    ax.set_title("Precision, recall és F1 összehasonlítása")
+    ax.set_ylabel("Metrika értéke")
     ax.set_ylim(0.0, 1.05)
     ax.set_xticks(x, labels=plot_df["config_name"], rotation=20, ha="right")
     ax.legend()
@@ -324,16 +336,16 @@ def save_figures(df: pd.DataFrame, output_dir: Path) -> None:
         output_dir,
         column="false_positive_rate",
         filename="fig_comparison_false_positive_rate.png",
-        title="False positive rate",
-        ylabel="False positive rate",
+        title="Hamis pozitív arány",
+        ylabel="Hamis pozitív arány",
     )
     save_single_metric_bar(
         df,
         output_dir,
         column="alert_count",
         filename="fig_comparison_alert_count.png",
-        title="Alert count",
-        ylabel="Alerts",
+        title="Riasztások száma",
+        ylabel="Riasztások",
     )
 
 

@@ -154,6 +154,8 @@ A `results/final/comparison/` könyvtárban az alábbi összehasonlító állom�
 - `fig_comparison_false_positive_rate.png`
 - `fig_comparison_alert_count.png`
 
+Megjegyzés: a `metrics_comparison.csv` tartalmazza a `true_positive_rate` és `true_negative_rate` mezőket is. Ezek a mezők a `metrics_summary.csv` fájlokból kerülnek átvételre, vagy hiány esetén a `tn`, `fp`, `fn`, `tp` értékek alapján számíthatók.
+
 Az összehasonlító táblázat a hiányzó konfigurációkat nem hagyja figyelmen kívül, hanem `missing` státusszal szerepelteti. Ez biztosítja, hogy a szakdolgozati értékelésben egyértelműen elkülönüljön a validált eredmény és a még nem futtatott konfiguráció.
 
 ### Tervezett kimenetek
@@ -178,3 +180,9 @@ Az alábbi kimenetek csak a megfelelő futtatások elkészülte után tekinthet�
 - A hibrid kiértékelési lépés implementációjának megtervezése csak akkor, ha stabil összekapcsolási kulcs áll rendelkezésre az AE és Wazuh eredmények között.
 - `make final-compare` újrafuttatása minden új validált eredmény után.
 - A szakdolgozati ábrákhoz használt végleges run könyvtárak dokumentálása.
+
+## Beadási melléklet megjegyzés
+
+A `results/final/` alatti futási eredmények nem feltétlenül részei a Git verziókezelésnek, mivel ezek a mérések automatikusan előállított eredményfájljai. A végleges szakdolgozati ábrákhoz és táblázatokhoz felhasznált run könyvtárakat külön meg kell őrizni.
+
+A beadási ZIP mellékletbe a `results/final/` releváns részeit is be kell tenni, különösen azokat a futásokat, amelyekből a dolgozat ábrái és táblázatai készültek. A dokumentációban egyértelműen rögzíteni kell, hogy melyik run könyvtárból kerültek át az egyes ábrák és táblázatok a dolgozatba.

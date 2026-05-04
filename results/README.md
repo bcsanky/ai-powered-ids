@@ -1,6 +1,6 @@
 # Eredménykönyvtárak felépítése
 
-A `results/` könyvtár a szakdolgozat végleges mérési eredményeinek egységes tárolására szolgál. Az itt megjelenő mérési állományok a pipeline által előállított kimenetek; ezeket alapértelmezetten nem szabad kézzel módosítani.
+A `results/` könyvtár a szakdolgozat végleges mérési eredményeinek egységes tárolására szolgál. Az itt megjelenő mérési állományok a mérési lánc által előállított kimenetek; ezeket alapértelmezetten nem szabad kézzel módosítani.
 
 ## Végleges struktúra
 
@@ -47,7 +47,7 @@ Elvárt fájlok:
 - `top_feature_frequency.png`, ha külön ábrageneráló lépés előállítja
 - `run_metadata.json`
 
-Megjegyzés: az AE tanító pipeline elsősorban CSV eredményeket és rekonstrukciós hiba alapú magyarázati fájlokat állít elő. A PNG ábrák AE esetén a `plot_final_results.py` ábrageneráló lépéssel állíthatók elő a `predictions.csv`, `threshold_curve.csv` és kapcsolódó eredményfájlok alapján.
+Megjegyzés: az AE tanítási folyamat elsősorban CSV eredményeket és rekonstrukciós hiba alapú magyarázati fájlokat állít elő. A PNG ábrák AE esetén a `plot_final_results.py` ábrageneráló lépéssel állíthatók elő a `predictions.csv`, `threshold_curve.csv` és kapcsolódó eredményfájlok alapján.
 
 ### `results/final/final-ae-context-v1/`
 
@@ -103,7 +103,7 @@ Nem elvárt fájl:
 
 ### `results/final/final-hybrid-v1/`
 
-A hibrid AE + Wazuh kiértékelés eredményei. Ez a lépés tervezett implementációhoz kötött, ezért a könyvtár csak akkor tartalmaz végleges eredményeket, ha a hibrid kiértékelő pipeline már elkészült és validált.
+A hibrid AE + Wazuh kiértékelés eredményei. Ez a lépés tervezett implementációhoz kötött, ezért a könyvtár csak akkor tartalmaz végleges eredményeket, ha a hibrid kiértékelési folyamat már elkészült és validált.
 
 Elvárt fájlok a hibrid implementáció elkészülte után:
 

@@ -12,7 +12,7 @@ A mérési folyamat elsődleges bemenete a CIC-IDS2017 nyers CSV formátumú ada
 data/raw/cicids2017/*.csv
 ```
 
-Az adatépítő pipeline a nyers CSV fájlokból a következő feldolgozott szeleteket állítja elő:
+Az adatépítési folyamat a nyers CSV fájlokból a következő feldolgozott szeleteket állítja elő:
 
 ```text
 train.parquet
@@ -97,7 +97,7 @@ make dataset CONFIG=experiments/final/ae_minimal_smoke.yaml
 make train-ae CONFIG=experiments/final/ae_minimal_smoke.yaml
 ```
 
-Az `ae_minimal_smoke.yaml` konfiguráció csak a pipeline futtathatóságának gyors ellenőrzésére szolgál. A szakdolgozati összehasonlító táblázatokban és ábrákban a teljes adatos `ae_minimal.yaml` vagy egy külön egyértelműen jelölt végleges futtatás eredményei használhatók.
+Az `ae_minimal_smoke.yaml` konfiguráció csak a mérési lánc futtathatóságának gyors ellenőrzésére szolgál. A szakdolgozati összehasonlító táblázatokban és ábrákban a teljes adatos `ae_minimal.yaml` vagy egy külön egyértelműen jelölt végleges futtatás eredményei használhatók.
 
 Elvárt fő kimeneti gyökerek:
 

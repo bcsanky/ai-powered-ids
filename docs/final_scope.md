@@ -14,7 +14,7 @@ A végleges laboratóriumi prototípus egy reprodukálható kísérleti rendszer
 
 - Wazuh Manager, Wazuh Indexer és Wazuh Dashboard Docker Compose alapú laboratóriumi környezetben.
 - Egy saját FastAPI alapú ML szolgáltatás-prototípus komponens, amely az architekturális integrációs pontot reprezentálja.
-- CIC-IDS2017 adatfeldolgozó pipeline, amely nyers CSV fájlokból tanító, validációs, kalibrációs és teszt adathalmazokat állít elő.
+- CIC-IDS2017 adatfeldolgozási lánc, amely nyers CSV fájlokból tanító, validációs, kalibrációs és teszt adathalmazokat állít elő.
 - Autoencoder alapú anomáliadetektáló modell sklearn `MLPRegressor` implementációval.
 - Rekonstrukciós hiba alapú anomáliapontszám.
 - Három küszöbölési stratégia: fix küszöb, validációs percentilis alapú küszöb és kalibrációs halmazon optimalizált F1-küszöb.
@@ -22,7 +22,7 @@ A végleges laboratóriumi prototípus egy reprodukálható kísérleti rendszer
 - Wazuh-stílusú baseline, amely exportált Wazuh riasztásokat vagy Wazuh-szerű predikciós mezőket hasonlít össze a címkézett adatokkal.
 - Eredményfájlok, mérőszámok, AE ábrák és összehasonlító ábrák előállítása a szakdolgozati értékeléshez.
 
-A laboratóriumi prototípus a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható kísérleti pipeline-on, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
+A laboratóriumi prototípus a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható mérési láncon, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
 
 ## 3. Megvalósítási kör május 15-ig
 
@@ -59,7 +59,7 @@ Nem valósítunk meg nagy skálájú teljesítménytesztet, magas rendelkezésre
 
 A `baseline_stat` egy egyszerű statisztikai anomáliadetektáló baseline. A feldolgozott feature-térben kiszámítja a tanítóhalmaz középpontját, majd a tesztminták ehhez viszonyított távolságából képez anomáliapontszámot. A küszöböt a validációs pontszámok percentilise alapján állítja be.
 
-Ez a konfiguráció nem tekinthető fejlett IDS-nek, de hasznos referenciaérték: megmutatja, hogy egy egyszerű, nem neurális módszer milyen teljesítményt ér el ugyanazon adatelőkészítési pipeline mellett.
+Ez a konfiguráció nem tekinthető fejlett IDS-nek, de hasznos referenciaérték: megmutatja, hogy egy egyszerű, nem neurális módszer milyen teljesítményt ér el ugyanazon adatelőkészítési folyamat mellett.
 
 ### baseline_wazuh
 
