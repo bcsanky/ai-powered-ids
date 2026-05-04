@@ -1,2 +1,0 @@
-tn,fp,fn,tp,precision,recall,f1,n_samples,n_attack,n_benign,roc_auc,baseline,threshold,has_timestamp,first_tp_time,first_fp_time,tp_per_min,fp_per_min,preprocess_path,label_column,threshold_quantile,feature_mode
-161952,8398,269371,8907,0.5147067321583357,0.0320075607845392,0.06026733607819123,448628,278278,170350,0.47581617769653184,stat,3.5242483973503114,False,,,,,data/processed/final/ae_minimal/preprocess.pkl,label,0.95,already_preprocessed
