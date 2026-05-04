@@ -1,0 +1,20 @@
+# Követelmény-megvalósítás mátrix
+
+Ez a mátrix azt foglalja össze, hogy a diplomamunka fő elvárásaihoz milyen megvalósított prototípus-elem, bizonyíték és dolgozati fejezet kapcsolódik. A részben teljesült státusz olyan elemet jelöl, amely laboratóriumi vagy demonstrációs formában megvalósult, de nem tekinthető teljes éles üzemi rendszernek.
+
+| Feladatlap elvárás | Megvalósított elem | Bizonyíték / fájl | Dolgozat fejezet | Státusz | Megjegyzés |
+|---|---|---|---|---|---|
+| Rendszerarchitektúra részletes bemutatása | Wazuh komponensek, ML szolgáltatás, batch scoring, riportkészítés és mérési lánc | `docs/final_scope.md`, `docs/thesis_chapter_5_implementation_draft.md` | 5. fejezet | teljesült | A prototípus laboratóriumi architektúraként értelmezendő. |
+| Alkalmazott technológiák és módszerek ismertetése | Python, sklearn, FastAPI, Docker/Wazuh labor, YAML konfigurációk, Makefile célok | `docs/thesis_implementation_notes.md`, `experiments/final/*.yaml`, `Makefile` | 5. fejezet | teljesült | A részletek a komponensenkénti leírásban szerepelnek. |
+| Adathalmazok és előfeldolgozás leírása | CIC-IDS2017 adatépítés, oszlopkanonizálás, train/validation/calibration/test bontás, `StandardScaler`, `OneHotEncoder` | `ml/src/build_dataset.py`, `docs/feature_catalog.md`, `dataset_metadata.json` | 5. és 6. fejezet | teljesült | Az előfeldolgozó kizárólag a tanító adatrészen illeszkedik. |
+| Gépi tanulási modell | sklearn `MLPRegressor` alapú autoencoder, rekonstrukciós hiba, küszöbölési stratégiák | `ml/src/train_ae.py`, `ml/src/autoencoder.py`, AE-Minimal és AE-Context futtatások | 5. és 6. fejezet | teljesült | A mérési ágak validált eredményt adnak. |
+| Log-elemzés / SIEM-integráció | Wazuh labor komponensek, Wazuh módú kiértékelési útvonal, szabályalapú proxy baseline | `infra/docker-compose.yml`, `ml/src/eval.py`, `ml/src/create_rule_proxy_export.py` | 5. és 6. fejezet | részben teljesült | Natív címkézett Wazuh export hiányában nincs validált natív Wazuh teljesítménymérés. |
+| Valós idejű vagy közel valós idejű scoring demonstráció | FastAPI `/score` végpont és batch scoring parancssori feldolgozás | `infra/mlservice/app/main.py`, `ml/src/score_events.py`, `docs/demo_runbook.md` | 5. fejezet | részben teljesült | Demonstrációs scoring készült; nem éles üzemi valós idejű SOC rendszer. |
+| Vizualizáció / riport | Összehasonlító ábrák, AE ábrák, security report, lab/replay case study, dashboard összefoglaló | `ml/src/plot_final_results.py`, `ml/src/compare_final_results.py`, `ml/src/generate_security_report.py`, `reports/final/thesis_figures/figure_manifest.csv` | 5. és 6. fejezet | teljesült | A kimenetek dolgozatba beemelhető ábrákat és táblázatokat adnak. |
+| Biztonsági, etikai, adatvédelmi megfontolások | Nyilvános adathalmaz, demonstrációs események, személyes adat minimalizálása, éles logadatok érzékenységének jelzése | `docs/thesis_limitations_and_error_analysis.md` | 6. fejezet és záró fejezet | teljesült | Éles környezetben külön adatkezelési és hozzáférés-kezelési kontrollokra lenne szükség. |
+| Technikai kihívások és jövőbeli fejlesztések | Küszöbérzékenység, false positive terhelés, Wazuh export hiánya, concept drift, CTI bővítés | `docs/thesis_limitations_and_error_analysis.md`, `docs/final_scope.md` | 6. fejezet | teljesült | A korlátok külön dokumentumban és fejezeti vázlatban szerepelnek. |
+| Összegzés és alkalmazási lehetőségek | Laboratóriumi IDS/SIEM prototípus, reprodukálható mérési lánc, demonstrációs scoring és riport | `docs/thesis_chapter_5_implementation_draft.md`, `docs/thesis_chapter_6_results_draft.md` | 5., 6. és záró fejezet | teljesült | A prototípus kutatási és oktatási demonstrációra alkalmas, nem éles üzemi megoldásként értelmezendő. |
+
+## Értelmezési megjegyzések
+
+A prototípus teljesíti a gépi tanulási modell, az adatfeldolgozás, a mérési összehasonlítás és a riportkészítés fő mérnöki céljait. A SIEM/Wazuh integráció laboratóriumi és proxy-alapú szinten teljesült; natív Wazuh teljesítménymérés csak címkézett Wazuh export birtokában lenne igazolható. A scoring komponens közel valós idejű működési mintát mutat, de nem éles üzemi rendelkezésre állású szolgáltatás.
