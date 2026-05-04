@@ -252,6 +252,20 @@ Ez a blokk a tényleges lab mérés előtti technikai readiness ellenőrzéseket
 | Live smoke readiness | `reports/live_smoke/live_smoke_readiness.md` | READY_FOR_LAB_EXECUTION / READY_WITH_WARNINGS / NOT_READY státusz | mérés előtti döntéstámogatás |
 | Operátori live brief | `reports/live_smoke/operator_smoke_brief.md` | Következő operátori lépések összefoglalása | mérésnapi segédlet |
 
+## Mérési minőség és kutatási állítás ellenőrzése
+
+Ez a blokk a meglévő real-lab mérés minőségét és értelmezhetőségét ellenőrző riportokat sorolja fel. Ezek nem új mérési eredmények, hanem a provenance-szel igazolt inputokból és eredményfájlokból készült minőségi kapuk. A `reports/measurement_quality/` futási kimeneti könyvtár, Gitbe nem kerül.
+
+| Elem | Forrásfájl | Dolgozatbeli felhasználás | Státusz |
+|---|---|---|---|
+| Scenario coverage | `reports/measurement_quality/scenario_coverage.md` | Ground truth eseményszám és scenario-lefedettség értékelése | mérés utáni quality gate |
+| Feature-alert alignment | `reports/measurement_quality/feature_alert_alignment.md` | Ground truth, feature, Wazuh, AE és hibrid event_id egyezés ellenőrzése | mérés utáni quality gate |
+| Metrikai konzisztencia | `reports/measurement_quality/metric_consistency.md` | Wazuh-only, AE-only és hibrid metrikák önkonzisztenciája | mérés utáni quality gate |
+| TTD minőség | `reports/measurement_quality/ttd_quality.md` | Time-to-detection értékek értelmezhetősége | mérés utáni quality gate |
+| Kutatási állítás erőssége | `reports/measurement_quality/research_claim_strength.md` | Hibrid javulás, kompromisszum vagy nem igazolt állítás kategorizálása | metrikaalapú értelmezés |
+| Mérési minőségi összefoglaló | `reports/measurement_quality/measurement_quality_summary.md` | MEASUREMENT_STRONG / USABLE_WITH_LIMITATIONS / WEAK / NOT_READY státusz | dolgozati döntéstámogatás |
+| Dolgozati quality megjegyzések | `reports/measurement_quality/thesis_measurement_quality_notes.md` | 6. fejezet korlátaihoz és hibaanalíziséhez használható rövid szöveg | kézi ellenőrzéssel beemelhető |
+
 ## Validált és hiányzó konfigurációk
 
 Validált konfigurációk:

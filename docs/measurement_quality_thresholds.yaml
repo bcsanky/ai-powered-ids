@@ -1,0 +1,25 @@
+minimums:
+  min_total_events: 20
+  min_benign_events: 5
+  min_attack_events: 5
+  min_scenarios: 4
+  min_attack_scenarios: 2
+  max_unmatched_alert_ratio: 0.5
+  max_missing_ae_score_ratio: 0.1
+  min_required_hybrid_rows: 3
+
+expected_scenarios:
+  benign:
+    - benign_ssh_login
+    - benign_package_update
+  attack:
+    - port_scan
+    - ssh_failed_logins
+    - ssh_bruteforce
+    - file_integrity_change
+    - privilege_change
+
+claim_thresholds:
+  min_f1_delta_for_improvement: 0.01
+  max_fpr_increase_without_warning: 0.10
+  max_alert_count_multiplier_without_warning: 2.0

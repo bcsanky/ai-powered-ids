@@ -26,6 +26,7 @@ SCAN_PATTERNS = [
     "reports/final_acceptance/**/*",
     "reports/final_submission_check/**/*",
     "reports/live_smoke/**/*",
+    "reports/measurement_quality/**/*",
     "results/performance/**/*",
     "figures/final/**/*",
     "examples/lab/**/*",

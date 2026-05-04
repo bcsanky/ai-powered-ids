@@ -189,3 +189,17 @@ make live-smoke
 ```
 
 Ha a kimenet `READY_WITH_WARNINGS`, a figyelmeztetéseket a mérés megkezdése előtt át kell nézni. Ha `NOT_READY`, a hibát javítani kell, mielőtt real-lab mérés indulna.
+
+## Measurement quality gate szerepe
+
+A measurement quality gate nem mérés, hanem a már elkészült real-lab mérési csomag minőségi ellenőrzése. Csak meglévő, verified real_lab provenance-hez kötött inputokból és eredményfájlokból dolgozhat. Provenance nélkül nem minősítheti a mérést használhatónak.
+
+A quality gate azt vizsgálja, hogy az elemszám, scenario-lefedettség, Wazuh alert matching, AE scoring lefedettség, hibrid összehasonlítás és TTD értékek alapján milyen óvatos kutatási állítás tehető. A claim strength kategória nem automatikus bizonyítás, hanem metrikaalapú értelmezési segítség. Ha a hibrid F1 nem javul, vagy csak riasztási terhelés árán javul a recall, ezt korlátként kell megfogalmazni.
+
+Futtatás tényleges mérés után:
+
+```bash
+make final-measurement-quality
+```
+
+A `reports/measurement_quality/` kimenetek futási riportok. Gitbe nem kerülnek, és nem helyettesítik sem a mérési provenance-t, sem a mérési manifestet.

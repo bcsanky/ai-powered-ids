@@ -79,6 +79,16 @@ Ez a checklist a natív Wazuh-only, AE-Minimal lab és hibrid Wazuh+AE mérés e
 - [ ] Elkészült a `reports/real_measurement_qa/defense_notes_real_measurement.md`.
 - [ ] Szükség esetén elkészült az anonimizált riport: `reports/real_measurement_redacted/`.
 
+## Mérési minőség és kutatási állítás
+
+- [ ] Lefutott a `make final-measurement-quality`.
+- [ ] A `reports/measurement_quality/scenario_coverage.md` alapján a scenario coverage megfelelő vagy korlátként dokumentált.
+- [ ] A `reports/measurement_quality/feature_alert_alignment.md` alapján az event_id készletek konzisztenciája megfelelő.
+- [ ] A `reports/measurement_quality/metric_consistency.md` alapján a Wazuh-only, AE-only és hibrid metrikák konzisztenciája megfelelő.
+- [ ] A `reports/measurement_quality/research_claim_strength.md` állítási kategóriája ismert.
+- [ ] A `reports/measurement_quality/measurement_quality_summary.md` státusza MEASUREMENT_STRONG vagy MEASUREMENT_USABLE_WITH_LIMITATIONS, vagy a gyenge mérés külön korlátként szerepel.
+- [ ] A `reports/measurement_quality/thesis_measurement_quality_notes.md` megjegyzései be lettek emelve a 6. fejezet korlátaihoz.
+
 ## Live integration és dashboard-ready kimenet
 
 - [ ] Lefutott a `make final-live-integration`.
