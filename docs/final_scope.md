@@ -4,7 +4,7 @@
 
 A szakdolgozat címe: **„AI-alapú kiberfenyegetés-felderítő és -elemző rendszer”**.
 
-A munka célja egy olyan laboratóriumi prototípus megtervezése, megvalósítása és értékelése, amely hagyományos IDS/SIEM komponenseket egészít ki gépi tanuláson alapuló anomáliadetektálással. A prototípus Wazuh komponensekre, egy saját FastAPI alapú ML szolgáltatásvázra, valamint a CIC-IDS2017 adathalmazon végzett kísérletekre épül. A gépi tanulási komponens egy sklearn `MLPRegressor` alapú autoencoder, amely rekonstrukciós hibából számít anomáliapontszámot.
+A munka célja egy olyan laboratóriumi prototípus megtervezése, megvalósítása és értékelése, amely hagyományos IDS/SIEM komponenseket egészít ki gépi tanuláson alapuló anomáliadetektálással. A prototípus Wazuh komponensekre, egy saját FastAPI alapú ML szolgáltatás-prototípus komponensre, valamint a CIC-IDS2017 adathalmazon végzett kísérletekre épül. A gépi tanulási komponens egy sklearn `MLPRegressor` alapú autoencoder, amely rekonstrukciós hibából számít anomáliapontszámot.
 
 A cél nem egy éles üzemi IDS teljes körű kiváltása, hanem annak vizsgálata, hogy egy hibrid, szabályalapú és gépi tanulási megközelítés milyen módon illeszthető egy SIEM/IDS architektúrába, és milyen mérőszámokkal értékelhető kontrollált, reprodukálható kísérleti környezetben.
 
@@ -13,7 +13,7 @@ A cél nem egy éles üzemi IDS teljes körű kiváltása, hanem annak vizsgála
 A végleges MVP egy reprodukálható kísérleti prototípus, amely az alábbi fő elemekből áll:
 
 - Wazuh Manager, Wazuh Indexer és Wazuh Dashboard Docker Compose alapú laboratóriumi környezetben.
-- Egy saját FastAPI alapú ML service skeleton, amely az architekturális integrációs pontot reprezentálja.
+- Egy saját FastAPI alapú ML szolgáltatás-prototípus komponens, amely az architekturális integrációs pontot reprezentálja.
 - CIC-IDS2017 adatfeldolgozó pipeline, amely nyers CSV fájlokból tanító, validációs, kalibrációs és teszt adathalmazokat állít elő.
 - Autoencoder alapú anomáliadetektáló modell sklearn `MLPRegressor` implementációval.
 - Rekonstrukciós hiba alapú anomáliapontszám.
@@ -24,14 +24,14 @@ A végleges MVP egy reprodukálható kísérleti prototípus, amely az alábbi f
 
 Az MVP a detektálási és értékelési láncot demonstrálja. A hangsúly a reprodukálható kísérleti pipeline-on, a konfigurációk összehasonlíthatóságán és a korlátok világos megnevezésén van.
 
-## 3. Mit valósítunk meg május 15-ig
+## 3. Megvalósítási kör május 15-ig
 
-Május 15-ig az alábbi elemek megvalósítása és dokumentálása a cél:
+A szakdolgozati prototípus lezárásáig az alábbi elemek tartoznak a megvalósítási körbe:
 
 - A végleges kísérleti konfigurációk rögzítése az `experiments/final/` könyvtárban.
 - A CIC-IDS2017 adathalmazból előállított feldolgozott adatszeletek létrehozása.
 - Az `ae_minimal` konfiguráció teljes futtatása, beleértve az adatépítést, a modell tanítását, a küszöbök számítását és a tesztkiértékelést.
-- Az `ae_context` konfiguráció jelenlegi kóddal futtatható változatának elkészítése, a későbbi kontextusjellemzők egyértelmű jelölésével.
+- Az `ae_context` konfiguráció futtatása egyszerű, timestamp nélküli context feature-ökkel.
 - A `baseline_stat` konfiguráció futtatása és eredményeinek összehasonlítása az autoencoder eredményeivel.
 - A `baseline_wazuh` konfiguráció előkészítése Wazuh vagy Wazuh-szerű exportált predikciók kiértékelésére.
 - A `hybrid` konfiguráció tervezési szintű rögzítése, amely az AE és Wazuh predikciók kombinálásának módját írja le.
@@ -83,9 +83,15 @@ A numerikus jellemzőket standard skálázás, a kategorikus protokollmezőt one
 
 ### ae_context
 
-Az `ae_context` a kontextusjellemzőkkel bővített irányt képviseli. A jelenlegi MVP-ben a konfiguráció futtatható marad a már implementált minimális feature-készlettel. A tervezett kontextusjellemzők külön TODO szekcióban szerepelnek, például időablakos forrásszámosságok, célport-gyakoriságok és forgalmi aggregátumok.
+Az `ae_context` a minimális flow feature-készletet egyszerű, timestamp nélküli context feature-ökkel egészíti ki. A jelenleg implementált context jellemzők train splitből illesztett port- és protokollgyakoriságon, ritka célport jelzőn, valamint soronként számított forgalmi arányokon alapulnak:
 
-Ez a megközelítés lehetőséget ad annak bemutatására, hogyan bővíthető a rendszer viselkedési kontextussal, miközben a végleges futtatás nem támaszkodik még nem implementált feature engineering lépésekre.
+- `destination_port_frequency`
+- `protocol_frequency`
+- `is_rare_destination_port`
+- `packet_ratio`
+- `bytes_packets_ratio`
+
+Ez a megközelítés lehetőséget ad annak bemutatására, hogyan bővíthető a rendszer egyszerű kontextussal úgy, hogy a feature engineering stabilan működjön a CIC-IDS2017 flow adatokon. A gyakorisági térképek nem használják a validation, calibration vagy test split eloszlását. Fontos korlát, hogy ezek nem időablakos, hostalapú vagy CTI-alapú context feature-ök.
 
 ### hybrid
 

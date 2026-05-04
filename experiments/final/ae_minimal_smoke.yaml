@@ -1,5 +1,5 @@
-experiment_id: final-ae-minimal-v1
-title: "Final AE minimal feature set"
+experiment_id: final-ae-minimal-smoke-v1
+title: "AE minimal smoke-test configuration"
 
 random_seed: 42
 
@@ -7,14 +7,14 @@ dataset:
   name: CIC-IDS2017
   version: "raw-v1"
   raw_dir: "data/raw/cicids2017"
-  output_dir: "data/processed/final/ae_minimal"
+  output_dir: "data/processed/final/ae_minimal_smoke"
   label_column_candidates:
     - Label
     - label
 
 dev_sample:
-  enabled: false
-  max_rows_total: null
+  enabled: true
+  max_rows_total: 5000
 
 split:
   benign_train_ratio: 0.70
@@ -25,7 +25,7 @@ split:
   attack_test_ratio: 0.50
 
 features:
-  set_name: minimal_v1
+  set_name: minimal_v1_smoke
   numeric:
     - destination_port
     - flow_duration
@@ -63,17 +63,17 @@ model:
   alpha: 0.0001
   batch_size: 32
   learning_rate_init: 0.001
-  max_iter: 200
+  max_iter: 20
   tol: 0.0001
-  n_iter_no_change: 5
+  n_iter_no_change: 3
   early_stopping: false
   validation_fraction: 0.1
 
 thresholds:
   fixed: 0.01
   percentile: 95
-  search_steps: 200
+  search_steps: 50
 
 paths:
-  artifacts_dir: "artifacts/final/final-ae-minimal-v1"
-  results_dir: "results/final/final-ae-minimal-v1"
+  artifacts_dir: "artifacts/final/final-ae-minimal-smoke-v1"
+  results_dir: "results/final/final-ae-minimal-smoke-v1"

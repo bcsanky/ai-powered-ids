@@ -107,6 +107,15 @@ def test_metadata_matches_real_row_counts():
     assert metadata["rows_test_attacks"] == int((test["is_benign"] == 0).sum())
     assert metadata["rows_test_benign"] == int((test["is_benign"] == 1).sum())
 
+    assert metadata["context_enabled"] is False
+    assert metadata["context_features"] == []
+    assert metadata["context_fit_split"] is None
+    assert metadata["unknown_context_frequency"] == 0.0
+    assert metadata["dev_sample"]["enabled"] is False
+    assert metadata["dev_sample"]["used"] is False
+    assert metadata["dev_sample"]["max_rows_total"] is None
+    assert metadata["dev_sample"]["rows_before"] == metadata["dev_sample"]["rows_after"]
+
 
 def test_train_val_calib_test_have_same_feature_columns():
     train = pd.read_parquet(PROCESSED_DIR / "train.parquet")

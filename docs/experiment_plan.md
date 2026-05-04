@@ -1,6 +1,6 @@
 # Végleges mérési munkafolyamat
 
-Ez a dokumentum a szakdolgozat végleges mérési folyamatát rögzíti. A terv az aktuális repository parancsaira, a `Makefile` célokra, az `ml/src/build_dataset.py`, `ml/src/train_ae.py` és `ml/src/eval.py` belépési pontokra, valamint az `experiments/final/` alatti végleges konfigurációkra épül.
+A szakdolgozat végleges mérési folyamata a projektben rögzített parancsokra, a `Makefile` célokra, az `ml/src/build_dataset.py`, `ml/src/train_ae.py` és `ml/src/eval.py` belépési pontokra, valamint az `experiments/final/` alatti végleges konfigurációkra épül.
 
 A cél egy reprodukálható mérési lánc kialakítása, amelyben az autoencoder-alapú konfigurációk, a statisztikai baseline, a Wazuh-stílusú baseline és a tervezett hibrid kiértékelés egységesen dokumentált eredményfájlokat állít elő.
 
@@ -24,6 +24,16 @@ dataset_metadata.json
 ```
 
 Az AE-Minimal és AE-Context futtatások a saját konfigurációjukban megadott `dataset.output_dir` könyvtárba írnak. A statisztikai baseline a már feldolgozott AE-Minimal adatokra épül.
+
+A végleges szakdolgozati konfigurációk teljes adatos futtatást használnak. A `dev_sample` kapcsoló ezekben explicit módon kikapcsolt állapotú:
+
+```yaml
+dev_sample:
+  enabled: false
+  max_rows_total: null
+```
+
+A `dev_sample` kizárólag technikai validációra szolgál. Bekapcsolt állapotban az adatépítés a tisztítás után, de a train/validation/calibration/test felosztás előtt determinisztikus mintavételt végez a `random_seed` alapján, és lehetőség szerint megőrzi mind a benign, mind a támadó osztályt. Az így készült smoke-test eredmények nem használhatók végleges szakdolgozati mérési eredményként.
 
 A Wazuh baseline külön bemenetet igényel: egy Wazuh vagy Wazuh-szerű exportot, amely tartalmazza a valós címkét és a Wazuh riasztási vagy predikciós mezőit. Támogatott formátumok az aktuális `ml/src/eval.py` alapján:
 
@@ -80,6 +90,15 @@ A teljes AE-Minimal adatépítés és tanítás rövidített Makefile célon ker
 make final-ae-minimal
 ```
 
+Gyors technikai smoke test kisebb mintán:
+
+```bash
+make dataset CONFIG=experiments/final/ae_minimal_smoke.yaml
+make train-ae CONFIG=experiments/final/ae_minimal_smoke.yaml
+```
+
+Az `ae_minimal_smoke.yaml` konfiguráció csak a pipeline futtathatóságának gyors ellenőrzésére szolgál. A szakdolgozati összehasonlító táblázatokban és ábrákban a teljes adatos `ae_minimal.yaml` vagy egy külön egyértelműen jelölt végleges futtatás eredményei használhatók.
+
 Elvárt fő kimeneti gyökerek:
 
 ```text
@@ -98,6 +117,8 @@ Az AE-Context mérési ág a minimális CIC-IDS2017 flow feature-ök mellett egy
 - `is_rare_destination_port`
 - `packet_ratio`
 - `bytes_packets_ratio`
+
+A `destination_port_frequency`, `protocol_frequency` és `is_rare_destination_port` train splitből illesztett gyakorisági statisztikákon alapul. A validation, calibration és test splitben megjelenő, trainben nem látott célportok vagy protokollok `0.0` gyakoriságot kapnak. A `packet_ratio` és `bytes_packets_ratio` soronként számított arányok, ezért nem igényelnek globális statisztikát.
 
 Futtatás:
 
@@ -121,7 +142,7 @@ artifacts/final/final-ae-context-v1/
 results/final/final-ae-context-v1/
 ```
 
-Fontos értelmezési szabály: az AE-Context nem használ timestamphez kötött időablakos aggregációkat. A jelenlegi context feature engineering gyakorisági és arányalapú, ezért stabilan futtatható a meglévő CIC-IDS2017 flow adatokon.
+Fontos értelmezési szabály: az AE-Context nem használ timestamphez kötött időablakos aggregációkat. A jelenlegi context feature engineering train-alapú gyakorisági és soronkénti arányalapú jellemzőket használ, ezért stabilan futtatható a meglévő CIC-IDS2017 flow adatokon.
 
 ## 5. Statisztikai baseline kiértékelési parancs
 
@@ -170,7 +191,7 @@ A Wazuh baseline eredményeinek értelmezésekor jelezni kell, hogy ez riasztás
 
 ## 7. Tervezett hibrid kiértékelési lépés
 
-A hibrid kiértékelés **tervezett május 6-i implementációs feladat**. A repository jelenlegi állapotában nincs `hybrid_eval.py`, és az aktuális `ml/src/eval.py` nem tartalmaz külön hibrid fúziós módot.
+A hibrid kiértékelés jelenleg tervezett elem. A projektben nincs külön hibrid kiértékelő modul, és az `ml/src/eval.py` nem tartalmaz külön hibrid fúziós módot.
 
 A tervezett hibrid lépés célja az AE predikciók és a Wazuh predikciók összekapcsolása egy stabil esemény- vagy flow-azonosító alapján. A kezdeti döntési logika:
 
@@ -178,17 +199,7 @@ A tervezett hibrid lépés célja az AE predikciók és a Wazuh predikciók öss
 hybrid_alert = ae_prediction == 1 OR wazuh_prediction == 1
 ```
 
-Tervezett parancsforma, amely csak az implementáció elkészülte után tekinthető futtathatónak:
-
-```bash
-# tervezett, jelenleg nem futtatható
-python3 -m ml.src.hybrid_eval \
-  --ae-predictions results/final/final-ae-minimal-v1/<run_id>/predictions.csv \
-  --wazuh-predictions results/final/final-baseline-wazuh-v1/<run_id>/predictions.csv \
-  --results-dir results/final/final-hybrid-v1
-```
-
-A szakdolgozatban ezt a lépést addig tervezett hibrid értékelésként kell megnevezni, amíg a megfelelő implementáció és validált kimenet nem készül el.
+A későbbi hibrid kiértékelő bemenete várhatóan az AE és Wazuh `predictions.csv` állománya lesz, kimenete pedig a többi mérési ággal azonos szerkezetű `results/final/final-hybrid-v1/` eredménykönyvtárba kerülhet. A szakdolgozatban ezt a lépést addig tervezett hibrid értékelésként kell megnevezni, amíg a megfelelő implementáció és validált kimenet nem készül el.
 
 ## 8. Elvárt eredményfájlok
 
@@ -223,31 +234,3 @@ A kimeneti fájlok az alábbi módon használhatók fel a szakdolgozatban:
 | Reprodukálhatósági melléklet | `run_metadata.json`, `train_config.json`, `thresholds.json` | Konfigurációk, futtatási útvonalak, küszöbök és metaadatok dokumentálása. |
 
 A szakdolgozatban az eredményeket óvatosan kell értelmezni: a CIC-IDS2017 flow-alapú mérés, a Wazuh logalapú baseline és a tervezett hibrid fúzió eltérő adatmodellre épülhet. Emiatt az összehasonlítás célja elsősorban a módszertani és architekturális különbségek bemutatása, nem pedig általános érvényű production IDS teljesítménygarancia megfogalmazása.
-
-## 10. May 3 validation checklist
-
-A május 3-i végleges kísérleti beállítás validálásához az alábbi parancsok használhatók. A `py_compile` és YAML-ellenőrző parancsok gyors statikus validációt adnak, míg a `make dataset`, `make train-ae` és `make final-eval-stat` tényleges pipeline-futtatások, ezért ezek hosszabb ideig tarthatnak.
-
-```bash
-python3 -m py_compile ml/src/build_dataset.py
-python3 -m py_compile ml/src/train_ae.py
-python3 -m py_compile ml/src/eval.py
-```
-
-```bash
-python3 - <<'PY'
-import yaml
-from pathlib import Path
-for p in Path("experiments/final").glob("*.yaml"):
-    with open(p, "r", encoding="utf-8") as f:
-        yaml.safe_load(f)
-    print("[OK]", p)
-PY
-```
-
-```bash
-make dataset CONFIG=experiments/final/ae_minimal.yaml
-make dataset CONFIG=experiments/final/ae_context.yaml
-make train-ae CONFIG=experiments/final/ae_minimal.yaml
-make final-eval-stat
-```

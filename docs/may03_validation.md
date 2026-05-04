@@ -3,7 +3,7 @@
 Validáció dátuma: 2026-05-03  
 Branch: `thesis/final`
 
-Ez a dokumentum a május 3-i final experiment setup futtathatósági ellenőrzését rögzíti. A validáció során nem történt modelllogika-módosítás: a `ml/src/build_dataset.py`, `ml/src/train_ae.py`, `ml/src/eval.py` és `ml/src/autoencoder.py` fájlok változatlanok maradtak.
+A május 3-i végleges kísérleti beállítás futtathatósági ellenőrzése során nem történt autoencoder modell-, tanítási vagy kiértékelési logika-módosítás. A későbbi dokumentált állapot szerint az `ml/src/build_dataset.py` timestamp nélküli AE-Context feature engineeringgel bővült, de ez nem változtatja meg az itt rögzített AE-Minimal tréning státuszát.
 
 ## Lefuttatott parancsok
 
@@ -152,9 +152,17 @@ Megjegyzés: a futás közben a Matplotlib ideiglenes cache könyvtárra vonatko
 
 ## AE-Context státusz
 
-Az `AE-Context` jelenleg csak kompatibilis konfiguráció. A repository aktuális állapota alapján nem tartalmaz valódi, implementált context feature engineering lépést. A konfiguráció célja, hogy a későbbi kontextusjellemzők helye és iránya dokumentált legyen, miközben a jelenlegi pipeline-nal futtatható marad.
+Az `AE-Context` aktuális állapotban már nem pusztán kompatibilis konfiguráció: az adatépítő pipeline egyszerű, timestamp nélküli context feature-öket tud előállítani. Ezek port- és protokollgyakoriságon, ritka célport jelzőn, valamint forgalmi arányokon alapulnak.
 
-Ezért a május 3-i validáció nem állítja, hogy az AE-Context már időablakos, forrás-cél aggregációs vagy CTI-alapú jellemzőket használna.
+Az implementált context feature-ök:
+
+- `destination_port_frequency`
+- `protocol_frequency`
+- `is_rare_destination_port`
+- `packet_ratio`
+- `bytes_packets_ratio`
+
+Ez továbbra sem jelent időablakos, hostalapú vagy CTI-alapú context feature engineeringet. A május 3-i validáció fókusza az AE-Minimal adatépítés, a statisztikai baseline és az alap futtathatóság volt; az AE-Minimal tréning teljes befejezése továbbra sem igazolt ebben a validációs körben.
 
 ## Nyitva maradt hiba vagy feladat
 

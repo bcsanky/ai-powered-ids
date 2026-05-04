@@ -3,6 +3,10 @@ title: "Final hybrid IDS configuration"
 
 random_seed: 42
 
+dev_sample:
+  enabled: false
+  max_rows_total: null
+
 dataset:
   name: CIC-IDS2017
   version: "raw-v1"

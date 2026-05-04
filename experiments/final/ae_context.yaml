@@ -12,6 +12,10 @@ dataset:
     - Label
     - label
 
+dev_sample:
+  enabled: false
+  max_rows_total: null
+
 split:
   benign_train_ratio: 0.70
   benign_val_ratio: 0.15

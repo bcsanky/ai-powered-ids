@@ -9,6 +9,10 @@ dataset:
   version: "raw-v1"
   raw_dir: "data/raw/cicids2017"
 
+dev_sample:
+  enabled: false
+  max_rows_total: null
+
 execution_order:
   - experiment_id: final-ae-minimal-v1
     config: experiments/final/ae_minimal.yaml

@@ -1,6 +1,6 @@
 # Eredménykönyvtárak felépítése
 
-Ez a dokumentum a szakdolgozat végleges mérési eredményeinek elvárt könyvtárszerkezetét és fájlkonvencióit írja le. A `results/` alatti fájlok a mérési pipeline által generált kimenetek; ezeket alapértelmezetten nem szabad kézzel módosítani.
+A `results/` könyvtár a szakdolgozat végleges mérési eredményeinek egységes tárolására szolgál. Az itt megjelenő mérési állományok a pipeline által előállított kimenetek; ezeket alapértelmezetten nem szabad kézzel módosítani.
 
 ## Végleges struktúra
 
@@ -50,7 +50,7 @@ Megjegyzés: az aktuális AE tanító pipeline elsősorban CSV eredményeket és
 
 ### `results/final/final-ae-context-v1/`
 
-Az opcionális AE-Context mérési ág eredményei. Jelenlegi állapotban ez csak akkor tekinthető tényleges kontextusmodellnek, ha a kontextusfeature-ök implementálva és validálva vannak. Ellenkező esetben kompatibilis, minimális feature-készletre épülő kontrollfuttatásként kezelendő.
+Az AE-Context mérési ág eredményei. Ez a konfiguráció a minimális CIC-IDS2017 flow feature-k mellett egyszerű, timestamp nélküli context feature-öket használ: train splitből illesztett célport- és protokollgyakoriságot, ritka célport jelzőt, valamint soronként számított csomag- és forgalmi arányokat. Ezek nem időablakos, hostalapú vagy CTI-alapú context feature-ök.
 
 Elvárt fájlok:
 
