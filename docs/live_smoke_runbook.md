@@ -71,6 +71,16 @@ WARN akkor is előfordulhat, ha a mérés előtt még természetesen hiányzik e
 
 FAIL esetén a mérés megkezdése előtt javítani kell a hibát. Tipikus ok lehet tiltott real-lab input útvonal, hiányzó modellállomány, hibás Makefile workflow vagy kötelezőként jelölt, de el nem érhető szolgáltatás.
 
+## Wazuh bind mount hiba esetén
+
+Ha a Wazuh Docker stack indításakor a `wazuh.indexer` konténer fájl targetre könyvtárat próbál mountolni, futtasd:
+
+```bash
+make infra-diagnostics
+```
+
+Ez csak diagnosztikai riportot készít a `reports/infra_diagnostics/` könyvtárba. Nem töröl host fájlt, nem generál tanúsítványt, nem készít alertet és nem állít elő mérési adatot.
+
 ## Kapcsolódó célok
 
 Ajánlott mérés előtti sorrend:

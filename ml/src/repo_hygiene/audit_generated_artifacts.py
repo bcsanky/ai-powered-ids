@@ -28,6 +28,7 @@ SCAN_PATTERNS = [
     "reports/live_smoke/**/*",
     "reports/measurement_quality/**/*",
     "reports/submission_bundle/**/*",
+    "reports/infra_diagnostics/**/*",
     "results/performance/**/*",
     "dist/submission/**/*",
     "figures/final/**/*",
