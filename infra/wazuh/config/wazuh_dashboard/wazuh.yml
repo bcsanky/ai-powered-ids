@@ -5,3 +5,4 @@ hosts:
       username: wazuh-wui
       password: "MyS3cr37P450r.*-"
       run_as: true
+enrollment.dns: "192.168.56.101"
