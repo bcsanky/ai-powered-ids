@@ -5,7 +5,6 @@ import csv
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 import yaml
 
@@ -220,4 +219,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

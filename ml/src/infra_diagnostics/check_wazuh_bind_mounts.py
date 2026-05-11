@@ -5,7 +5,7 @@ import csv
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+
 
 
 EXPECTED_WAZUH_FILE_MOUNTS = [
@@ -178,4 +178,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
