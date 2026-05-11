@@ -1,0 +1,78 @@
+{
+  "created_at": "2026-05-11T19:54:31Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "check_id": "wazuh_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "wazuh_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "results/wazuh_real/predictions.csv"
+    },
+    {
+      "check_id": "hybrid_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "hybrid_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "results/hybrid_real/predictions.csv"
+    },
+    {
+      "check_id": "ground_truth_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ground_truth olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "check_id": "ttd_numeric",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "TTD értékek numerikusak, ahol alert volt",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "ttd_negative",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "nincs negatív TTD",
+      "recommendation": "Ellenőrizd az időszinkront és a korrelációs időablakot.",
+      "value": "0"
+    },
+    {
+      "check_id": "ttd_large_values",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "0 darab 300 másodpercnél nagyobb TTD",
+      "recommendation": "Túl nagy TTD esetén az időablak és az alert matching ellenőrizendő.",
+      "value": "0"
+    },
+    {
+      "check_id": "ttd_attack_coverage",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "attack TTD coverage: 0.3250",
+      "recommendation": "Ha nincs TTD adat, a TTD nem használható eredményértelmezésre.",
+      "value": "0.3250"
+    },
+    {
+      "check_id": "ttd_summary_stats",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "TTD összefoglaló statisztikák",
+      "recommendation": "",
+      "value": "{'mean': '38.3824', 'median': '29.0000', 'p95': '87.3500'}"
+    },
+    {
+      "check_id": "hybrid_ttd_available",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "hibrid predikciókban van TTD adat",
+      "recommendation": "",
+      "value": ""
+    }
+  ]
+}

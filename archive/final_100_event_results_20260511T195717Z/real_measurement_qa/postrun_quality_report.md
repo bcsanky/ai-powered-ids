@@ -1,0 +1,26 @@
+# Real-lab post-run QA riport
+
+Dolgozati beemelhetőségi státusz: **READY**
+
+| Ellenőrzés | Kategória | Státusz | Üzenet | Javaslat |
+|---|---|---|---|---|
+| file_metrics_summary | Kötelező eredményfájlok | PASS | rendben: results/wazuh_real/metrics_summary.csv |  |
+| file_metrics_summary | Kötelező eredményfájlok | PASS | rendben: results/ae_lab/metrics_summary.csv |  |
+| file_metrics_summary | Kötelező eredményfájlok | PASS | rendben: results/hybrid_real/metrics_summary.csv |  |
+| file_metrics_comparison | Kötelező eredményfájlok | PASS | rendben: results/real_comparison/metrics_comparison.csv |  |
+| file_metrics_comparison | Kötelező eredményfájlok | PASS | rendben: results/real_comparison/metrics_comparison.md |  |
+| file_real_lab_results_report | Kötelező eredményfájlok | PASS | rendben: reports/real_measurement/real_lab_results_report.md |  |
+| file_thesis_real_lab_section | Kötelező eredményfájlok | PASS | rendben: reports/real_measurement/thesis_real_lab_section.md |  |
+| file_measurement_manifest | Kötelező eredményfájlok | PASS | rendben: reports/real_measurement/measurement_manifest.csv |  |
+| comparison_configurations | Metrikai konzisztencia | PASS | minden konfiguráció szerepel |  |
+| n_samples_consistency | Metrikai konzisztencia | PASS | n_samples értékek: [100, 100, 100, 100, 100] |  |
+| range_precision | Metrikai konzisztencia | PASS | precision tartományellenőrzés |  |
+| range_recall | Metrikai konzisztencia | PASS | recall tartományellenőrzés |  |
+| range_f1 | Metrikai konzisztencia | PASS | f1 tartományellenőrzés |  |
+| range_false_positive_rate | Metrikai konzisztencia | PASS | false_positive_rate tartományellenőrzés |  |
+| alert_count_non_negative | Metrikai konzisztencia | PASS | alert_count nem negatív |  |
+| wazuh-only_valid | Metrikai konzisztencia | PASS | Wazuh-only sor érvényes |  |
+| ae-minimal_lab_valid | Metrikai konzisztencia | PASS | AE-Minimal lab sor érvényes |  |
+| hybrid_row_valid | Metrikai konzisztencia | PASS | legjobb hibrid: Hybrid OR |  |
+| label_coverage | Metrikai konzisztencia | PASS | van legalább 1 benign és 1 attack esemény |  |
+| measurement_provenance | Adateredet | PASS | verified_real_lab provenance rendelkezésre áll |  |

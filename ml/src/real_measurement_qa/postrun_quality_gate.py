@@ -302,6 +302,7 @@ def write_thesis_readiness(answer: dict[str, Any], output_path: Path, status: st
             "- A mérés lab környezetben készült, nem hosszú idejű éles SOC-validáció.",
             "- A hibrid eredmény az event_id alapú illesztés és az időszinkron pontosságától függ.",
             "- Az AE-only ág offline scoring, ezért natív detektálási idő csak a Wazuh riasztásoknál értelmezhető.",
+            "- Az All-positive baseline naiv kontrollsor, nem valós detektor vagy működő IDS-stratégia.",
             "- A metrikák csak az adott lab eseménykészletre vonatkoznak.",
         ]
     )

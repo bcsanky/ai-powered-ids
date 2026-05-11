@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from ml.src.wazuh_baseline.parse_wazuh_alerts import OUTPUT_COLUMNS, parse_wazuh_alerts
+from ml.src.wazuh_baseline.parse_wazuh_alerts import OUTPUT_COLUMNS, normalize_alert, parse_wazuh_alerts
 
 
 def test_parse_wazuh_jsonl_to_normalized_csv(tmp_path):
@@ -67,3 +67,44 @@ def test_parse_wazuh_json_hits_export(tmp_path):
     assert parsed.iloc[0]["rule_id"] == "5503"
     assert parsed.iloc[0]["source_ip"] == "192.168.1.5"
     assert parsed.iloc[0]["target_ip"] == "192.168.1.10"
+
+
+def test_explicit_destination_ip_has_priority_over_agent_ip():
+    normalized = normalize_alert(
+        {
+            "timestamp": "2026-05-11T12:00:00Z",
+            "rule": {"id": "1001", "level": 3},
+            "agent": {"name": "target-ubuntu", "ip": "192.168.56.101"},
+            "data": {"dstip": "10.10.10.20"},
+        }
+    )
+
+    assert normalized["target_ip"] == "10.10.10.20"
+
+
+def test_destination_ip_field_has_priority_over_agent_ip():
+    normalized = normalize_alert(
+        {
+            "timestamp": "2026-05-11T12:00:00Z",
+            "rule": {"id": "1001", "level": 3},
+            "agent": {"name": "target-ubuntu", "ip": "192.168.56.101"},
+            "destination": {"ip": "10.10.10.30"},
+        }
+    )
+
+    assert normalized["target_ip"] == "10.10.10.30"
+
+
+def test_agent_ip_is_target_ip_fallback_for_host_based_alert():
+    normalized = normalize_alert(
+        {
+            "timestamp": "2026-05-11T12:00:00Z",
+            "rule": {"id": "550", "level": 7, "description": "Integrity checksum changed"},
+            "agent": {"name": "target-ubuntu", "ip": "192.168.56.101"},
+            "full_log": "host-based Wazuh alert",
+        }
+    )
+
+    assert normalized["agent_name"] == "target-ubuntu"
+    assert normalized["source_ip"] == ""
+    assert normalized["target_ip"] == "192.168.56.101"

@@ -1,0 +1,1082 @@
+[
+  {
+    "relative_path": "examples/lab/README.md",
+    "file_size_bytes": 1781,
+    "sha256": "93bc87078da47ea7ea04b895e3c55b232f62476a3f9543812555d4e60c553ce2",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "examples/lab/lab_events.csv",
+    "file_size_bytes": 3691,
+    "sha256": "6fb432fcc4921e83833951c5a372d465058cd1c8e91a8749aebe413df85e645f",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "examples/lab/lab_events.jsonl",
+    "file_size_bytes": 8333,
+    "sha256": "1f37ab28d977ec6bc7b57a56100b45e3b3a053f6936f99629c5318ba3b94aa98",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "examples/scoring/README.md",
+    "file_size_bytes": 1022,
+    "sha256": "204154202465889262b7c3edbdb9d8431913f8c4436a0248b65bc474d8bbefad",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "examples/scoring/sample_events.csv",
+    "file_size_bytes": 424,
+    "sha256": "e88f73a1fb24cdc2882535b2d7b3f433c2e0d15793b908eb2ba2dbd756e9690b",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "examples/scoring/sample_events.jsonl",
+    "file_size_bytes": 1413,
+    "sha256": "dbb7710dedf11c18f9c8db4b858b0543a61a8b49abcd0ab14255202c60c88eb2",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs input; nem real-lab mérési eredmény."
+  },
+  {
+    "relative_path": "data/lab/archive/lab_ground_truth_20events_20260506_125016.csv",
+    "file_size_bytes": 2375,
+    "sha256": "375c799bbfee0e0b87632daa25237f8abc19afbb54669a6898e911e53c6975c3",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/archive/session_events_20events_20260506_125024.json",
+    "file_size_bytes": 5771,
+    "sha256": "25c665ffcee5d157cd95180086322b15d13273eeb85a0e8591dbc83efcd68bfd",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/lab_features.csv",
+    "file_size_bytes": 14259,
+    "sha256": "c161185a463916f5f03892c23b167794618c62fee4f3534cc954a346b9aa3fbd",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/lab_ground_truth.csv",
+    "file_size_bytes": 11569,
+    "sha256": "ee6e21f0368aa85135285728abdbefad6c6cc4128445db4a91aaf17d1c7e5f82",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/pilot/feature_build_metadata.json",
+    "file_size_bytes": 705,
+    "sha256": "862a805778af111074b33a5cb753e1189d1f9da3e059ad0cd96e1fd763c6fbd3",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "data/lab/pilot/lab_features.csv",
+    "file_size_bytes": 588,
+    "sha256": "0b8640f6f2493c58836011144add5974a801fb3739b38362f583d6d2eca22a04",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/pilot/lab_ground_truth.csv",
+    "file_size_bytes": 451,
+    "sha256": "06898efef23052fa2cfa91e787fe17f81c574ff0d19da2ffb67f73f5805dc6a6",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/pilot/zeek/conn.log",
+    "file_size_bytes": 2840,
+    "sha256": "73a5a5ca70ff3b7a59b4e5436a40b1d5eaba460c7b51a2ac1147e088731537fa",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/pilot_session_events.json",
+    "file_size_bytes": 889,
+    "sha256": "51e6e3cadd80a7ed8f087351f95aecd1b2b0b7a28dfd05d66f6f14d3576a4cf8",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/conn.log",
+    "file_size_bytes": 8021,
+    "sha256": "c0547d5c21bbb928d9442fa61d5d1cc284b5b0f00456ee2d1369964b8ae0f181",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/conn_rerun1_before_rerun2_merge_20260511T193743Z.log",
+    "file_size_bytes": 6052,
+    "sha256": "0aa26a190259628af628fdc788d698c84199b51d46e84c1ab8ea82a60b58d1de",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/feature_build_metadata.json",
+    "file_size_bytes": 740,
+    "sha256": "5f6945079595a948fc3da9670e6c7acfbcd1ace9ca2aad5da285375e7cec66bb",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/lab_features.csv",
+    "file_size_bytes": 3267,
+    "sha256": "54072751bfbcbd8cf77c747a7ce33ffc7e55843b057fed1c60d46bb14b129e8e",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/lab_ground_truth.csv",
+    "file_size_bytes": 2517,
+    "sha256": "a9f98ef2a6e1ac332d117810db6007adaab72bd1adaf0f097a0f20c0f73d4efc",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow/lab_ground_truth_before_rerun2_patch_20260511T193722Z.csv",
+    "file_size_bytes": 2517,
+    "sha256": "69b8adbaf491ead913e4b049394bb2eaf4dae1c4e1962e5b2a1c57c0a055d3b7",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2/conn.log",
+    "file_size_bytes": 1969,
+    "sha256": "07e499b60f95e710cd83e43747c95c5242ba5576df7a2e3be5ea371c11715b86",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2/conn_old_wrong_20260511T193114Z.log",
+    "file_size_bytes": 6052,
+    "sha256": "0aa26a190259628af628fdc788d698c84199b51d46e84c1ab8ea82a60b58d1de",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2/feature_build_metadata.json",
+    "file_size_bytes": 745,
+    "sha256": "2b342911b106fffe3ab6cf5c409b30884d5fb9eaf3db9c4f606d4af4ccf59ef1",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2/lab_features.csv",
+    "file_size_bytes": 1132,
+    "sha256": "13a496f1d7e663dc237fab2166c74acf849bf65a5c52dcb5a894f05e4f3f58cd",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2/lab_ground_truth.csv",
+    "file_size_bytes": 836,
+    "sha256": "cbdefc37da9a138be6e796f6022e8e05379b1e74d7ce1417652a53faf55106ce",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_2_events.json",
+    "file_size_bytes": 1970,
+    "sha256": "e9fbffcaab9d1f686ce251b0e3b0b0f2b4432c8bc97402ec742963fa64f0f545",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_events.json",
+    "file_size_bytes": 6261,
+    "sha256": "094706e42115ddb2c90f8c357e0e1add1a8e1cd8a9466593af6733d98dca5564",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_events.json.bak_20260511T172848Z",
+    "file_size_bytes": 579,
+    "sha256": "752d004fd966ea4b7c6b93862f49f3adf542f310d7123d1162dc1cbe2bb59859",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/rerun_missing_flow_events.json.bak_20260511T173023Z",
+    "file_size_bytes": 286,
+    "sha256": "46e6703e187ec791ef7e31b007855d77d92a57e75a8e839cd14023c62e6eb2fa",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/session_events.json",
+    "file_size_bytes": 28785,
+    "sha256": "44efa869befbfff010cc1a5d6f97327dcc7dd553ec27cdc0176432fbcd003340",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/conn.log",
+    "file_size_bytes": 56567,
+    "sha256": "98dff8987b425a6a244eaffc3ada49a7ccd4d8875b575632f8fdfa5b8c9d5503",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/dhcp.log",
+    "file_size_bytes": 2721,
+    "sha256": "d95b6754ba662d811bed6a5ef400f241da5e1a1477ecd3793df5d25638a6518a",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/dns.log",
+    "file_size_bytes": 955,
+    "sha256": "c8861b7c60064c4d9b1e5c54a31c9732bdbe2bd15d91e336e158dbcab3f9817e",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/packet_filter.log",
+    "file_size_bytes": 278,
+    "sha256": "661682bb227b7c3eaaaa9dcce5d294bb7bb7988db0ad966f42e23d3f9af91050",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/real-lab-001.pcap",
+    "file_size_bytes": 1661371,
+    "sha256": "97e0cf7313eacef2c2f95652160523cc107567bc1dfb980e3f5bc690069841ee",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Nagy nyers forgalmi állomány; külön kezelendő."
+  },
+  {
+    "relative_path": "data/lab/zeek/reporter.log",
+    "file_size_bytes": 691,
+    "sha256": "9803e62ccc0679c74f80bdd434e4c2326473b4f19dde444313e4506e91428acd",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/ssh.log",
+    "file_size_bytes": 4642,
+    "sha256": "e0eb8a99a933a645d2822e031a32369c9c9e1c0b4cf0df63fc131ecc958c5c32",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/lab/zeek/weird.log",
+    "file_size_bytes": 5390,
+    "sha256": "0ae178658976082bd8797bd24a505597a9481b23447f0e9a2044db0bddd63732",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/wazuh/alerts.jsonl",
+    "file_size_bytes": 225853,
+    "sha256": "82be69aeb1816618e980ed9bb37d1f4d7af2e071dd52b141cd7214fb68aeed1d",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Wazuh alert export érzékeny adatot tartalmazhat."
+  },
+  {
+    "relative_path": "data/wazuh/alerts_export_metadata.json",
+    "file_size_bytes": 416,
+    "sha256": "8c9fb85e4f5146d32683eebf7b093a032642db6088ea187ca0eee35ed58db563",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Wazuh alert export érzékeny adatot tartalmazhat."
+  },
+  {
+    "relative_path": "data/wazuh/archive/alerts_export_metadata_20events_20260506_125043.json",
+    "file_size_bytes": 413,
+    "sha256": "f00c4dfa114b79539edd583f80e06c45be0ffa1d4669780ce137abe09f54a355",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Wazuh alert export érzékeny adatot tartalmazhat."
+  },
+  {
+    "relative_path": "data/wazuh/archive/alerts_old_20260506_160711.jsonl",
+    "file_size_bytes": 133763,
+    "sha256": "7dd2171af8e6d39b738607021ceefb70f3a9e573727f443f1636ff579fbbc28a",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Wazuh alert export érzékeny adatot tartalmazhat."
+  },
+  {
+    "relative_path": "data/wazuh/pilot_alerts.jsonl",
+    "file_size_bytes": 13002,
+    "sha256": "ce8b974375e3645b78c31e148e3d04b14a66e2739e8fe48170b7239c61a3d825",
+    "category": "raw_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/processed/wazuh_real/alerts_parsed.csv",
+    "file_size_bytes": 41046,
+    "sha256": "b4de626288ca0fd4bb91446150d027b354fae131da8d5831fcd530ee33cf0c4f",
+    "category": "intermediate",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/processed/wazuh_real/lab_ground_truth_validated.csv",
+    "file_size_bytes": 11468,
+    "sha256": "6e6399610a02fae33aa1cc5a6e3564df1cab6a8b8cfeec4c110edebea9beb7ef",
+    "category": "intermediate",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/processed/wazuh_real/wazuh_correlated.csv",
+    "file_size_bytes": 2856,
+    "sha256": "7ed0aa432bdf605ea4986f5ea280f115108142b1e764b159749a8c981b8cc6ab",
+    "category": "intermediate",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/processed/lab_ae/ae_lab_predictions.csv",
+    "file_size_bytes": 20733,
+    "sha256": "f750c90ef79cd536e6aeb2eb0c590f4d1b729b2afbddc9965420b2df2fec1bb2",
+    "category": "intermediate",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "data/processed/lab_ae/lab_features_validated.csv",
+    "file_size_bytes": 14186,
+    "sha256": "e6181ebb94127d4ab5e5e50f577aba06b878fac7a09329d30c70c640aad97057",
+    "category": "intermediate",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/wazuh_real/confusion_matrix.csv",
+    "file_size_bytes": 65,
+    "sha256": "004dbc3af7884bc2e27cf2f387d27334357dc06493090a356cfe6521e1f4d2e4",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/wazuh_real/metrics_summary.csv",
+    "file_size_bytes": 216,
+    "sha256": "45e39ae73172573fad7ae4ceff01a1013de5f1e93e23268de35cfdc495804f74",
+    "category": "metric",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/wazuh_real/predictions.csv",
+    "file_size_bytes": 2856,
+    "sha256": "7ed0aa432bdf605ea4986f5ea280f115108142b1e764b159749a8c981b8cc6ab",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/wazuh_real/run_metadata.json",
+    "file_size_bytes": 268,
+    "sha256": "811a3f3cce006634c21ff5ab2a5331d1f32bcf054fbbe00da97d508d14acb533",
+    "category": "metadata",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/ae_lab/confusion_matrix.csv",
+    "file_size_bytes": 65,
+    "sha256": "7942da294318467254b1e182980863470fbb3842fb0103cd91ced5f60c39828f",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/ae_lab/metrics_summary.csv",
+    "file_size_bytes": 239,
+    "sha256": "1f48f0c3c5a3a8b4ac64e7580284e8ecd1348f4e7a87c1ebaad898142841bdef",
+    "category": "metric",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/ae_lab/predictions.csv",
+    "file_size_bytes": 20281,
+    "sha256": "18e9562ef3f19c5beb73c445c5062ad3205e19cfc9920829b9d7fe32071f0a93",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/ae_lab/run_metadata.json",
+    "file_size_bytes": 235,
+    "sha256": "840c3aca219a2181c78228002e5381a3eb27cb94b60fb0c656b5aea042843e88",
+    "category": "metadata",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/hybrid_real/confusion_matrix_by_strategy.csv",
+    "file_size_bytes": 206,
+    "sha256": "eab2d7a4e328b4a0a0724475f12279c57c572f73ec97181a316339ff3773c228",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/hybrid_real/metrics_summary.csv",
+    "file_size_bytes": 485,
+    "sha256": "35387b3962b16dcb51bdaa685d406e820d46b2f9b7331d547329f4063fe1c096",
+    "category": "metric",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/hybrid_real/predictions.csv",
+    "file_size_bytes": 7826,
+    "sha256": "68288a54ff363c0b5ade061fb1bcbd64c23f327f30b197c0b6c79b82f02d1682",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "results/hybrid_real/run_metadata.json",
+    "file_size_bytes": 404,
+    "sha256": "7602bcc6989f68a56c79fb423762ecaceb926db6e1080f1a0cfc0770a7c907f9",
+    "category": "metadata",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/fig_alert_count.png",
+    "file_size_bytes": 53253,
+    "sha256": "141516f14ee78c27026732bc664e05bdc07fc3c7daf056c12871e1b041c517e7",
+    "category": "figure",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/fig_false_positive_rate.png",
+    "file_size_bytes": 53878,
+    "sha256": "e51f5ca16e2cd4566cee419bd084f0d182bee4004e441fc17f110af9289e48aa",
+    "category": "figure",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/fig_mean_ttd.png",
+    "file_size_bytes": 50005,
+    "sha256": "403d3aa4da9e0bc577258ad69358c2524dc6814c3d298b02a3751da414da785a",
+    "category": "figure",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/fig_precision_recall_f1.png",
+    "file_size_bytes": 58886,
+    "sha256": "d0f3ef7455b1192fa23ff715dff309d2db6155ff38f281a7b757655f9574f82a",
+    "category": "figure",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/metrics_comparison.csv",
+    "file_size_bytes": 394,
+    "sha256": "e03ba98aaabfc50e4973b17f48031426f1bec6b997fbd4c8c6734526f08580a3",
+    "category": "metric",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/metrics_comparison.md",
+    "file_size_bytes": 475,
+    "sha256": "3846d569fbcdc156ee8cd6a291c016b4357d9111ef1872442110ad0994e454ef",
+    "category": "metric",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/real_comparison/run_metadata.json",
+    "file_size_bytes": 391,
+    "sha256": "6b33893e526df3e2d132cb2de3845f62442775dcfaacc8d04fb6343b42b269ec",
+    "category": "metadata",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "results/performance/performance_metrics.csv",
+    "file_size_bytes": 13042,
+    "sha256": "917bda8e37ab5c70135ee44d11accab540a995cedf960e918eb19174d2a1f9e2",
+    "category": "metric",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/lab/case_study_benign_activity.md",
+    "file_size_bytes": 3257,
+    "sha256": "a0cf376dd0964095eb2b457072dc35944eefc2b518c94f33d07820a5e52b7a66",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/case_study_combined_suspicious.md",
+    "file_size_bytes": 3433,
+    "sha256": "95c7f75791de0341cafbcf5603c5021cb29d9b34468ee67f8c0743af9b9b4ccf",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/case_study_port_scan.md",
+    "file_size_bytes": 3391,
+    "sha256": "109cc6684fd14d523a90a7aab756b7d23949f58e034b08a20eb7880bfb956178",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/case_study_ssh_bruteforce.md",
+    "file_size_bytes": 3364,
+    "sha256": "b05d0b62ad6fe447e4e238bd0f0d5dd84d06f139805e4bbca503632c06fbca72",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/case_study_summary.md",
+    "file_size_bytes": 2352,
+    "sha256": "8d6a9cb76efba639edb126ece23e8426d577c58b7e50df4b896ed4de343618d0",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/lab_scored_events.csv",
+    "file_size_bytes": 6262,
+    "sha256": "7a28bfa658bee9cd468df1658a8e0fe6fd469b0f2aa2d040869fe45934bf37b7",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/lab_scored_events.jsonl",
+    "file_size_bytes": 11220,
+    "sha256": "6b8bac5ef4d8126e1f7aaeab571a4e89fc8329e4e942276efd14343692371180",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/lab_timeline.png",
+    "file_size_bytes": 58810,
+    "sha256": "2fe65e051b410b2c9f548ac96f3d78e9c83ea31ee67f9554bc2c262a9bcd9998",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/risk_level_distribution.png",
+    "file_size_bytes": 28854,
+    "sha256": "beaf74f6a203766e77e58534a73d5c4576693b463e2889ea6cd1000800913f10",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/scenario_risk_matrix.csv",
+    "file_size_bytes": 130,
+    "sha256": "db7fe3be42c5fdfc3d70699a5bfc2db9b3aecf502c3b5a601e73fda017360906",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/lab/scenario_summary.csv",
+    "file_size_bytes": 414,
+    "sha256": "ec9da3bacd97865f01099cbfdc0123a5a50588155e12e23632ed6c6cb43709be",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/dashboard_summary.csv",
+    "file_size_bytes": 560,
+    "sha256": "401c86663c77949a5648b42c1b60be45f96f96e91a6a4fe1b616fb0e8935537e",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/security_report.html",
+    "file_size_bytes": 3708,
+    "sha256": "fb9213b5071548bb0fcc9c770a5a1a1e155172f2c64918043c37a342f835bf04",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/security_report.md",
+    "file_size_bytes": 3159,
+    "sha256": "edff5c079e60e8b910e9f36c57e4ff20cc3f3a6865983eb40b5d67ecbb526f8c",
+    "category": "report",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/ae_context_confusion_matrix.png",
+    "file_size_bytes": 42030,
+    "sha256": "2b1ae800e618d79957406d3206362e2b57aa9e3b61ce3594ee9410453962d41c",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/ae_minimal_confusion_matrix.png",
+    "file_size_bytes": 42031,
+    "sha256": "39e4d8aee9049082df9b5e7eba021017e692cb92d0bc835e085cba5831c68418",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/comparison_alert_count.png",
+    "file_size_bytes": 44544,
+    "sha256": "71b55a581ec48d22a5c284280b2506a38569e9ff96a5bc70ac441292e3b06b7a",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/comparison_false_positive_rate.png",
+    "file_size_bytes": 42599,
+    "sha256": "e2cbac4ac98ae3b54ee4e398a3d0b49d883146447817e6b9e672936047da5a49",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/comparison_precision_recall_f1.png",
+    "file_size_bytes": 51134,
+    "sha256": "81041a8bb7e3f756b853c5345f15c9e17c6ba3f65dcf44517fe476fb097d272c",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/figure_manifest.csv",
+    "file_size_bytes": 1874,
+    "sha256": "eb6802a74cf17bc49525f02009355f5e59de491e57e3e3777915758c06f4c6bd",
+    "category": "validated_input",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/lab_risk_level_distribution.png",
+    "file_size_bytes": 28854,
+    "sha256": "beaf74f6a203766e77e58534a73d5c4576693b463e2889ea6cd1000800913f10",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/lab_timeline.png",
+    "file_size_bytes": 58810,
+    "sha256": "2fe65e051b410b2c9f548ac96f3d78e9c83ea31ee67f9554bc2c262a9bcd9998",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/performance_latency_by_batch_size.png",
+    "file_size_bytes": 115981,
+    "sha256": "8cbc70760d720f90e981d0427c8b6fce9e7afa7da3b75ba76c87fc3e9ba2a988",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/performance_scoring_time_distribution.png",
+    "file_size_bytes": 68725,
+    "sha256": "a8d506ed9b9ed14553ede3b491063ed3987f4669e83bb979718e96294f79e069",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/final/thesis_figures/performance_throughput_by_batch_size.png",
+    "file_size_bytes": 117427,
+    "sha256": "2674117147171cdf14409f27a6045b94f2dbf18b3357706b8ef5e2a4837e6dc6",
+    "category": "figure",
+    "provenance_status": "demo_or_generated",
+    "include_in_submission": false,
+    "note": "Demonstrációs vagy offline kimenet; real-lab eredményként nem használható."
+  },
+  {
+    "relative_path": "reports/performance/benchmark_results.csv",
+    "file_size_bytes": 13042,
+    "sha256": "917bda8e37ab5c70135ee44d11accab540a995cedf960e918eb19174d2a1f9e2",
+    "category": "validated_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "reports/performance/benchmark_summary.md",
+    "file_size_bytes": 1097,
+    "sha256": "603dc02a749f8127fbf5609fcacf34f9831051b83e7beed93b3de4f6429d17d9",
+    "category": "report",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/latency_by_batch_size.png",
+    "file_size_bytes": 106522,
+    "sha256": "9196e7693a0075267f001efe86fac443ca060253f638cef7d5f4084ba7c5d31e",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/performance_report.html",
+    "file_size_bytes": 6664,
+    "sha256": "0fffd8b735aac458807f7791395794503474f8da8f793d0e4ace9268fa81658c",
+    "category": "report",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/performance_report.md",
+    "file_size_bytes": 6044,
+    "sha256": "b7ec945dd7f23d32c8b17bad5699b0b5e01ded4d8da7f73d1a4d14401d7c9230",
+    "category": "report",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/resource_usage_by_batch_size.png",
+    "file_size_bytes": 152002,
+    "sha256": "268ba8bfbe68497372db6f749ba11b9a117305dbaade12650bbdd575c39762cc",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/scoring_time_distribution.png",
+    "file_size_bytes": 75574,
+    "sha256": "459611d89ce6a9f5d71442763b23275fe3cc91dcbf4dc80020dd19b3bfa4b009",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/performance/system_info.json",
+    "file_size_bytes": 588,
+    "sha256": "b629375d540db2d84616647edf79f1f96ac4992526e4adf40100b93898bf0e36",
+    "category": "validated_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "reports/performance/throughput_by_batch_size.png",
+    "file_size_bytes": 116913,
+    "sha256": "2418e7a408566fcaf30751c9a3a073559f16ab45ee5ffbf220affdf316f6f7b9",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/lab_input_validation/input_validation_report.md",
+    "file_size_bytes": 397,
+    "sha256": "9acbe8f216a71bdae4569e79a1e90f86d4688519d5f1f1f45dac3413138488f6",
+    "category": "report",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/lab_input_validation/input_validation_summary.csv",
+    "file_size_bytes": 288,
+    "sha256": "efa57203ed2da6f5e23f6d9c96febab46dfd961104a33cea9afc7459b7b4975c",
+    "category": "validated_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "reports/lab_input_validation/run_metadata.json",
+    "file_size_bytes": 266,
+    "sha256": "3e60b680d2323e7fb4a2dda469886bdc8849d969b62542ef35c437e4bdfb550e",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/wazuh_export/run_metadata.json",
+    "file_size_bytes": 230,
+    "sha256": "8b927593c0c10f26fac894bf7ca84ac4fdb1fb2644454db8fd241024d3342cda",
+    "category": "metadata",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/wazuh_export/wazuh_export_rule_summary.csv",
+    "file_size_bytes": 215,
+    "sha256": "7672421d63c35498b0ad9979486c06973c51d8f8f740349cd072475ea1a21682",
+    "category": "validated_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "reports/wazuh_export/wazuh_export_summary.md",
+    "file_size_bytes": 486,
+    "sha256": "3de92b330734c7e4f6c4b2a88eebf246b2945b269af533dba289ebefd035a0c8",
+    "category": "report",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "reports/wazuh_export/wazuh_export_timeline.csv",
+    "file_size_bytes": 1090,
+    "sha256": "903827f8d473a5ce1690205fcb5a2de2b3cbcab2a8357908f6ff0373c9f5677c",
+    "category": "validated_input",
+    "provenance_status": "unknown",
+    "include_in_submission": false,
+    "note": "Input vagy köztes állomány; szükség szerint külön mellékelhető."
+  },
+  {
+    "relative_path": "reports/real_measurement/bundle_validation_report.md",
+    "file_size_bytes": 1334,
+    "sha256": "c9f3abfaa939ab61a770cba2e66ed48e6649113241c079e239ce55beb5943305",
+    "category": "report",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/bundle_validation_summary.csv",
+    "file_size_bytes": 1085,
+    "sha256": "36c557949a6d34d45cdfb6828652392c3fa4fe8d0407fff8ad3ccb451579bd23",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/measurement_provenance.json",
+    "file_size_bytes": 1361,
+    "sha256": "f5c17358a4c850a45f3b3702ef60018054fddaa304eab95ac3cc840e6693ce3f",
+    "category": "validated_input",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/real_lab_results_report.html",
+    "file_size_bytes": 3584,
+    "sha256": "2b2007d38117cd5204d4ac149c4ab54e054986c4c8dac01cb394aa8f3ad70940",
+    "category": "report",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/real_lab_results_report.md",
+    "file_size_bytes": 3546,
+    "sha256": "3aaf0da000cfeaff6f5f66544285245a35f93efe9b475797400f9f3d935da2ad",
+    "category": "report",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/run_metadata.json",
+    "file_size_bytes": 329,
+    "sha256": "1c72ce16f9169dd148c7c241dcb171af52042529a1fe9c0d29a5da651ee45caa",
+    "category": "metadata",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "reports/real_measurement/thesis_real_lab_section.md",
+    "file_size_bytes": 2620,
+    "sha256": "65026d83df21865a39b5e28d09bebfb82e6a2e55e3a7dfb832b357c58b342542",
+    "category": "report",
+    "provenance_status": "verified_real_lab",
+    "include_in_submission": true,
+    "note": "Provenance alapján real-lab méréshez köthető eredményfájl."
+  },
+  {
+    "relative_path": "figures/final/latency_by_load.png",
+    "file_size_bytes": 106522,
+    "sha256": "9196e7693a0075267f001efe86fac443ca060253f638cef7d5f4084ba7c5d31e",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "figures/final/resource_usage_by_batch_size.png",
+    "file_size_bytes": 152002,
+    "sha256": "268ba8bfbe68497372db6f749ba11b9a117305dbaade12650bbdd575c39762cc",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  },
+  {
+    "relative_path": "figures/final/throughput.png",
+    "file_size_bytes": 116913,
+    "sha256": "2418e7a408566fcaf30751c9a3a073559f16ab45ee5ffbf220affdf316f6f7b9",
+    "category": "figure",
+    "provenance_status": "unknown",
+    "include_in_submission": true,
+    "note": "Dolgozati melléklethez használható eredményfájl."
+  }
+]

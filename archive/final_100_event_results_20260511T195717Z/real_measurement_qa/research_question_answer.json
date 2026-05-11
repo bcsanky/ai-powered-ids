@@ -1,0 +1,11 @@
+{
+  "best_hybrid_by_f1": "Hybrid OR",
+  "wazuh_f1": 0.3513513513513513,
+  "ae_f1": 0.5714285714285715,
+  "best_hybrid_f1": 0.5714285714285715,
+  "f1_delta_vs_wazuh": 0.2200772200772202,
+  "recall_delta_vs_wazuh": 0.675,
+  "fpr_delta_vs_wazuh": 0.65,
+  "alert_count_delta_vs_wazuh": 66.0,
+  "thesis_readiness_status": "READY"
+}

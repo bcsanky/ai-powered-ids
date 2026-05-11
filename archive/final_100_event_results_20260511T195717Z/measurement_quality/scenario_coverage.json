@@ -1,0 +1,120 @@
+{
+  "created_at": "2026-05-11T19:54:30Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "check_id": "measurement_provenance",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "verified real_lab provenance rendelkezésre áll",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "ground_truth_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground truth útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "check_id": "ground_truth_provenance_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground truth útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy a quality gate ugyanazt az inputot olvassa-e, mint a mérési csomag.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "check_id": "ground_truth_columns",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "kötelező oszlopok rendben",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "event_id_unique",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "event_id értékek egyediek",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "timestamps_valid",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "timestamp_start és timestamp_end értékek validak",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "min_total_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "összes esemény: 100, elvárt minimum: 100",
+      "recommendation": "",
+      "value": "100"
+    },
+    {
+      "check_id": "min_benign_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "benign események száma: 60, elvárt minimum: 60",
+      "recommendation": "",
+      "value": "60"
+    },
+    {
+      "check_id": "min_attack_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "attack események száma: 40, elvárt minimum: 40",
+      "recommendation": "",
+      "value": "40"
+    },
+    {
+      "check_id": "min_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "különböző scenario-k száma: 7, elvárt minimum: 7",
+      "recommendation": "",
+      "value": "7"
+    },
+    {
+      "check_id": "min_attack_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "attack scenario-k száma: 5, elvárt minimum: 5",
+      "recommendation": "",
+      "value": "5"
+    },
+    {
+      "check_id": "short_or_zero_duration",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "nincs nulla vagy negatív duration",
+      "recommendation": "Ellenőrizd az event marker start/end használatát.",
+      "value": "0"
+    },
+    {
+      "check_id": "expected_benign_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "várt benign scenario-k lefedve",
+      "recommendation": "A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei.",
+      "value": "2"
+    },
+    {
+      "check_id": "expected_attack_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "várt attack scenario-k lefedve",
+      "recommendation": "A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei.",
+      "value": "5"
+    }
+  ],
+  "provenance_valid": true,
+  "scenario_count": 7
+}

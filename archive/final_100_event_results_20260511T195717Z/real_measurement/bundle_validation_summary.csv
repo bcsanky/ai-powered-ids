@@ -1,0 +1,20 @@
+check,status,detail
+data/lab/lab_ground_truth.csv,PASS,létezik
+data/lab/lab_features.csv,PASS,létezik
+data/wazuh/alerts.jsonl,PASS,létezik
+data/processed/wazuh_real/alerts_parsed.csv,PASS,létezik
+data/processed/wazuh_real/wazuh_correlated.csv,PASS,létezik
+data/processed/lab_ae/ae_lab_predictions.csv,PASS,létezik
+results/wazuh_real/metrics_summary.csv,PASS,létezik
+results/ae_lab/metrics_summary.csv,PASS,létezik
+results/hybrid_real/metrics_summary.csv,PASS,létezik
+results/real_comparison/metrics_comparison.csv,PASS,létezik
+results/real_comparison/metrics_comparison.md,PASS,létezik
+results/real_comparison/fig_precision_recall_f1.png,PASS,létezik
+results/real_comparison/fig_false_positive_rate.png,PASS,létezik
+results/real_comparison/fig_alert_count.png,PASS,létezik
+results/real_comparison/fig_mean_ttd.png,PASS,létezik
+metrics_comparison_configurations,PASS,minden konfiguráció szerepel
+label_coverage,PASS,"benign=True, attack=True"
+n_samples_consistency,PASS,"{""wazuh"": 100.0, ""ae"": 100.0, ""hybrid"": 100}"
+measurement_provenance,PASS,verified_real_lab

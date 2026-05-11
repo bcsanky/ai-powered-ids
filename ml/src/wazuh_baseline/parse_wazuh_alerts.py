@@ -121,6 +121,7 @@ def normalize_alert(alert: dict[str, Any]) -> dict[str, Any]:
                 "dst_ip",
                 "target_ip",
                 "destination.ip",
+                "agent.ip",
             )
             or ""
         ),

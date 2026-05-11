@@ -1,0 +1,24 @@
+check_id,category,status,message,recommendation,value
+wazuh_metrics_readable,Metrika CSV,PASS,wazuh_metrics olvasható,Futtasd a real-lab metrika pipeline megfelelő lépését.,1
+ae_metrics_readable,Metrika CSV,PASS,ae_metrics olvasható,Futtasd a real-lab metrika pipeline megfelelő lépését.,1
+hybrid_metrics_readable,Metrika CSV,PASS,hybrid_metrics olvasható,Futtasd a real-lab metrika pipeline megfelelő lépését.,3
+metrics_comparison_readable,Metrika CSV,PASS,metrics_comparison olvasható,Futtasd a real-lab metrika pipeline megfelelő lépését.,5
+comparison_configurations,Comparison,PASS,minden kötelező konfiguráció szerepel,,
+range_precision,Metrikatartomány,PASS,precision 0 és 1 közötti,,
+range_recall,Metrikatartomány,PASS,recall 0 és 1 közötti,,
+range_f1,Metrikatartomány,PASS,f1 0 és 1 közötti,,
+range_false_positive_rate,Metrikatartomány,PASS,false_positive_rate 0 és 1 közötti,,
+range_false_negative_rate,Metrikatartomány,PASS,false_negative_rate 0 és 1 közötti,,
+alert_count_non_negative,Comparison,PASS,alert_count nem negatív,,
+n_samples_consistency,Comparison,PASS,"n_samples értékek: [100, 100, 100, 100, 100]",,
+nan_metric_values,Comparison,PASS,nincs NaN a fő metrikákban,A hiányos metrikát értelmezési korlátként kell kezelni.,0
+wazuh_confusion_sum_0,Konfúziós mátrix,PASS,"TP+FP+TN+FN=100, n_samples=100",,
+ae_confusion_sum_0,Konfúziós mátrix,PASS,"TP+FP+TN+FN=100, n_samples=100",,
+hybrid_confusion_sum_0,Konfúziós mátrix,PASS,"TP+FP+TN+FN=100, n_samples=100",,
+hybrid_confusion_sum_1,Konfúziós mátrix,PASS,"TP+FP+TN+FN=100, n_samples=100",,
+hybrid_confusion_sum_2,Konfúziós mátrix,PASS,"TP+FP+TN+FN=100, n_samples=100",,
+hybrid_or_logic,Hibrid logika,PASS,Hybrid OR predikció megfelel a Wazuh OR AE logikának,,
+wazuh_mean_ttd_available,TTD metrika,PASS,wazuh mean_ttd elérhető,,
+wazuh_median_ttd_available,TTD metrika,PASS,wazuh median_ttd elérhető,,
+hybrid_mean_ttd_available,TTD metrika,PASS,hybrid mean_ttd elérhető,,
+hybrid_median_ttd_available,TTD metrika,PASS,hybrid median_ttd elérhető,,

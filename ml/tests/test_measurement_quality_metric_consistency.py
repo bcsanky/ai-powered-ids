@@ -51,6 +51,10 @@ def test_metric_consistency_valid_hybrid_or_logic(tmp_path):
             {"configuration": "Hybrid OR", **metric_row()},
             {"configuration": "Hybrid weighted", **metric_row()},
             {"configuration": "Hybrid priority", **metric_row()},
+            {
+                "configuration": "All-positive baseline",
+                **metric_row(TP=1, FP=1, TN=0, FN=0, precision=0.5, recall=1.0, f1=2 / 3, false_positive_rate=1.0, false_negative_rate=0.0, alert_count=2),
+            },
         ],
     )
     write_csv(wazuh_pred, [{"event_id": "e1", "y_true": 1, "wazuh_pred": 1}])
@@ -69,4 +73,4 @@ def test_metric_consistency_valid_hybrid_or_logic(tmp_path):
     )
 
     assert any(row["check_id"] == "hybrid_or_logic" and row["status"] == "PASS" for row in result["rows"])
-
+    assert any(row["check_id"] == "all_positive_baseline_values" and row["status"] == "PASS" for row in result["rows"])

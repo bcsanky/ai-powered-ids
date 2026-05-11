@@ -18,6 +18,7 @@ from ml.src.measurement_quality.common import (
 
 EXPECTED_CONFIGURATIONS = ["Wazuh-only", "AE-Minimal lab", "Hybrid OR", "Hybrid weighted", "Hybrid priority"]
 RANGE_METRICS = ["precision", "recall", "f1", "false_positive_rate", "false_negative_rate"]
+CONTROL_BASELINE_NAME = "All-positive baseline"
 
 
 def parse_args() -> argparse.Namespace:
@@ -80,6 +81,97 @@ def check_confusion_sum(name: str, df: pd.DataFrame | None) -> list[dict[str, An
             )
         )
     return rows
+
+
+def nearly_equal(actual: Any, expected: float, tolerance: float = 1e-6) -> bool:
+    value = pd.to_numeric(actual, errors="coerce")
+    return bool(pd.notna(value) and abs(float(value) - expected) <= tolerance)
+
+
+def check_all_positive_baseline(comparison: pd.DataFrame | None) -> list[dict[str, Any]]:
+    if comparison is None or comparison.empty or "configuration" not in comparison.columns:
+        return []
+    matched = comparison[comparison["configuration"].astype(str) == CONTROL_BASELINE_NAME]
+    if matched.empty:
+        return [
+            check_row(
+                "all_positive_baseline_present",
+                "Comparison",
+                "WARN",
+                "az All-positive baseline kontrollsor nem szerepel a comparison táblában",
+                "Futtasd újra a real-compare lépést az aktuális ground truth alapján.",
+            )
+        ]
+    row = matched.iloc[0]
+    required = [
+        "TP",
+        "FP",
+        "TN",
+        "FN",
+        "precision",
+        "recall",
+        "f1",
+        "false_positive_rate",
+        "false_negative_rate",
+        "alert_count",
+        "n_samples",
+    ]
+    missing = [column for column in required if column not in comparison.columns]
+    if missing:
+        return [
+            check_row(
+                "all_positive_baseline_values",
+                "Comparison",
+                "FAIL",
+                "az All-positive baseline sorból hiányzó oszlop(ok): " + ", ".join(missing),
+            )
+        ]
+    tp = pd.to_numeric(row["TP"], errors="coerce")
+    fp = pd.to_numeric(row["FP"], errors="coerce")
+    tn = pd.to_numeric(row["TN"], errors="coerce")
+    fn = pd.to_numeric(row["FN"], errors="coerce")
+    alert_count = pd.to_numeric(row["alert_count"], errors="coerce")
+    n_samples = pd.to_numeric(row["n_samples"], errors="coerce")
+    if any(pd.isna(value) for value in [tp, fp, tn, fn, alert_count, n_samples]):
+        return [
+            check_row(
+                "all_positive_baseline_values",
+                "Comparison",
+                "FAIL",
+                "az All-positive baseline konfúziós vagy n_samples értékei nem numerikusak",
+            )
+        ]
+    tp_int = int(tp)
+    fp_int = int(fp)
+    tn_int = int(tn)
+    fn_int = int(fn)
+    n_samples_int = int(n_samples)
+    expected_precision = tp_int / n_samples_int if n_samples_int else float("nan")
+    expected_f1 = (2 * expected_precision) / (expected_precision + 1.0) if expected_precision == expected_precision else float("nan")
+    checks = [
+        tp_int + fp_int + tn_int + fn_int == n_samples_int,
+        tn_int == 0,
+        fn_int == 0,
+        int(alert_count) == n_samples_int,
+        nearly_equal(row["precision"], expected_precision),
+        nearly_equal(row["recall"], 1.0),
+        nearly_equal(row["f1"], expected_f1),
+        nearly_equal(row["false_positive_rate"], 1.0 if fp_int else 0.0),
+        nearly_equal(row["false_negative_rate"], 0.0),
+    ]
+    status = "PASS" if all(checks) else "FAIL"
+    return [
+        check_row(
+            "all_positive_baseline_values",
+            "Comparison",
+            status,
+            (
+                f"All-positive baseline: TP={tp_int}, FP={fp_int}, TN={tn_int}, FN={fn_int}, "
+                f"n_samples={n_samples_int}"
+            ),
+            "" if status == "PASS" else "A kontrollsort a ground truth címkéiből kell újraszámolni.",
+        )
+    ]
 
 
 def run_check(
@@ -157,6 +249,7 @@ def run_check(
                 nan_metrics,
             )
         )
+        rows.extend(check_all_positive_baseline(comparison))
 
     rows.extend(check_confusion_sum("wazuh", wazuh))
     rows.extend(check_confusion_sum("ae", ae))

@@ -1,0 +1,190 @@
+{
+  "created_at": "2026-05-11T19:54:31Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "check_id": "wazuh_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "wazuh_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "1"
+    },
+    {
+      "check_id": "ae_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "ae_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "1"
+    },
+    {
+      "check_id": "hybrid_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "hybrid_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "3"
+    },
+    {
+      "check_id": "metrics_comparison_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "metrics_comparison olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "5"
+    },
+    {
+      "check_id": "comparison_configurations",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "minden kötelező konfiguráció szerepel",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "range_precision",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "precision 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "range_recall",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "recall 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "range_f1",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "f1 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "range_false_positive_rate",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "false_positive_rate 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "range_false_negative_rate",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "false_negative_rate 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "alert_count_non_negative",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "alert_count nem negatív",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "n_samples_consistency",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "n_samples értékek: [100, 100, 100, 100, 100]",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "nan_metric_values",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "nincs NaN a fő metrikákban",
+      "recommendation": "A hiányos metrikát értelmezési korlátként kell kezelni.",
+      "value": "0"
+    },
+    {
+      "check_id": "wazuh_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "ae_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_confusion_sum_1",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_confusion_sum_2",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_or_logic",
+      "category": "Hibrid logika",
+      "status": "PASS",
+      "message": "Hybrid OR predikció megfelel a Wazuh OR AE logikának",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "wazuh_mean_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "wazuh mean_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "wazuh_median_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "wazuh median_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_mean_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "hybrid mean_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "hybrid_median_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "hybrid median_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    }
+  ]
+}

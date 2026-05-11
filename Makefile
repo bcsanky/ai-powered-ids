@@ -152,7 +152,7 @@ hybrid-real-eval:
 	$(PYTHON) -m ml.src.hybrid_real.evaluate_hybrid_real --wazuh-predictions $(WAZUH_RESULTS_DIR)/predictions.csv --ae-predictions $(LAB_AE_RESULTS_DIR)/predictions.csv --results-dir $(HYBRID_REAL_RESULTS_DIR) --weighted-threshold $(HYBRID_WEIGHTED_THRESHOLD)
 
 real-compare:
-	$(PYTHON) -m ml.src.hybrid_real.compare_real_results --wazuh-metrics $(WAZUH_RESULTS_DIR)/metrics_summary.csv --ae-metrics $(LAB_AE_RESULTS_DIR)/metrics_summary.csv --hybrid-metrics $(HYBRID_REAL_RESULTS_DIR)/metrics_summary.csv --output-dir $(REAL_COMPARISON_DIR)
+	$(PYTHON) -m ml.src.hybrid_real.compare_real_results --wazuh-metrics $(WAZUH_RESULTS_DIR)/metrics_summary.csv --ae-metrics $(LAB_AE_RESULTS_DIR)/metrics_summary.csv --hybrid-metrics $(HYBRID_REAL_RESULTS_DIR)/metrics_summary.csv --ground-truth $(LAB_GROUND_TRUTH) --output-dir $(REAL_COMPARISON_DIR)
 
 real-plot:
 	$(PYTHON) -m ml.src.hybrid_real.plot_real_comparison --comparison $(REAL_COMPARISON_DIR)/metrics_comparison.csv --output-dir $(REAL_COMPARISON_DIR)

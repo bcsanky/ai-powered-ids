@@ -23,6 +23,10 @@ HYBRID_CONFIGURATIONS = ["Hybrid OR", "Hybrid weighted", "Hybrid priority"]
 RANGE_METRICS = ["precision", "recall", "f1", "false_positive_rate"]
 METRIC_COLUMNS = [
     "configuration",
+    "TP",
+    "FP",
+    "TN",
+    "FN",
     "precision",
     "recall",
     "f1",
@@ -38,6 +42,10 @@ METRIC_COLUMNS = [
 METRIC_LABELS = {
     "configuration": "Konfiguráció",
     "strategy": "Stratégia",
+    "TP": "TP",
+    "FP": "FP",
+    "TN": "TN",
+    "FN": "FN",
     "precision": "Precision",
     "recall": "Recall",
     "f1": "F1",
@@ -50,7 +58,7 @@ METRIC_LABELS = {
     "n_attack": "Támadó esemény",
     "n_benign": "Benign esemény",
 }
-COUNT_COLUMNS = {"alert_count", "n_samples", "n_attack", "n_benign", "failed_events"}
+COUNT_COLUMNS = {"TP", "FP", "TN", "FN", "alert_count", "n_samples", "n_attack", "n_benign", "failed_events"}
 RATIO_COLUMNS = {
     "precision",
     "recall",

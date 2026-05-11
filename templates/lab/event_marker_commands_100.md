@@ -1,6 +1,6 @@
 # real-lab-001 végleges 100 eseményes event marker parancssablon
 
-Ez a fájl a `real-lab-001` végleges, 100 eseményes mérésének kézi markereléséhez készült. Nem tartalmaz tényleges támadó parancsot, nem generál mérési eredményt, és nem helyettesíti a futás közbeni operátori ellenőrzést.
+Ez a fájl a `real-lab-001` végleges, 100 eseményes mérésének kézi markereléséhez készült. A lab-akciók tényleges, de szigorúan korlátozott parancsok: minden hálózati cél kizárólag `192.168.56.101` lehet, és a fájl nem tartalmaz jelszót vagy titkot.
 
 Biztonsági scope:
 
@@ -9,6 +9,19 @@ Biztonsági scope:
 - Tiltott célok: public IP-k, céges hálózatok, router, más VM-ek és internetes hostok.
 - Minden lab művelet kizárólag a `192.168.56.101` célgépen hajtható végre.
 
+Eseménytípusok:
+
+| Eseménytípus | Scenario | Label | Attack type | Darab |
+| --- | --- | --- | --- | ---: |
+| Normál SSH belépés | `benign_ssh_login` | `benign` | üres | 30 |
+| Normál csomagfrissítés / rendszerfrissítés | `benign_package_update` | `benign` | üres | 30 |
+| Port scan | `port_scan` | `attack` | `port_scan` | 8 |
+| Sikertelen SSH belépések | `ssh_failed_logins` | `attack` | `ssh_failed_logins` | 8 |
+| Kontrollált SSH brute force | `ssh_bruteforce` | `attack` | `ssh_bruteforce` | 8 |
+| Fájlmódosítás Wazuh FIM alatt | `file_integrity_change` | `attack` | `file_integrity_change` | 8 |
+| Jogosultságváltozás | `privilege_change` | `attack` | `privilege_change` | 8 |
+| Összesen |  |  |  | 100 |
+
 Futási előfeltételek:
 
 - A Zeek/tcpdump capture már fusson az első event előtt.
@@ -16,13 +29,16 @@ Futási előfeltételek:
 - Az események nem fedhetik át egymást időben.
 - Két esemény között hagyj 60-90 másodperc szünetet.
 - A végleges marker state fájl: `data/lab/session_events.json`.
+- Kalin legyen elérhető az `ssh`, `sshpass` és `nmap`.
+- A remote benign/FIM/jogosultság parancsok az `admin` target felhasználóval futnak.
+- Valódi jelszót ne írj ebbe a fájlba; interaktív SSH vagy sudo jelszó csak a futó shellben szerepeljen.
 
 ```bash
 # 001. esemény: BSSH-001 benign_ssh_login
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-001 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-001 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -32,7 +48,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-002 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-002 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -42,7 +58,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-001 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-001_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-001_package_update_cache_check.log || true; else printf "BPKG-001 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-001_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -52,7 +68,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-001 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -62,7 +78,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-001 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -72,7 +88,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-002 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-002_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-002_package_update_cache_check.log || true; else printf "BPKG-002 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-002_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -82,7 +98,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-003 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-003_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-003_package_update_cache_check.log || true; else printf "BPKG-003 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-003_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -92,7 +108,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-003 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-003 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -102,17 +118,17 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-001 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
-sleep 60
+
 
 # 010. esemény: AFIM-001 file_integrity_change
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-001 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-001 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -122,7 +138,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-004 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-004 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -132,7 +148,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-005 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-005 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -142,7 +158,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-004 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-004_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-004_package_update_cache_check.log || true; else printf "BPKG-004 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-004_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -152,7 +168,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-001 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-001 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-001
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -162,7 +178,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-002 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -172,7 +188,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-005 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-005_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-005_package_update_cache_check.log || true; else printf "BPKG-005 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-005_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -182,7 +198,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-006 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-006_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-006_package_update_cache_check.log || true; else printf "BPKG-006 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-006_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -192,7 +208,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-006 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-006 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -202,7 +218,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-002 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -212,7 +228,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-002 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -222,7 +238,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-007 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-007 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -232,7 +248,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-008 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-008 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -242,7 +258,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-007 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-007_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-007_package_update_cache_check.log || true; else printf "BPKG-007 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-007_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -252,7 +268,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-002 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-002 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -262,7 +278,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-002 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-002 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-002
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -272,7 +288,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-008 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-008_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-008_package_update_cache_check.log || true; else printf "BPKG-008 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-008_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -282,7 +298,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-009 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-009_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-009_package_update_cache_check.log || true; else printf "BPKG-009 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-009_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-009
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -292,7 +308,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-009 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-009 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-009
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -302,7 +318,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-003 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -312,7 +328,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-003 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -322,7 +338,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-010 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-010 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-010
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -332,7 +348,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-011 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-011 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-011
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -342,7 +358,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-010 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-010_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-010_package_update_cache_check.log || true; else printf "BPKG-010 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-010_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-010
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -352,7 +368,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-003 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -362,7 +378,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-003 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-003 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -372,7 +388,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-011 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-011_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-011_package_update_cache_check.log || true; else printf "BPKG-011 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-011_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-011
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -382,7 +398,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-012 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-012_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-012_package_update_cache_check.log || true; else printf "BPKG-012 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-012_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-012
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -392,7 +408,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-012 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-012 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-012
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -402,7 +418,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-003 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-003 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-003
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -412,7 +428,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-004 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -422,7 +438,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-013 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-013 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-013
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -432,7 +448,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-014 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-014 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-014
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -442,7 +458,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-013 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-013_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-013_package_update_cache_check.log || true; else printf "BPKG-013 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-013_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-013
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -452,7 +468,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-004 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -462,7 +478,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-004 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -472,7 +488,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-014 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-014_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-014_package_update_cache_check.log || true; else printf "BPKG-014 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-014_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-014
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -482,7 +498,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-015 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-015_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-015_package_update_cache_check.log || true; else printf "BPKG-015 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-015_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-015
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -492,7 +508,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-015 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-015 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-015
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -502,7 +518,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-004 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-004 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -512,7 +528,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-004 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-004 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-004
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -522,7 +538,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-016 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-016 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-016
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -532,7 +548,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-017 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-017 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-017
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -542,7 +558,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-016 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-016_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-016_package_update_cache_check.log || true; else printf "BPKG-016 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-016_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-016
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -552,7 +568,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-005 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -562,7 +578,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-005 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -572,7 +588,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-017 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-017_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-017_package_update_cache_check.log || true; else printf "BPKG-017 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-017_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-017
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -582,7 +598,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-018 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-018_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-018_package_update_cache_check.log || true; else printf "BPKG-018 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-018_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-018
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -592,7 +608,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-018 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-018 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-018
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -602,7 +618,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-005 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -612,17 +628,16 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-005 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-005 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
-sleep 60
 
 # 061. esemény: BSSH-019 benign_ssh_login
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-019 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-019 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-019
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -632,7 +647,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-020 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-020 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-020
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -642,7 +657,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-019 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-019_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-019_package_update_cache_check.log || true; else printf "BPKG-019 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-019_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-019
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -652,7 +667,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-005 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-005 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-005
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -662,7 +677,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-006 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -672,7 +687,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-020 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-020_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-020_package_update_cache_check.log || true; else printf "BPKG-020 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-020_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-020
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -682,7 +697,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-021 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-021_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-021_package_update_cache_check.log || true; else printf "BPKG-021 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-021_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-021
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -692,7 +707,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-021 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-021 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-021
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -702,7 +717,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-006 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -712,7 +727,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-006 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -722,7 +737,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-022 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-022 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-022
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -732,7 +747,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-023 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-023 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-023
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -742,7 +757,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-022 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-022_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-022_package_update_cache_check.log || true; else printf "BPKG-022 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-022_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-022
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -752,7 +767,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-006 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-006 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -762,7 +777,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-006 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-006 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-006
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -772,7 +787,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-023 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-023_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-023_package_update_cache_check.log || true; else printf "BPKG-023 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-023_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-023
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -782,7 +797,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-024 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-024_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-024_package_update_cache_check.log || true; else printf "BPKG-024 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-024_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-024
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -792,7 +807,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-024 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-024 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-024
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -802,7 +817,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-007 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -812,7 +827,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-007 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -822,7 +837,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-025 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-025 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-025
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -832,7 +847,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-026 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-026 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-026
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -842,7 +857,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-025 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-025_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-025_package_update_cache_check.log || true; else printf "BPKG-025 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-025_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-025
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -852,7 +867,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-007 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -862,7 +877,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-007 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-007 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -872,7 +887,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-026 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-026_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-026_package_update_cache_check.log || true; else printf "BPKG-026 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-026_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-026
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -882,7 +897,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-027 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-027_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-027_package_update_cache_check.log || true; else printf "BPKG-027 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-027_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-027
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -892,7 +907,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-027 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-027 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-027
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -902,7 +917,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-007 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-007 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-007
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -912,7 +927,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APORT-008 --scenario port_scan --label attack --attack-type "port_scan" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+nmap -Pn -n --max-retries 1 --host-timeout 30s -p 22,80,443,1514,1515 192.168.56.101
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APORT-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -922,7 +937,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-028 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-028 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-028
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -932,7 +947,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-029 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-029 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-029
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -942,7 +957,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-028 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-028_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-028_package_update_cache_check.log || true; else printf "BPKG-028 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-028_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-028
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -952,7 +967,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFAIL-008 --scenario ssh_failed_logins --label attack --attack-type "ssh_failed_logins" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for i in 1 2 3; do sshpass -p "real-lab-001-wrong-$i" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 2; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFAIL-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -962,7 +977,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id ABRUTE-008 --scenario ssh_bruteforce --label attack --attack-type "ssh_bruteforce" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+for p in real-lab-001-brute-{01..08}; do sshpass -p "$p" ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no -o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -o NumberOfPasswordPrompts=1 real_lab_invalid@192.168.56.101 'true' || true; sleep 1; done
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id ABRUTE-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -972,7 +987,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-029 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-029_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-029_package_update_cache_check.log || true; else printf "BPKG-029 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-029_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-029
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -982,7 +997,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BPKG-030 --scenario benign_package_update --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'if command -v apt-get >/dev/null 2>&1; then sudo apt-get -s upgrade >/tmp/BPKG-030_package_update_simulation.log; elif command -v dnf >/dev/null 2>&1; then sudo dnf -q check-update --cacheonly >/tmp/BPKG-030_package_update_cache_check.log || true; else printf "BPKG-030 no_supported_package_manager %s\n" "$(date -u +%FT%TZ)" >/tmp/BPKG-030_package_update_note.log; fi'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BPKG-030
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -992,7 +1007,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id BSSH-030 --scenario benign_ssh_login --label benign --attack-type "" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "BSSH-030 benign_ssh_login %s\n" "$(date -u +%FT%TZ)" >> /tmp/real_lab_001_benign_ssh_login.log'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id BSSH-030
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -1002,7 +1017,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id AFIM-008 --scenario file_integrity_change --label attack --attack-type "file_integrity_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'printf "AFIM-008 file_integrity_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_fim_marker.txt >/dev/null'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id AFIM-008
 Futtatás helye: WSL, a repository gyökérkönyvtára.
@@ -1012,7 +1027,7 @@ sleep 60
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json start --event-id APRIV-008 --scenario privilege_change --label attack --attack-type "privilege_change" --source-ip 192.168.56.102 --target-ip 192.168.56.101
 Futtatás helye: Kali VM (192.168.56.102), kizárólag a Target VM (192.168.56.101) ellen.
-# Itt hajtsd végre a tervezett lab műveletet kizárólag a 192.168.56.101 célgépen.
+ssh -tt -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 admin@192.168.56.101 'sudo touch /etc/real_lab_001_privilege_marker && printf "APRIV-008 privilege_change %s\n" "$(date -u +%FT%TZ)" | sudo tee -a /etc/real_lab_001_privilege_marker >/dev/null && sudo chmod 600 /etc/real_lab_001_privilege_marker && sudo chmod 640 /etc/real_lab_001_privilege_marker'
 Futtatás helye: WSL, a repository gyökérkönyvtára.
 python3 -m ml.src.lab_capture.event_marker --state-file data/lab/session_events.json end --event-id APRIV-008
 

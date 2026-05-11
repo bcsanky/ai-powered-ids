@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-05-11T21:54:05",
+  "wazuh_predictions": "results/wazuh_real/predictions.csv",
+  "ae_predictions": "results/ae_lab/predictions.csv",
+  "results_dir": "results/hybrid_real",
+  "weighted_threshold": 0.5,
+  "strategies": [
+    "hybrid_or",
+    "hybrid_weighted",
+    "hybrid_priority"
+  ],
+  "note": "Natív Wazuh és AE-Minimal lab predikciók kontrollált hibrid kiértékelése."
+}

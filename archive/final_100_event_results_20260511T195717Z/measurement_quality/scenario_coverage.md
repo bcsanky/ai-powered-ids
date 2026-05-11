@@ -1,0 +1,22 @@
+# Scenario coverage ellenőrzés
+
+Összesített státusz: **PASS**
+
+A riport a lab ground truth eseményszámát, címkeeloszlását és scenario-lefedettségét vizsgálja.
+
+| Ellenőrzés | Kategória | Státusz | Üzenet | Javaslat | Érték |
+|---|---|---|---|---|---|
+| measurement_provenance | Adateredet | PASS | verified real_lab provenance rendelkezésre áll |  |  |
+| ground_truth_path_guard | Adateredet | PASS | ground truth útvonal elfogadható |  | data/lab/lab_ground_truth.csv |
+| ground_truth_provenance_path | Adateredet | PASS | ground truth útvonal egyezik a provenance-szel | Ellenőrizd, hogy a quality gate ugyanazt az inputot olvassa-e, mint a mérési csomag. | data/lab/lab_ground_truth.csv |
+| ground_truth_columns | Ground truth | PASS | kötelező oszlopok rendben |  |  |
+| event_id_unique | Ground truth | PASS | event_id értékek egyediek |  |  |
+| timestamps_valid | Ground truth | PASS | timestamp_start és timestamp_end értékek validak |  |  |
+| min_total_events | Mérési elemszám | PASS | összes esemény: 100, elvárt minimum: 100 |  | 100 |
+| min_benign_events | Mérési elemszám | PASS | benign események száma: 60, elvárt minimum: 60 |  | 60 |
+| min_attack_events | Mérési elemszám | PASS | attack események száma: 40, elvárt minimum: 40 |  | 40 |
+| min_scenarios | Scenario lefedettség | PASS | különböző scenario-k száma: 7, elvárt minimum: 7 |  | 7 |
+| min_attack_scenarios | Scenario lefedettség | PASS | attack scenario-k száma: 5, elvárt minimum: 5 |  | 5 |
+| short_or_zero_duration | Ground truth | PASS | nincs nulla vagy negatív duration | Ellenőrizd az event marker start/end használatát. | 0 |
+| expected_benign_scenarios | Scenario lefedettség | PASS | várt benign scenario-k lefedve | A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei. | 2 |
+| expected_attack_scenarios | Scenario lefedettség | PASS | várt attack scenario-k lefedve | A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei. | 5 |

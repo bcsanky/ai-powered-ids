@@ -1,0 +1,2 @@
+TN,FP,FN,TP,tn,fp,fn,tp,precision,recall,f1,false_positive_rate,false_negative_rate,alert_count,raw_alert_count,mean_ttd,median_ttd,n_samples,n_attack,n_benign
+39,21,27,13,39,21,27,13,0.38235294117647056,0.325,0.35135135135135137,0.35,0.675,34,159,37.23076923076923,39.0,100,40,60

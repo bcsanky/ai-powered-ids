@@ -197,6 +197,7 @@ def generate_report(
         "## Konfigurációk értelmezése",
         "- Wazuh-only: natív Wazuh alert exportból korrelált szabályalapú jelzés.",
         "- AE-Minimal lab: a végleges AE-Minimal modell offline pontozása a lab feature-ökön.",
+        "- All-positive baseline: naiv kontrollsor, amely minden eseményt pozitívnak jelöl; nem valós detektor és nem Wazuh-, Zeek-, AE- vagy hibrid predikció.",
         "- Hybrid OR, weighted és priority: a Wazuh és AE jelzések kontrollált kombinációi.",
         "",
         "## Fő eredménytábla",

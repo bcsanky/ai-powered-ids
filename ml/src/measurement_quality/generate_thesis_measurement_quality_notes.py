@@ -40,6 +40,8 @@ def run_notes(output_dir: Path) -> dict[str, Any]:
         "",
         sentence_for_claim(str(claim_category)),
         "",
+        "Az All-positive baseline csak naiv kontrollsor: minden eseményt pozitívnak jelöl, ezért nem értelmezhető önálló detektorként vagy működő IDS-stratégiaként.",
+        "",
         "A dolgozatban ezért külön kell jelezni, hogy a mérés laboratóriumi környezetben készült, nem hosszú idejű éles SOC-validáció, és a TTD csak ott értelmezhető, ahol Wazuh alert matching ténylegesen rendelkezésre áll.",
         "",
         "Nem állítható általános ipari érvényesség vagy production teljesítménygarancia. A minőségi riport célja a mérési eredmények óvatos, metrikaalapú értelmezése.",

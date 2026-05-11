@@ -13,6 +13,10 @@ from ml.src.real_measurement_qa.postrun_quality_gate import compute_research_ans
 METRIC_LABELS = {
     "configuration": "Konfiguráció",
     "strategy": "Stratégia",
+    "TP": "TP",
+    "FP": "FP",
+    "TN": "TN",
+    "FN": "FN",
     "precision": "Precision",
     "recall": "Recall",
     "f1": "F1",
@@ -27,6 +31,10 @@ METRIC_LABELS = {
 }
 REAL_COMPARISON_COLUMNS = [
     "configuration",
+    "TP",
+    "FP",
+    "TN",
+    "FN",
     "precision",
     "recall",
     "f1",
@@ -75,7 +83,7 @@ def read_required_csv(path: Path) -> pd.DataFrame:
 def format_cell(value: Any, column: str) -> str:
     if value is None or pd.isna(value):
         return "nincs adat"
-    if column == "alert_count" or column.startswith("n_"):
+    if column in {"TP", "FP", "TN", "FN", "alert_count"} or column.startswith("n_"):
         converted = pd.to_numeric(value, errors="coerce")
         return "nincs adat" if pd.isna(converted) else str(int(converted))
     if column in {"precision", "recall", "f1", "false_positive_rate", "false_negative_rate", "mean_ttd", "median_ttd"}:
@@ -132,6 +140,7 @@ def bullet_lines(comparison: pd.DataFrame, answer: dict[str, Any]) -> list[str]:
         lines.append("- A legjobb F1 szerinti hibrid konfiguráció nem növelte a riasztásszámot a Wazuh-only baseline-hoz képest.")
     lines.extend(
         [
+            "- Az All-positive baseline naiv kontrollsor: minden eseményt pozitívnak jelöl, ezért nem tekinthető valós detektornak.",
             "- Az eredmények csak az adott lab eseménykészletre vonatkoznak.",
             "- A real-lab mérés nem hosszú idejű éles SOC-validáció.",
         ]

@@ -1,0 +1,166 @@
+{
+  "created_at": "2026-05-11T19:54:30Z",
+  "status": "WARN",
+  "checks": [
+    {
+      "check_id": "measurement_provenance",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "verified real_lab provenance rendelkezésre áll",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "check_id": "ground_truth_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground_truth útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "check_id": "lab_features_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "lab_features útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_features.csv"
+    },
+    {
+      "check_id": "provenance_ground_truth_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy ugyanazt a mérési inputot használod-e.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "check_id": "provenance_lab_features_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy ugyanazt a mérési inputot használod-e.",
+      "value": "data/lab/lab_features.csv"
+    },
+    {
+      "check_id": "ground_truth_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ground_truth olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "check_id": "lab_features_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "lab_features olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "check_id": "wazuh_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "wazuh_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "check_id": "ae_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ae_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "check_id": "hybrid_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "hybrid_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "check_id": "features_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "lab_features event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "check_id": "wazuh_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "Wazuh predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "check_id": "ae_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "AE predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "check_id": "hybrid_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "Hybrid predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "check_id": "missing_ae_score_ratio",
+      "category": "AE scoring",
+      "status": "PASS",
+      "message": "hiányzó AE score arány: 0.0000",
+      "recommendation": "A lab feature mappinget és AE scoring kimenetet ellenőrizni kell.",
+      "value": "0.0000"
+    },
+    {
+      "check_id": "attack_without_wazuh_ratio",
+      "category": "Wazuh matching",
+      "status": "WARN",
+      "message": "Wazuh alert nélküli attack események aránya: 0.6750",
+      "recommendation": "Magas arány esetén a Wazuh export, időablak vagy IP-korreláció ellenőrzendő.",
+      "value": "0.6750"
+    },
+    {
+      "check_id": "ground_truth_source_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "ground_truth.source_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "check_id": "ground_truth_target_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "ground_truth.target_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "check_id": "lab_features_source_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "lab_features.source_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "check_id": "lab_features_target_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "lab_features.target_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    }
+  ]
+}

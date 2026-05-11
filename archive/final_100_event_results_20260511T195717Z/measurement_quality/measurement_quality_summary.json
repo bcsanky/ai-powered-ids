@@ -1,0 +1,603 @@
+{
+  "created_at": "2026-05-11T19:54:32Z",
+  "measurement_quality_status": "MEASUREMENT_USABLE_WITH_LIMITATIONS",
+  "claim_category": "TRADEOFF_ONLY",
+  "fail_count": 0,
+  "warn_count": 1,
+  "rows": [
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "measurement_provenance",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "verified real_lab provenance rendelkezésre áll",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "ground_truth_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground truth útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "ground_truth_provenance_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground truth útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy a quality gate ugyanazt az inputot olvassa-e, mint a mérési csomag.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "ground_truth_columns",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "kötelező oszlopok rendben",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "event_id_unique",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "event_id értékek egyediek",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "timestamps_valid",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "timestamp_start és timestamp_end értékek validak",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "min_total_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "összes esemény: 100, elvárt minimum: 100",
+      "recommendation": "",
+      "value": "100"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "min_benign_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "benign események száma: 60, elvárt minimum: 60",
+      "recommendation": "",
+      "value": "60"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "min_attack_events",
+      "category": "Mérési elemszám",
+      "status": "PASS",
+      "message": "attack események száma: 40, elvárt minimum: 40",
+      "recommendation": "",
+      "value": "40"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "min_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "különböző scenario-k száma: 7, elvárt minimum: 7",
+      "recommendation": "",
+      "value": "7"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "min_attack_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "attack scenario-k száma: 5, elvárt minimum: 5",
+      "recommendation": "",
+      "value": "5"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "short_or_zero_duration",
+      "category": "Ground truth",
+      "status": "PASS",
+      "message": "nincs nulla vagy negatív duration",
+      "recommendation": "Ellenőrizd az event marker start/end használatát.",
+      "value": "0"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "expected_benign_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "várt benign scenario-k lefedve",
+      "recommendation": "A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei.",
+      "value": "2"
+    },
+    {
+      "source_file": "scenario_coverage.csv",
+      "check_id": "expected_attack_scenarios",
+      "category": "Scenario lefedettség",
+      "status": "PASS",
+      "message": "várt attack scenario-k lefedve",
+      "recommendation": "A hiányzó scenario-kat csak akkor kell pótolni, ha a mérési terv részei.",
+      "value": "5"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "measurement_provenance",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "verified real_lab provenance rendelkezésre áll",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ground_truth_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "ground_truth útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "lab_features_path_guard",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "lab_features útvonal elfogadható",
+      "recommendation": "",
+      "value": "data/lab/lab_features.csv"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "provenance_ground_truth_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy ugyanazt a mérési inputot használod-e.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "provenance_lab_features_path",
+      "category": "Adateredet",
+      "status": "PASS",
+      "message": "útvonal egyezik a provenance-szel",
+      "recommendation": "Ellenőrizd, hogy ugyanazt a mérési inputot használod-e.",
+      "value": "data/lab/lab_features.csv"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ground_truth_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ground_truth olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "lab_features_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "lab_features olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "wazuh_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "wazuh_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ae_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ae_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "hybrid_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "hybrid_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "100"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "features_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "lab_features event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "wazuh_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "Wazuh predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ae_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "AE predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "hybrid_event_set",
+      "category": "Event alignment",
+      "status": "PASS",
+      "message": "Hybrid predictions event_id készlet egyezik",
+      "recommendation": "",
+      "value": "missing=0, extra=0"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "missing_ae_score_ratio",
+      "category": "AE scoring",
+      "status": "PASS",
+      "message": "hiányzó AE score arány: 0.0000",
+      "recommendation": "A lab feature mappinget és AE scoring kimenetet ellenőrizni kell.",
+      "value": "0.0000"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "attack_without_wazuh_ratio",
+      "category": "Wazuh matching",
+      "status": "WARN",
+      "message": "Wazuh alert nélküli attack események aránya: 0.6750",
+      "recommendation": "Magas arány esetén a Wazuh export, időablak vagy IP-korreláció ellenőrzendő.",
+      "value": "0.6750"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ground_truth_source_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "ground_truth.source_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "ground_truth_target_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "ground_truth.target_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "lab_features_source_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "lab_features.source_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "source_file": "feature_alert_alignment.csv",
+      "check_id": "lab_features_target_ip_filled",
+      "category": "Mezőkitöltöttség",
+      "status": "PASS",
+      "message": "lab_features.target_ip kitöltöttsége: 1.0000",
+      "recommendation": "Alacsony kitöltöttség ronthatja az alert-event korrelációt.",
+      "value": "1.0000"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "wazuh_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "wazuh_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "1"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "ae_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "ae_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "1"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_metrics_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "hybrid_metrics olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "3"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "metrics_comparison_readable",
+      "category": "Metrika CSV",
+      "status": "PASS",
+      "message": "metrics_comparison olvasható",
+      "recommendation": "Futtasd a real-lab metrika pipeline megfelelő lépését.",
+      "value": "5"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "comparison_configurations",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "minden kötelező konfiguráció szerepel",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "range_precision",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "precision 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "range_recall",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "recall 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "range_f1",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "f1 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "range_false_positive_rate",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "false_positive_rate 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "range_false_negative_rate",
+      "category": "Metrikatartomány",
+      "status": "PASS",
+      "message": "false_negative_rate 0 és 1 közötti",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "alert_count_non_negative",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "alert_count nem negatív",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "n_samples_consistency",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "n_samples értékek: [100, 100, 100, 100, 100]",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "nan_metric_values",
+      "category": "Comparison",
+      "status": "PASS",
+      "message": "nincs NaN a fő metrikákban",
+      "recommendation": "A hiányos metrikát értelmezési korlátként kell kezelni.",
+      "value": "0"
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "wazuh_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "ae_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_confusion_sum_0",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_confusion_sum_1",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_confusion_sum_2",
+      "category": "Konfúziós mátrix",
+      "status": "PASS",
+      "message": "TP+FP+TN+FN=100, n_samples=100",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_or_logic",
+      "category": "Hibrid logika",
+      "status": "PASS",
+      "message": "Hybrid OR predikció megfelel a Wazuh OR AE logikának",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "wazuh_mean_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "wazuh mean_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "wazuh_median_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "wazuh median_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_mean_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "hybrid mean_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "metric_consistency.csv",
+      "check_id": "hybrid_median_ttd_available",
+      "category": "TTD metrika",
+      "status": "PASS",
+      "message": "hybrid median_ttd elérhető",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "wazuh_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "wazuh_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "results/wazuh_real/predictions.csv"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "hybrid_predictions_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "hybrid_predictions olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "results/hybrid_real/predictions.csv"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ground_truth_readable",
+      "category": "Bemenet",
+      "status": "PASS",
+      "message": "ground_truth olvasható",
+      "recommendation": "Futtasd a real-lab pipeline megfelelő lépését.",
+      "value": "data/lab/lab_ground_truth.csv"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ttd_numeric",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "TTD értékek numerikusak, ahol alert volt",
+      "recommendation": "",
+      "value": ""
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ttd_negative",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "nincs negatív TTD",
+      "recommendation": "Ellenőrizd az időszinkront és a korrelációs időablakot.",
+      "value": "0"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ttd_large_values",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "0 darab 300 másodpercnél nagyobb TTD",
+      "recommendation": "Túl nagy TTD esetén az időablak és az alert matching ellenőrizendő.",
+      "value": "0"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ttd_attack_coverage",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "attack TTD coverage: 0.3250",
+      "recommendation": "Ha nincs TTD adat, a TTD nem használható eredményértelmezésre.",
+      "value": "0.3250"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "ttd_summary_stats",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "TTD összefoglaló statisztikák",
+      "recommendation": "",
+      "value": "{'mean': '38.3824', 'median': '29.0000', 'p95': '87.3500'}"
+    },
+    {
+      "source_file": "ttd_quality.csv",
+      "check_id": "hybrid_ttd_available",
+      "category": "TTD",
+      "status": "PASS",
+      "message": "hibrid predikciókban van TTD adat",
+      "recommendation": "",
+      "value": ""
+    }
+  ]
+}

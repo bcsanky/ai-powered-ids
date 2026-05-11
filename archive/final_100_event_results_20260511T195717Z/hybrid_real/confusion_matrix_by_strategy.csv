@@ -1,0 +1,7 @@
+strategy,actual,predicted_benign,predicted_attack
+hybrid_or,benign,0,60
+hybrid_or,attack,0,40
+hybrid_weighted,benign,59,1
+hybrid_weighted,attack,40,0
+hybrid_priority,benign,0,60
+hybrid_priority,attack,0,40

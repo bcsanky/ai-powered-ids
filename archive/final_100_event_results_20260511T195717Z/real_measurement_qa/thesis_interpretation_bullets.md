@@ -1,0 +1,7 @@
+- Az összehasonlító táblázat 5 konfiguráció metrikáit tartalmazza ugyanazon real-lab mérési készleten.
+- A legjobb F1 érték szerinti hibrid konfiguráció: `Hybrid OR`.
+- A vizsgált lab mérés alapján a legjobb hibrid konfiguráció F1 értéke magasabb, mint a Wazuh-only baseline értéke.
+- A legjobb F1 szerinti hibrid konfigurációnál a hamis pozitív arány magasabb, ezért ezt a korlátok között jelezni kell.
+- A hibrid döntés riasztásszám-növekedést okozhat, ami üzemeltetési szempontból külön értelmezendő.
+- Az eredmények csak az adott lab eseménykészletre vonatkoznak.
+- A real-lab mérés nem hosszú idejű éles SOC-validáció.

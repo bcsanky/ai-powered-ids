@@ -73,6 +73,8 @@ def generate_chapter6(
 
 Az értékelés célja annak vizsgálata, hogy ugyanazon címkézett lab eseményeken hogyan viselkedik a Wazuh-only baseline, az AE-Minimal lab pontozás és a három hibrid döntési stratégia. A fő metrikák a precision, recall, F1, hamis pozitív arány, hamis negatív arány, riasztásszám és ahol értelmezhető, a time-to-detection.
 
+Az All-positive baseline külön naiv kontrollsor: minden eseményt pozitívnak jelöl, ezért nem Wazuh-, Zeek-, AE- vagy hibrid detektor, hanem triviális viszonyítási alap.
+
 ## 6.2 Mérési környezet és inputok
 
 {provenance_note} A mérés bemeneteit a ground truth eseményablak, a lab feature tábla és a Wazuh alert export adja. A mérési eredmények csak a vizsgált lab mérésben értelmezhetők.
