@@ -39,5 +39,5 @@ Tilos celkent megadni vagy erinteni:
 - Minden tamado aktivitasnak a `192.168.56.101` celgepre kell korlatozodnia.
 - Nem hasznalhato destruktiv, tartosan modositott vagy kontrollalatlan tamado parancs.
 - A dokumentumok nem tartalmazhatnak Wazuh jelszot vagy mas titkot.
-- Fake alert, fake feature, fake metric, fake provenance vagy mas fiktiv meresi eredmeny nem keszulhet.
+- Kezzel gyartott alert, feature, metric, provenance vagy mas nem tenyleges lab futasbol szarmazo meresi eredmeny nem keszulhet.
 - A session csak akkor indithato, ha a snapshotok elerhetok, a Wazuh agent Active, es a meresi idointervallum elore feljegyezheto.

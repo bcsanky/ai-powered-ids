@@ -125,4 +125,4 @@ make final-real-measurement-thesis-ready
 make final-measurement-quality MEASUREMENT_QUALITY_THRESHOLDS=docs/measurement_quality_thresholds_real_lab_100.yaml
 ```
 
-Ha barmelyik parancs hibat jelez, ne potold kezzel az inputot es ne keszits fake eredmenyt. A hibat a valos lab bemeneteken kell javitani vagy korlatkent dokumentalni.
+Ha barmelyik parancs hibat jelez, ne potold kezzel az inputot, es ne keszits kezzel gyartott vagy nem tenyleges lab futasbol szarmazo eredmenyt. A hibat a valos lab bemeneteken kell javitani vagy korlatkent dokumentalni.

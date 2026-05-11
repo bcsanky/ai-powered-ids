@@ -1,6 +1,6 @@
 # real-lab-001 Zeek capture runbook
 
-Ez a runbook a `real-lab-001` session Zeek-alapu network inputjanak elokesziteset irja le. A meres pcap capture-rel indul Kalin, majd offline Zeek feldolgozassal keszul a `conn.log`. A dokumentum nem hoz letre fake pcap, fake conn.log, fake feature vagy fake provenance allomanyt.
+Ez a runbook a `real-lab-001` session Zeek-alapu network inputjanak elokesziteset irja le. A meres pcap capture-rel indul Kalin, majd offline Zeek feldolgozassal keszul a `conn.log`. A dokumentum nem hoz letre kezzel gyartott pcap, conn.log, feature vagy provenance allomanyt.
 
 ## Biztonsagi keret
 
@@ -95,4 +95,4 @@ mkdir -p data/lab/zeek
 cp ~/real-lab-001-zeek/conn.log data/lab/zeek/conn.log
 ```
 
-Ez valos meresi bemenet, ezert csak a tenyleges `real-lab-001` pcapbol generalva kerulhet ide. Fake vagy kezzel gyartott `conn.log` nem hasznalhato.
+Ez valos meresi bemenet, ezert csak a tenyleges `real-lab-001` pcapbol generalva kerulhet ide. Kezzel gyartott vagy nem tenyleges pcapbol generalt `conn.log` nem hasznalhato.

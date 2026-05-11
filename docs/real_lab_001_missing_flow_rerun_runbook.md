@@ -1,6 +1,6 @@
 # real-lab-001 missing-flow rerun runbook
 
-Ez a runbook a `real-lab-001` mérés 22 hiányzó Zeek-flow eseményének célzott újrafuttatásához készült. Nem készít fake pcapet, fake `conn.log`-ot, fake alertet, fake feature-t, fake metrikát vagy fake provenance-t.
+Ez a runbook a `real-lab-001` mérés 22 hiányzó Zeek-flow eseményének célzott újrafuttatásához készült. Nem készít kézzel gyártott pcapet, kézzel gyártott `conn.log`-ot, kézzel gyártott alertet, feature-t, metrikát vagy provenance-t.
 
 ## Miért kell rerun
 

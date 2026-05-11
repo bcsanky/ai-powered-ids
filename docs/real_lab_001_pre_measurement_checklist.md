@@ -46,5 +46,5 @@ make lab-session-prep LAB_SESSION_ID=real-lab-001 ATTACKER_IP=192.168.56.102 TAR
 - [ ] A pilot utan a cel es a tamado VM session allapota visszaallitva vagy kitakaritva.
 - [ ] A vegleges `real-lab-001` session elott nincs nyitott event marker.
 - [ ] A vegleges meres elott a `data/lab/session_events.json` el lett tavolitva, ha korabbi state-bol maradt.
-- [ ] A vegleges `real-lab-001` session elott nincs felhasznalhato fake alert, fake feature, fake metric vagy fake provenance.
+- [ ] A vegleges `real-lab-001` session elott nincs felhasznalhato kezzel gyartott alert, feature, metric vagy provenance.
 - [ ] A vegrehajtando cel minden attack esemenynel kizarolag `192.168.56.101`.
