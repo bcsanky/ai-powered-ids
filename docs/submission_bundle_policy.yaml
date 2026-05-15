@@ -57,6 +57,10 @@ always_exclude:
   - ".env"
   - ".env.*"
   - reports/real_measurement_redacted/redaction_mapping.json
+  - "*.swp"
+  - "*.swo"
+  - "*~"
+  - "reports/thesis_integration/*_generated.md"
 
 sensitive_patterns:
   - "alerts.json"

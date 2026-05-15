@@ -1,0 +1,9 @@
+{
+  "created_at": "2026-05-15T00:55:17Z",
+  "zip_path": "dist/submission/ai_powered_ids_runtime_bundle.zip",
+  "zip_sha256": "b9263f8066efde86d26dcad16a211fc9d8be6054442c2e6629742ce99aeba796",
+  "manifest_path": "reports/runtime_bundle/runtime_bundle_manifest.csv",
+  "report_path": "reports/runtime_bundle/runtime_bundle_report.md",
+  "included_file_count": 403,
+  "missing_count": 2
+}

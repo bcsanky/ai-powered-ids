@@ -1,0 +1,13 @@
+{
+  "status": "WARN",
+  "zip_path": "dist/submission/ai_powered_ids_runtime_bundle.zip",
+  "created_at": "2026-05-15T00:55:17Z",
+  "included_file_count": 403,
+  "total_size_bytes": 2375987,
+  "missing": [
+    "data/lab/flows.csv",
+    "raw/wazuh_export.json"
+  ],
+  "excluded_count": 260,
+  "sensitive_findings": []
+}

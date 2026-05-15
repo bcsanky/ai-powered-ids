@@ -1,0 +1,201 @@
+{
+  "status": "WARN",
+  "checks": [
+    {
+      "check_id": "zip_exists",
+      "category": "zip",
+      "status": "PASS",
+      "message": "ZIP elérhető: dist/submission/ai_powered_ids_runtime_bundle.zip",
+      "recommendation": ""
+    },
+    {
+      "check_id": "zip_file_count",
+      "category": "zip",
+      "status": "PASS",
+      "message": "Becsomagolt fájlok száma: 403",
+      "recommendation": ""
+    },
+    {
+      "check_id": "forbidden_paths",
+      "category": "security",
+      "status": "PASS",
+      "message": "Nincs tiltott cache/env/key/cert útvonal a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "sensitive_content",
+      "category": "security",
+      "status": "PASS",
+      "message": "Nem találtam jelszó/token/private key/cert mintát.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_README.md",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "README.md szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_Makefile",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "Makefile szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_requirements-dev.txt",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "requirements-dev.txt szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_ml_src",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "ml/src szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_ml_tests",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "ml/tests szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_experiments_final_ae_minimal.yaml",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "experiments/final/ae_minimal.yaml szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_experiments_final_ae_context.yaml",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "experiments/final/ae_context.yaml szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_docs",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "docs szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_templates_lab",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "templates/lab szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_artifacts_final_final-ae-minimal-v1",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "artifacts/final/final-ae-minimal-v1 szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_data_processed_final_ae_minimal_preprocess.pkl",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "data/processed/final/ae_minimal/preprocess.pkl szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_reports_real_measurement",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "reports/real_measurement szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_reports_real_measurement_qa",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "reports/real_measurement_qa szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_reports_measurement_quality",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "reports/measurement_quality szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_results_wazuh_real",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "results/wazuh_real szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_results_ae_lab",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "results/ae_lab szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_results_hybrid_real",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "results/hybrid_real szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_results_real_comparison",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "results/real_comparison szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_data_lab_lab_ground_truth.csv",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "data/lab/lab_ground_truth.csv szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_data_lab_lab_features.csv",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "data/lab/lab_features.csv szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_data_lab_zeek_conn.log",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "data/lab/zeek/conn.log szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_data_lab_flows.csv",
+      "category": "required_content",
+      "status": "WARN",
+      "message": "data/lab/flows.csv nem létezik a forrásfában, ezért nem került ZIP-be.",
+      "recommendation": "Optional flow-CSV input; Zeek conn.log is the measured input when this is absent."
+    },
+    {
+      "check_id": "required_data_wazuh_alerts.jsonl",
+      "category": "required_content",
+      "status": "PASS",
+      "message": "data/wazuh/alerts.jsonl szerepel a ZIP-ben.",
+      "recommendation": ""
+    },
+    {
+      "check_id": "required_raw_wazuh_export.json",
+      "category": "required_content",
+      "status": "WARN",
+      "message": "raw/wazuh_export.json nem létezik a forrásfában, ezért nem került ZIP-be.",
+      "recommendation": "Optional raw manual Wazuh export; normalized alerts.jsonl is sufficient when this is absent."
+    }
+  ]
+}

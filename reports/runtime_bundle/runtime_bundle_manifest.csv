@@ -1,0 +1,666 @@
+path,size_bytes,sha256,category,included,note
+README.md,1779,6c5528ad103890f44deaa42bf0f21cac085d934ae5a56efda74344d61e5df3b8,project,true,
+Makefile,37999,2a03e6577f58bac91480d78f466c248e059d38dc6d621311fe75855371c63b0b,project,true,
+requirements-dev.txt,86,cc24ffef0fd36375f991d191521b0347094ec7b62d78ef62635e8d95a46e97bc,project,true,
+ml/src/__init__.py,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,source,true,
+ml/src/__pycache__/__init__.cpython-311.pyc,132,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/__init__.cpython-38.pyc,109,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/__init__.cpython-39.pyc,137,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/autoencoder.cpython-311.pyc,4878,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/autoencoder.cpython-38.pyc,3272,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/autoencoder.cpython-39.pyc,3296,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/benchmark_scoring.cpython-38.pyc,9697,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/build_dataset.cpython-38.pyc,13295,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/collect_thesis_figures.cpython-38.pyc,4573,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/compare_final_results.cpython-38.pyc,9405,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/create_rule_proxy_export.cpython-38.pyc,4411,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/eval.cpython-38.pyc,16924,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/eval.cpython-39.pyc,16393,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/evaluate.cpython-38.pyc,109,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/explain.cpython-38.pyc,1625,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/explain.cpython-39.pyc,1653,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/export_performance_artifacts.cpython-38.pyc,2372,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/export_performance_outputs.cpython-38.pyc,2370,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/features.cpython-38.pyc,109,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/generate_case_studies.cpython-38.pyc,12478,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/generate_performance_report.cpython-38.pyc,8374,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/generate_security_report.cpython-38.pyc,9884,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/hybrid_eval.cpython-38.pyc,9080,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/model.cpython-38.pyc,106,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/plot_final_results.cpython-38.pyc,7905,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/plot_performance_results.cpython-38.pyc,6311,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/schema.cpython-38.pyc,1405,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/schema.cpython-39.pyc,1393,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/score_events.cpython-38.pyc,4811,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/scoring_runtime.cpython-311.pyc,11639,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/scoring_runtime.cpython-38.pyc,7077,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/thresholds.cpython-38.pyc,3255,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/thresholds.cpython-39.pyc,3283,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/train.cpython-38.pyc,106,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/train_ae.cpython-38.pyc,9893,,source,false,excluded cache/virtualenv directory
+ml/src/__pycache__/train_ae.cpython-39.pyc,9574,,source,false,excluded cache/virtualenv directory
+ml/src/autoencoder.py,2686,394037a3b3c6d4a19755f22dd090a826557e94255b093527ab663355f7731556,source,true,
+ml/src/benchmark_scoring.py,12613,3687e96b07dd9ed1582047bcd08fcfa3e915096c7ec1ce9ee6503ee0f92eebbe,source,true,
+ml/src/build_dataset.py,18351,b8b6095fb28b866ac19c1474cb94704363c440d51ce4347c4e70458cdb1e6498,source,true,
+ml/src/collect_thesis_figures.py,5481,a306560a118bae37d7e208711a6e7037a56f71be231acfb2323f53d5122099b4,source,true,
+ml/src/compare_final_results.py,10960,ada28b0334b671795c3cd0e557deb2c6105a71165a5d034d4a431b7c30716f39,source,true,
+ml/src/create_rule_proxy_export.py,4868,e2d7600052efa0c2222b650c845f5d0b4aca30fe1351cf625f1159af705ad157,source,true,
+ml/src/eval.py,20800,d937ec2968e0f3ddeda89a6c45184b1e53409e19fdae198a2b74de5bc7d3d980,source,true,
+ml/src/evaluate.py,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,source,true,
+ml/src/explain.py,1584,fa1b98c5731bce2741961668501b29be72c6b3ff94a271aaf56513b97260abc2,source,true,
+ml/src/export_performance_outputs.py,2474,d101b3573d158feda6cc042d84f3407e8bbf0be1997decb149fe47d66cf2096e,source,true,
+ml/src/features.py,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,source,true,
+ml/src/final_acceptance/__init__.py,77,1191d58a2f182ee5ed41fde8a1fe329bbdcf6daf2bb2e810e7a6812858f93720,source,true,
+ml/src/final_acceptance/__pycache__/__init__.cpython-38.pyc,207,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_documentation_consistency.cpython-38.pyc,3644,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_expected_failure_modes.cpython-38.pyc,7104,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_make_targets.cpython-38.pyc,3080,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_provenance_policy.cpython-38.pyc,3423,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_real_lab_runbook_docs.cpython-38.pyc,2909,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/check_release_candidate_readiness.cpython-38.pyc,3076,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/common.cpython-38.pyc,6739,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/__pycache__/generate_real_lab_execution_brief.cpython-38.pyc,3242,,source,false,excluded cache/virtualenv directory
+ml/src/final_acceptance/check_documentation_consistency.py,3507,3af3d72ae9b77726550e4e5128af1d40ba6b237fcbd0fb24b66956f47e2d2506,source,true,
+ml/src/final_acceptance/check_expected_failure_modes.py,8268,b588292c2d927ca233766cf43afd1a9a6b4b07792cf1258d9c05544f7ed5b6b4,source,true,
+ml/src/final_acceptance/check_make_targets.py,3497,7167cba29e962b2cbb6bd0dd6389b44e6e36c9eeea8c04ccc9e2f80527013809,source,true,
+ml/src/final_acceptance/check_provenance_policy.py,3284,185540801f50a01713f31a3d1bac2482237caa3adedbba73efa0b28422a3a811,source,true,
+ml/src/final_acceptance/check_real_lab_runbook_docs.py,3302,8168cda806a4e89ac163d052a92573064dc3f805e5733f81972bff82aac578f7,source,true,
+ml/src/final_acceptance/check_release_candidate_readiness.py,3488,f3c207b61c75e50b8bb27fb3884ee3337881387a5b2e2ef1710bb1aca21a93b3,source,true,
+ml/src/final_acceptance/common.py,6615,b57571cd13ab7c35878ec72828ad09b8c2b322539e9346b2cd622e1bc635b1f9,source,true,
+ml/src/final_acceptance/generate_real_lab_execution_brief.py,2887,7cce44daad99b601928997c6075f7a0ae23e856f46d8e851b4eaa67217043647,source,true,
+ml/src/final_submission_check/__init__.py,77,55b42ef89fee5251a5f7da7cb63d7479d3dc1ff89f13213a87972ab943e0e029,source,true,
+ml/src/final_submission_check/__pycache__/__init__.cpython-38.pyc,213,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/check_no_overclaiming.cpython-38.pyc,3562,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/check_requirement_coverage.cpython-38.pyc,3838,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/check_submission_artifact_plan.cpython-38.pyc,3243,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/check_thesis_structure_expectations.cpython-38.pyc,3924,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/common.cpython-38.pyc,6529,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/generate_biraloi_risk_questions.cpython-38.pyc,5038,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/__pycache__/generate_final_submission_readiness.cpython-38.pyc,3994,,source,false,excluded cache/virtualenv directory
+ml/src/final_submission_check/check_no_overclaiming.py,3437,ecba93f03288f498b549ec7fd411414fd978f08d6a19af744dd3cb02d45899c6,source,true,
+ml/src/final_submission_check/check_requirement_coverage.py,4008,ddcc9dc0b4ad3166e619fc5b1574ab7a759c0a00711435167c2218dd3ccb81d8,source,true,
+ml/src/final_submission_check/check_submission_artifact_plan.py,3902,1d87d2449fa3e43212522840fa43cb7bd0d556abca3ca554bf2ce289cd27a770,source,true,
+ml/src/final_submission_check/check_thesis_structure_expectations.py,3817,09b8a307ff7cacbe9b7bae501c73423e6f3f80ef41a3ca9b3e4a2c8cc4b1879f,source,true,
+ml/src/final_submission_check/common.py,5452,e99077e9778ba8261d3ddd5eb76e43813eca057523c6a5233f4a2d408aaf0ec7,source,true,
+ml/src/final_submission_check/generate_biraloi_risk_questions.py,4632,d0a9a57fccaf380519e1f24019af664a7ea14c25a17aeb80d8c0b509d65feb32,source,true,
+ml/src/final_submission_check/generate_final_submission_readiness.py,4027,318aa33687887955eb10405e46bc5714aa7508ba2b959e5472b02f64e465f8d9,source,true,
+ml/src/generate_case_studies.py,13465,1763a3db12727cdd1340b4eaa6b9ab293b5a1465bb6f101453eac47f70bda26a,source,true,
+ml/src/generate_performance_report.py,9210,0f5aa92e09ce92a1ed4adb0c2a66431916e08967a16ab443c8275b0d1663d8ef,source,true,
+ml/src/generate_security_report.py,11271,5ac2ca609aa9e9f48f4d97082edef1e9ef17c17ce26cbed6b886679a0971e866,source,true,
+ml/src/hybrid_eval.py,9365,3680620d207988e143985f917a425bd8a3dd17940139c9b8327db3b264c80775,source,true,
+ml/src/hybrid_real/__init__.py,66,2dd9d21a2391ef07769a3d26317ac693f9c9dd77e2eaa4bf7aef83bcb56d90e8,source,true,
+ml/src/hybrid_real/__pycache__/__init__.cpython-38.pyc,195,,source,false,excluded cache/virtualenv directory
+ml/src/hybrid_real/__pycache__/compare_real_results.cpython-38.pyc,6975,,source,false,excluded cache/virtualenv directory
+ml/src/hybrid_real/__pycache__/evaluate_hybrid_real.cpython-38.pyc,7618,,source,false,excluded cache/virtualenv directory
+ml/src/hybrid_real/__pycache__/plot_real_comparison.cpython-38.pyc,3684,,source,false,excluded cache/virtualenv directory
+ml/src/hybrid_real/compare_real_results.py,8371,3a6fa3c461ecf93dbf436c949f509469b25b04a946fc39438250c58dd5c57b81,source,true,
+ml/src/hybrid_real/evaluate_hybrid_real.py,9995,4c234f40ebf878b1dd7b2f85a7f9ba559d534460372bb5daab015b74fd4eb98d,source,true,
+ml/src/hybrid_real/plot_real_comparison.py,3517,fdf525179ef3684f46293e2aef9bc4fce42c3eb24b02fb5b4397f7b65c6b030b,source,true,
+ml/src/infra_diagnostics/__init__.py,58,8df1d268fac9ba13f0f9a539306da7f9eb214b81f2ab5836541f8aa4839e9ea6,source,true,
+ml/src/infra_diagnostics/__pycache__/__init__.cpython-38.pyc,189,,source,false,excluded cache/virtualenv directory
+ml/src/infra_diagnostics/__pycache__/check_docker_compose_mount_policy.cpython-38.pyc,6544,,source,false,excluded cache/virtualenv directory
+ml/src/infra_diagnostics/__pycache__/check_wazuh_bind_mounts.cpython-38.pyc,7286,,source,false,excluded cache/virtualenv directory
+ml/src/infra_diagnostics/check_docker_compose_mount_policy.py,8026,bff2be0460b2504ffb7d77f864d7e0a2444d8d6b8a3310db56beb16db5a61065,source,true,
+ml/src/infra_diagnostics/check_wazuh_bind_mounts.py,7435,389e25c0b223f3f66df86a5d56485939a36a122d2b4177efb5ac9c66d2e82049,source,true,
+ml/src/lab_ae_eval/__init__.py,61,b36060ddb25343f79ca839435ca98146b23415a8e59de18f73d9d9b31797dfc8,source,true,
+ml/src/lab_ae_eval/__pycache__/__init__.cpython-38.pyc,190,,source,false,excluded cache/virtualenv directory
+ml/src/lab_ae_eval/__pycache__/evaluate_ae_lab.cpython-38.pyc,3463,,source,false,excluded cache/virtualenv directory
+ml/src/lab_ae_eval/__pycache__/score_lab_features.cpython-38.pyc,4400,,source,false,excluded cache/virtualenv directory
+ml/src/lab_ae_eval/__pycache__/validate_lab_features.cpython-38.pyc,3060,,source,false,excluded cache/virtualenv directory
+ml/src/lab_ae_eval/evaluate_ae_lab.py,3731,95732afcd91bb66b0983c0fd4d576d822fa4e2abc7a44f5eda900362ba1c6036,source,true,
+ml/src/lab_ae_eval/score_lab_features.py,5248,4493e040f79817c311d4b5beaf76166726f848f60edcc932f5d37cfa273111ed,source,true,
+ml/src/lab_ae_eval/validate_lab_features.py,3284,36432b4524313dd862559e5351126b0253f767d446904cea45ffc9e032c49785,source,true,
+ml/src/lab_capture/__init__.py,78,d631a60138d47bb3ef30f0dc692f3cef1bbfc6849df5afe0fb54c0af14ad15d7,source,true,
+ml/src/lab_capture/__pycache__/__init__.cpython-38.pyc,207,,source,false,excluded cache/virtualenv directory
+ml/src/lab_capture/__pycache__/event_marker.cpython-38.pyc,5386,,source,false,excluded cache/virtualenv directory
+ml/src/lab_capture/__pycache__/generate_lab_templates.cpython-38.pyc,2878,,source,false,excluded cache/virtualenv directory
+ml/src/lab_capture/event_marker.py,5770,a537d9140c4c9aac39f92ebe86dbb6d875b2cb68abce71c4868cc34592cdd293,source,true,
+ml/src/lab_capture/generate_lab_templates.py,2762,ed1ffe9abe7aa7cb1bb80545782d56df3805a7000d0d83c4e615e834159c1ed0,source,true,
+ml/src/lab_features/__init__.py,73,68b2d7949280d938dbc2237ccf2e126a0b07ea455f12ad04d8f2882a25c01934,source,true,
+ml/src/lab_features/__pycache__/__init__.cpython-38.pyc,203,,source,false,excluded cache/virtualenv directory
+ml/src/lab_features/__pycache__/build_features_from_flow_csv.cpython-38.pyc,4288,,source,false,excluded cache/virtualenv directory
+ml/src/lab_features/__pycache__/build_features_from_zeek_conn.cpython-38.pyc,5344,,source,false,excluded cache/virtualenv directory
+ml/src/lab_features/__pycache__/common.cpython-38.pyc,5177,,source,false,excluded cache/virtualenv directory
+ml/src/lab_features/__pycache__/validate_real_lab_inputs.cpython-38.pyc,4561,,source,false,excluded cache/virtualenv directory
+ml/src/lab_features/build_features_from_flow_csv.py,5385,5fc51dadec58b7e896da22ba4ed55c0e652b97253872cb2c574ce3a270d3caf4,source,true,
+ml/src/lab_features/build_features_from_zeek_conn.py,6384,69dd7171886dc3b3b988c79f04b47211027566e08c3cbd92082b3df09afdf564,source,true,
+ml/src/lab_features/common.py,7060,2bf6e40ea1ad8443706838019d11677dac21cbcb50b4f1af727eb355493c3464,source,true,
+ml/src/lab_features/validate_real_lab_inputs.py,4728,c8fb23a3da0ecbf7c30e0a7ffd30587c7ca5bd87e6b5ad871409f39a56e0f1c6,source,true,
+ml/src/lab_session/__init__.py,62,2b7aebe1694eb658a88cf2a84fac39f745438d5e66ba4ba33719190ff495609a,source,true,
+ml/src/lab_session/__pycache__/__init__.cpython-38.pyc,187,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/common.cpython-38.pyc,3164,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/create_session_plan.cpython-38.pyc,4219,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/generate_run_commands.cpython-38.pyc,2877,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/post_session_input_check.cpython-38.pyc,5089,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/scenario_marker_helper.cpython-38.pyc,2771,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/session_doctor.cpython-38.pyc,7723,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/__pycache__/session_summary.cpython-38.pyc,5548,,source,false,excluded cache/virtualenv directory
+ml/src/lab_session/common.py,2388,be3b26040593a9e32424e6a12f31d75b7694298512b35a2b5a9711603873c06a,source,true,
+ml/src/lab_session/create_session_plan.py,4308,75cd2a8f78d0151bda05c2e25b65fe6efd87efc781bca3be2328e11b65366e0f,source,true,
+ml/src/lab_session/generate_run_commands.py,3471,2de799aa424cb4c23e5a4c4b7a3d900c1fb73bd5163a0be38e7ee61dbb191d8e,source,true,
+ml/src/lab_session/post_session_input_check.py,6883,50fd0cc1d5ae030eb05403bd6d2fc86c8f75a42e3c8188002916ae4c17d2fb7f,source,true,
+ml/src/lab_session/scenario_marker_helper.py,3370,6b70d02dfbbe37228603b12516814e194c854d780b1de391d2ece64abbc086a2,source,true,
+ml/src/lab_session/session_doctor.py,10340,6bc9697e87b80437c0a44d76d03734c87ffcf8cdeaf23d4abad9a7913b0d8760,source,true,
+ml/src/lab_session/session_summary.py,6165,d19f7eaafb8b7b710a3cce253d5987f2a2c014b24e41c1185940d72b3107254a,source,true,
+ml/src/live_integration/__init__.py,50,be1cedd7ee7af9eac444b119370743ebf2a0ac22602d3a51ea5a8fc3ed0648ef,source,true,
+ml/src/live_integration/__pycache__/__init__.cpython-38.pyc,180,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/__pycache__/enrich_wazuh_alerts.cpython-38.pyc,13368,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/__pycache__/generate_dashboard_payload.cpython-38.pyc,5847,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/__pycache__/generate_live_integration_thesis_section.cpython-38.pyc,8031,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/__pycache__/validate_live_integration_outputs.cpython-38.pyc,6962,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/__pycache__/write_enriched_alerts_to_opensearch.cpython-38.pyc,4451,,source,false,excluded cache/virtualenv directory
+ml/src/live_integration/enrich_wazuh_alerts.py,18067,eab1dfffd52274d7935f4f02c5d28901c076e0250654cdb177b78744b901678c,source,true,
+ml/src/live_integration/generate_dashboard_payload.py,5677,ac01494f4b46583ed3196e7425132dc2e7194772ecacfa5282cec1852b9745ad,source,true,
+ml/src/live_integration/generate_live_integration_thesis_section.py,9200,e69c095ae1585fc874637494569468c343a68861e4fac4a2d43e4f4c11fe744e,source,true,
+ml/src/live_integration/validate_live_integration_outputs.py,7394,ef4ea0b125b68c40d85ba573f8e4fc3f7bf198f417820e686e00f5dd91683cd9,source,true,
+ml/src/live_integration/write_enriched_alerts_to_opensearch.py,4828,e9824785195a947af5466a956482c2a3b117267a24b91b00720dd5c93fede236,source,true,
+ml/src/live_smoke/__init__.py,68,a1999e878ddb650a8f98b7252f74a1d50338e1df1e91d866227179e509794d7f,source,true,
+ml/src/live_smoke/__pycache__/__init__.cpython-38.pyc,192,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_docker_environment.cpython-38.pyc,4196,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_make_workflow_dry_run.cpython-38.pyc,2246,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_ml_service_health.cpython-38.pyc,3376,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_model_artifacts.cpython-38.pyc,4272,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_opensearch_connection.cpython-38.pyc,3813,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/check_real_input_paths.cpython-38.pyc,2713,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/common.cpython-38.pyc,7100,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/generate_live_smoke_readiness.cpython-38.pyc,3792,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/__pycache__/generate_operator_smoke_brief.cpython-38.pyc,4085,,source,false,excluded cache/virtualenv directory
+ml/src/live_smoke/check_docker_environment.py,5320,55174aa3dc412802d3d366fc293bdc7afec36a723b235a215552ee95196a0d14,source,true,
+ml/src/live_smoke/check_make_workflow_dry_run.py,2444,cab00107042bef219fb8f102c0a450c64c8d930e5e6178a55791ed2266a607e9,source,true,
+ml/src/live_smoke/check_ml_service_health.py,4575,6d81c793cf187570c4e0d7d1cd8b94b5f95562777fe132a7c99446acd282f06a,source,true,
+ml/src/live_smoke/check_model_artifacts.py,6005,f5f63d312588082db79ded29830def5226101a4bf4c9d2ee96cf41a2f0742de1,source,true,
+ml/src/live_smoke/check_opensearch_connection.py,5761,2bcc62b4165e759fb69b2a95b875dd5207afc851f83502f88742a69bbeb76833,source,true,
+ml/src/live_smoke/check_real_input_paths.py,2933,74612b9ed0f0c0ee53927f867964290e00405582714dcd1cb4775d0a7a7e329b,source,true,
+ml/src/live_smoke/common.py,6536,7ec1830b3e72a9c4bfd1872c369af22d9b3cfcf7407fb3b2be644ce66dde5b23,source,true,
+ml/src/live_smoke/generate_live_smoke_readiness.py,4073,a81de8774a6fac8496106d395513b1cdbe51ead648d7ad549845010439532d97,source,true,
+ml/src/live_smoke/generate_operator_smoke_brief.py,3917,2e104d4cb008eb902081b4a557d1d7abaf64354cd5abb612a17b22557c7a8a64,source,true,
+ml/src/measurement_quality/__init__.py,57,45d52be992e47869402abeea639c605f27188418f756c73584bfac4d7c3a9607,source,true,
+ml/src/measurement_quality/__pycache__/__init__.cpython-38.pyc,190,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/check_feature_alert_alignment.cpython-38.pyc,6185,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/check_metric_consistency.cpython-38.pyc,9604,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/check_research_claim_strength.cpython-38.pyc,5585,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/check_scenario_coverage.cpython-38.pyc,6301,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/check_ttd_quality.cpython-38.pyc,4157,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/common.cpython-38.pyc,8866,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/generate_measurement_quality_summary.cpython-38.pyc,4412,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/__pycache__/generate_thesis_measurement_quality_notes.cpython-38.pyc,3597,,source,false,excluded cache/virtualenv directory
+ml/src/measurement_quality/check_feature_alert_alignment.py,8711,dc37fa12e4e102d066e14d8128eb418dbb56c4456a7d980be118aa41cb4c66a9,source,true,
+ml/src/measurement_quality/check_metric_consistency.py,13493,6af9ccf305d5ee064f17677bad52e1e624cec71607c019093930fe690062d833,source,true,
+ml/src/measurement_quality/check_research_claim_strength.py,7359,1ffae8c8f3c809922e5e72cad4de4a700029374341daabd64cb80c0bb07e6036,source,true,
+ml/src/measurement_quality/check_scenario_coverage.py,8473,702c3438fd75fcb6f84bd98cfe59e13d3ecbcafe274cea2084d505b778a12999,source,true,
+ml/src/measurement_quality/check_ttd_quality.py,5993,2e70530ceae804fa62c111fc70762f5f5c76578d3c9b6e8ae7f41ba5c8e2d963,source,true,
+ml/src/measurement_quality/common.py,8187,c351cda372a4ea104cfd7d6aaa0e79c5dd2734303f0de886b70d12ae0e246fb3,source,true,
+ml/src/measurement_quality/generate_measurement_quality_summary.py,4119,989382d0833eb6ecd5d416356f1987fe35a1ffe6677c7d621118a25a821f96cb,source,true,
+ml/src/measurement_quality/generate_thesis_measurement_quality_notes.py,3401,b2f675f40ccf9be178bd6b640c024b043e2d596721065d04cef32858301f6d82,source,true,
+ml/src/model.py,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,source,true,
+ml/src/plot_final_results.py,7625,ebea78258e1b12628c6469c12ee34eb74f224802923db8ce168345f202ec759e,source,true,
+ml/src/plot_performance_results.py,6891,f4b4ae7a4494bdc063e29d2e4fd5e56f1cd66da6c92579b43e5db7cfeb6fd314,source,true,
+ml/src/real_measurement/__init__.py,79,21c0bcb48e9a6279046d1f48e7da9ac78ab3c4ee05390a6995b93172eb234bd3,source,true,
+ml/src/real_measurement/__pycache__/__init__.cpython-38.pyc,213,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement/__pycache__/create_measurement_manifest.cpython-38.pyc,5991,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement/__pycache__/generate_real_measurement_report.cpython-38.pyc,9793,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement/__pycache__/redact_measurement_outputs.cpython-38.pyc,5278,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement/__pycache__/validate_measurement_bundle.cpython-38.pyc,6665,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement/create_measurement_manifest.py,6625,94afe950a1ec84ef92bdca53144cf649300f7ede1fc4a1dc1892b2dcc1a20663,source,true,
+ml/src/real_measurement/generate_real_measurement_report.py,11390,8fc98aff55c2e3c28441d7f2b255bd2ae94845cea70d4352cc5beb7f5252df55,source,true,
+ml/src/real_measurement/redact_measurement_outputs.py,5305,b1b9e9747110374d288a3fa7c2661f6a3d60550afd2a7bc629ec5add0214b956,source,true,
+ml/src/real_measurement/validate_measurement_bundle.py,7345,7ee234b8d0617d230562391532af1847b25059e7a8e1dd2dca71522dffa03bf7,source,true,
+ml/src/real_measurement_qa/__init__.py,68,7a9b4397c6a12d5b557ee9c81adcbe15ca3bc9a7edbcc279f105e6dcabcd355e,source,true,
+ml/src/real_measurement_qa/__pycache__/__init__.cpython-38.pyc,205,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement_qa/__pycache__/generate_defense_notes.cpython-38.pyc,5812,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement_qa/__pycache__/generate_thesis_tables.cpython-38.pyc,7123,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement_qa/__pycache__/postrun_quality_gate.cpython-38.pyc,13037,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement_qa/__pycache__/preflight_check.cpython-38.pyc,6808,,source,false,excluded cache/virtualenv directory
+ml/src/real_measurement_qa/generate_defense_notes.py,5599,ace57c66f2ccafbd509bcc17b6033856b44a183b42a157820c658308a23469c4,source,true,
+ml/src/real_measurement_qa/generate_thesis_tables.py,7740,b10f7461da691e279bb5e29e8605fa062d878f07d35648ee9d37bf6fa962d946,source,true,
+ml/src/real_measurement_qa/postrun_quality_gate.py,15650,2f193cd9bfa92114a8a5b82eaf9b9bdf3d15a75ad4f5f35e6c40b602ccf92dde,source,true,
+ml/src/real_measurement_qa/preflight_check.py,7994,58e501c5303c1311d7956a73b2a576180be14f587456dd0f95c1e4f1a849e05b,source,true,
+ml/src/repo_hygiene/__init__.py,65,28bcaf0815ef7c2996159c253c0e73d437e85c4d7bd882333ca7113b7657aac8,source,true,
+ml/src/repo_hygiene/__pycache__/__init__.cpython-38.pyc,195,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/audit_generated_artifacts.cpython-38.pyc,7192,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/check_no_demo_real_results.cpython-38.pyc,2687,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/check_tracked_generated_outputs.cpython-38.pyc,3416,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/cleanup_generated_outputs_plan.cpython-38.pyc,2786,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/common.cpython-38.pyc,4191,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/__pycache__/create_measurement_provenance.cpython-38.pyc,2975,,source,false,excluded cache/virtualenv directory
+ml/src/repo_hygiene/audit_generated_artifacts.py,8859,17aaa71ab996ce5888d99a0b6792d6a512c132f78c2f6a960af463c3c0ed4539,source,true,
+ml/src/repo_hygiene/check_no_demo_real_results.py,2586,a43c252fb7c9c09ac34567d10ef3c31696dca6fc84ee5bfea7067c2b5b1ee279,source,true,
+ml/src/repo_hygiene/check_tracked_generated_outputs.py,3110,a31837e1a1fe70e2b3bf2ce83a91685741ac969309e41e71f56c19a5acb421da,source,true,
+ml/src/repo_hygiene/cleanup_generated_outputs_plan.py,2771,c1a43ae8de6424985914e29df2be58ff484a116f5edc0f725067a82fc7d61d5b,source,true,
+ml/src/repo_hygiene/common.py,3822,13f0eeeb06ecb10e30a2457e77ce465df28e8a5558e31ef1cef05eb5d945d4c8,source,true,
+ml/src/repo_hygiene/create_measurement_provenance.py,3044,2df381dd112cebcd42fd564a69b3c7e1d9fa6d212af54f3d7f0e583cffd73d45,source,true,
+ml/src/runtime_bundle/__init__.py,43,c2a4f3cd72f3bc6c25cfcde21f4a1d8f52d8de6c2406f30626a6e63047b93165,source,true,
+ml/src/runtime_bundle/__pycache__/__init__.cpython-38.pyc,172,,source,false,excluded cache/virtualenv directory
+ml/src/runtime_bundle/__pycache__/create_runtime_bundle.cpython-38.pyc,19764,,source,false,excluded cache/virtualenv directory
+ml/src/runtime_bundle/create_runtime_bundle.py,21522,63d7ba1273a4a990cfd98022a0572267d0403b0ca8cab741d80fb5ee7468f6e3,source,true,
+ml/src/schema.py,1540,4e4c3292bb045665cb56866ef2823940a560e741fed4f091f767081ae8cc3d5e,source,true,
+ml/src/score_events.py,4876,b4d62c59debe250f8b4e132792030748e6d284ebfb8a1c660dfe39887e049ce8,source,true,
+ml/src/scoring_runtime.py,7531,b18a6d1958c30297f0618fa73579ff1cec013b4d1340037d7a9b34c2684245cd,source,true,
+ml/src/submission_bundle/__init__.py,46,ce5dd3f233573327a238ce75cb21569e896948df0f2a205f34e27f42e2576f72,source,true,
+ml/src/submission_bundle/__pycache__/__init__.cpython-38.pyc,177,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/collect_submission_candidates.cpython-38.pyc,5056,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/common.cpython-38.pyc,10517,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/create_submission_manifest.cpython-38.pyc,3248,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/create_submission_zip.cpython-38.pyc,3652,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/generate_submission_bundle_report.cpython-38.pyc,4120,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/generate_submission_readme.cpython-38.pyc,2704,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/inspect_submission_zip.cpython-38.pyc,5057,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/__pycache__/validate_submission_candidates.cpython-38.pyc,4604,,source,false,excluded cache/virtualenv directory
+ml/src/submission_bundle/collect_submission_candidates.py,6552,fdc03bf4d48faa91c1c0cecb7c09ae4cd4acdbbf790230b8c2095b6760ead721,source,true,
+ml/src/submission_bundle/common.py,8552,c2d2be9d6e330851791296432fe0e7cf45c87551b50c6b630d9ce67f24738f4a,source,true,
+ml/src/submission_bundle/create_submission_manifest.py,3288,c66fb9ad8b8311fbef4340cf03ec2e815b81a2b8a3f96c38542ca39260439561,source,true,
+ml/src/submission_bundle/create_submission_zip.py,4064,621fe75efad3b03392ff0e586d039a0638dbae6fd6a0a39ff2c365547221492e,source,true,
+ml/src/submission_bundle/generate_submission_bundle_report.py,4251,500f59f5f44339c204b0a3cb674f94d8d49e72b9483264510bb0833cf667e166,source,true,
+ml/src/submission_bundle/generate_submission_readme.py,2417,4c934880e9c7eba4e82a898e22ae9d2e292bafb302b48815f399e59b7f593d11,source,true,
+ml/src/submission_bundle/inspect_submission_zip.py,5286,b8546af343bfeb8d45338b17ef80e1e6d8924910db62a4960e29a168b70c89cc,source,true,
+ml/src/submission_bundle/validate_submission_candidates.py,5322,6f1d3f9a0023156b12c94defd3347823830c7ca31e7f582c662c59b8169a85af,source,true,
+ml/src/thesis_integration/__init__.py,77,e3c9222e5b5d54aef971ebe720f4ad9f589a056a9418ec76c5a9e3e3e1ed33ef,source,true,
+ml/src/thesis_integration/__pycache__/__init__.cpython-38.pyc,209,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/check_thesis_inputs.cpython-38.pyc,5032,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/common.cpython-38.pyc,15208,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_abstracts.cpython-38.pyc,4743,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_appendix_plan.cpython-38.pyc,2975,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_chapter5_implementation_section.cpython-38.pyc,7347,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_chapter6_results_section.cpython-38.pyc,20162,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_chapter7_summary_hu.cpython-38.pyc,3518,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_chapter8_summary_en.cpython-38.pyc,3628,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_defense_questions_from_results.cpython-38.pyc,5033,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_figures_and_tables_plan.cpython-38.pyc,4022,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/__pycache__/generate_thesis_update_package.cpython-38.pyc,3471,,source,false,excluded cache/virtualenv directory
+ml/src/thesis_integration/check_thesis_inputs.py,5731,4730906ef472370ad8c9c0fbda8c47d57f231de3f8a3b1429f67d1eac725d589,source,true,
+ml/src/thesis_integration/common.py,17206,a19a089bb42e2c04b1a82c894e97cd107b9727fc321300c0daedc4db787e49d1,source,true,
+ml/src/thesis_integration/generate_abstracts.py,4689,e2c16c311fd629333ccb505a57d770c3a2d2c771a49d8f22dc81e095c198b784,source,true,
+ml/src/thesis_integration/generate_appendix_plan.py,3636,ec2e31c85509ec3154c31c6b0ca891973918d7cf2a0ebf5685e18306ab53dace,source,true,
+ml/src/thesis_integration/generate_chapter5_implementation_section.py,7147,48abfce333625cdaeeb644d6c4d2132d020a0c4daef5793cf922a706aa1c7c0d,source,true,
+ml/src/thesis_integration/generate_chapter6_results_section.py,22228,27a8aa3665232a11b9ef0ca9781c221d987684665da813222b9346146c763373,source,true,
+ml/src/thesis_integration/generate_chapter7_summary_hu.py,3386,db8242351a28e03aba0178c459e4fb03ccc835439d2e15442d7467cf77e39312,source,true,
+ml/src/thesis_integration/generate_chapter8_summary_en.py,3395,251bf7067561555a50b128257a16bd8fa600650a5d7a5ced00912d38243e3005,source,true,
+ml/src/thesis_integration/generate_defense_questions_from_results.py,4779,7e1d4a4d4a80e1973a97f8486e1786603c98d39850acbc737f9ed267511d8cf4,source,true,
+ml/src/thesis_integration/generate_figures_and_tables_plan.py,4111,c8dee4e81895777e39b056d47d6df499fd8a968609a15f64d0fb1e1f34dc235f,source,true,
+ml/src/thesis_integration/generate_thesis_update_package.py,3602,c89a0971006b2a36f50facd08e7789812d18831076a614c333599e10314f480e,source,true,
+ml/src/thresholds.py,3878,623110f77673aadb17f77a990bc6e5dea57b6967c8801dd6b98acec08e03c631,source,true,
+ml/src/train.py,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,source,true,
+ml/src/train_ae.py,11250,3d4949effe2ed51ad76e1ec956e7d687b2194474355de1746f7ea65e53ad6d14,source,true,
+ml/src/wazuh_baseline/__init__.py,39,5c5f5609f754b450616e607ef7e3d176beb2900cad048c375bd32fbe4a7c4ad4,source,true,
+ml/src/wazuh_baseline/__pycache__/__init__.cpython-38.pyc,168,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_baseline/__pycache__/build_ground_truth.cpython-38.pyc,2757,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_baseline/__pycache__/correlate_alerts.cpython-38.pyc,4140,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_baseline/__pycache__/evaluate_wazuh_baseline.cpython-38.pyc,3684,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_baseline/__pycache__/parse_wazuh_alerts.cpython-38.pyc,4267,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_baseline/build_ground_truth.py,2896,f423a7f5ff0f08d5a8178e0e8944369687dd842c3890c5022c25375c7829c8f9,source,true,
+ml/src/wazuh_baseline/correlate_alerts.py,4929,c413709afac11c1d0c35b0290aabe0d0fee3e22386f25fc41e793544edf34398,source,true,
+ml/src/wazuh_baseline/evaluate_wazuh_baseline.py,4215,fd021af6d5defb843876312b5c4b6e78bbc1334a2389ebbb61275d52d2cb93aa,source,true,
+ml/src/wazuh_baseline/parse_wazuh_alerts.py,4810,a979a91caf90de478fdaaff5aeda53449ed18b8b8b70b68ef19e331b12393886,source,true,
+ml/src/wazuh_export/__init__.py,78,930e82cc35dcaea66f5f6c5f4e3f15174877e905ba8d6bdd0b7c3d8a71979332,source,true,
+ml/src/wazuh_export/__pycache__/__init__.cpython-38.pyc,208,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_export/__pycache__/export_alerts_from_file.cpython-38.pyc,3387,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_export/__pycache__/export_alerts_from_opensearch.cpython-38.pyc,4286,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_export/__pycache__/summarize_wazuh_export.cpython-38.pyc,4608,,source,false,excluded cache/virtualenv directory
+ml/src/wazuh_export/export_alerts_from_file.py,3463,45bd06ceaffe41849bf73b4c26e10e557ec4e4cb56fb4e86a4d3022d36e1c32a,source,true,
+ml/src/wazuh_export/export_alerts_from_opensearch.py,5621,986dd49733beaffe68f0c428ee881b2a7045874f9ec09c2163160f2a9854fb07,source,true,
+ml/src/wazuh_export/summarize_wazuh_export.py,4809,29de1f27ba9bc7beda8d7b8bca3de034946e7c71a13dd7d1e445b2f3d35ecd6f,source,true,
+ml/tests/__pycache__/conftest.cpython-38-pytest-8.3.5.pyc,467,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/conftest.cpython-39-pytest-8.4.2.pyc,463,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_appendix_plan.cpython-38-pytest-8.3.5.pyc,1179,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_autoencoder.cpython-38-pytest-8.3.5.pyc,3435,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_autoencoder.cpython-39-pytest-8.4.2.pyc,3371,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_benchmark_scoring.cpython-38-pytest-8.3.5.pyc,6096,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_biraloi_risk_questions.cpython-38-pytest-8.3.5.pyc,1528,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_case_studies.cpython-38-pytest-8.3.5.pyc,4325,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_cleanup_generated_outputs_plan.cpython-38-pytest-8.3.5.pyc,1277,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_collect_thesis_figures.cpython-38-pytest-8.3.5.pyc,3549,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_context_features.cpython-38-pytest-8.3.5.pyc,5711,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_dataset_outputs.cpython-38-pytest-8.3.5.pyc,13142,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_dataset_outputs.cpython-39-pytest-8.4.2.pyc,11252,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_defense_notes_generation.cpython-38-pytest-8.3.5.pyc,2166,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_defense_questions_from_results.cpython-38-pytest-8.3.5.pyc,1683,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_explain.cpython-38-pytest-8.3.5.pyc,2840,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_features.cpython-27-PYTEST.pyc,1393,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_features.cpython-38-pytest-8.3.5.pyc,762,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_features.cpython-39-pytest-8.4.2.pyc,740,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_figures_and_tables_plan.cpython-38-pytest-8.3.5.pyc,1456,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_acceptance_documentation.cpython-38-pytest-8.3.5.pyc,1781,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_acceptance_failure_modes.cpython-38-pytest-8.3.5.pyc,1482,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_acceptance_make_targets.cpython-38-pytest-8.3.5.pyc,2115,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_acceptance_provenance_policy.cpython-38-pytest-8.3.5.pyc,2361,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_acceptance_readiness.cpython-38-pytest-8.3.5.pyc,2017,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_submission_artifact_plan.cpython-38-pytest-8.3.5.pyc,1913,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_submission_no_overclaiming.cpython-38-pytest-8.3.5.pyc,1514,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_submission_readiness.cpython-38-pytest-8.3.5.pyc,1740,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_submission_requirement_coverage.cpython-38-pytest-8.3.5.pyc,1666,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_final_submission_structure.cpython-38-pytest-8.3.5.pyc,1459,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_generate_abstracts.cpython-38-pytest-8.3.5.pyc,1504,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_generate_chapter5_section.cpython-38-pytest-8.3.5.pyc,1464,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_generate_chapter6_section.cpython-38-pytest-8.3.5.pyc,2262,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_generate_run_commands.cpython-38-pytest-8.3.5.pyc,1964,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_generate_summary_sections.cpython-38-pytest-8.3.5.pyc,1679,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_hybrid_eval.cpython-38-pytest-8.3.5.pyc,4828,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_hybrid_real_eval.cpython-38-pytest-8.3.5.pyc,4959,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_infra_diagnostics_compose_mount_policy.cpython-38-pytest-8.3.5.pyc,2929,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_infra_diagnostics_wazuh_mounts.cpython-38-pytest-8.3.5.pyc,2464,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_ae_eval.cpython-38-pytest-8.3.5.pyc,4362,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_ae_features.cpython-38-pytest-8.3.5.pyc,4280,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_event_marker.cpython-38-pytest-8.3.5.pyc,3114,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_feature_flow_csv_builder.cpython-38-pytest-8.3.5.pyc,4069,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_feature_zeek_builder.cpython-38-pytest-8.3.5.pyc,6693,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_session_doctor.cpython-38-pytest-8.3.5.pyc,3350,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_session_plan.cpython-38-pytest-8.3.5.pyc,2284,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_lab_session_summary.cpython-38-pytest-8.3.5.pyc,2715,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_dashboard_payload.cpython-38-pytest-8.3.5.pyc,2448,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_enrich_wazuh_alerts.cpython-38-pytest-8.3.5.pyc,8404,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_integration_thesis_section.cpython-38-pytest-8.3.5.pyc,2048,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_integration_validation.cpython-38-pytest-8.3.5.pyc,2945,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_docker.cpython-38-pytest-8.3.5.pyc,2161,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_input_paths.cpython-38-pytest-8.3.5.pyc,2463,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_make_dry_run.cpython-38-pytest-8.3.5.pyc,2247,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_ml_service.cpython-38-pytest-8.3.5.pyc,2904,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_model_artifacts.cpython-38-pytest-8.3.5.pyc,1951,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_opensearch.cpython-38-pytest-8.3.5.pyc,2325,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_live_smoke_readiness.cpython-38-pytest-8.3.5.pyc,1818,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_manifest.cpython-38-pytest-8.3.5.pyc,2898,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_provenance.cpython-38-pytest-8.3.5.pyc,2660,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_alignment.cpython-38-pytest-8.3.5.pyc,3905,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_claim_strength.cpython-38-pytest-8.3.5.pyc,3101,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_metric_consistency.cpython-38-pytest-8.3.5.pyc,3323,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_scenario_coverage.cpython-38-pytest-8.3.5.pyc,5228,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_summary.cpython-38-pytest-8.3.5.pyc,2035,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_thesis_notes.cpython-38-pytest-8.3.5.pyc,1791,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_measurement_quality_ttd.cpython-38-pytest-8.3.5.pyc,2519,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_metrics.cpython-38-pytest-8.3.5.pyc,3289,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_no_demo_real_results_guard.cpython-38-pytest-8.3.5.pyc,2536,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_operator_smoke_brief.cpython-38-pytest-8.3.5.pyc,1816,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_performance_export.cpython-38-pytest-8.3.5.pyc,4390,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_performance_report.cpython-38-pytest-8.3.5.pyc,3017,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_post_session_input_check.cpython-38-pytest-8.3.5.pyc,4124,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_postrun_quality_gate.cpython-38-pytest-8.3.5.pyc,5408,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_comparison.cpython-38-pytest-8.3.5.pyc,9390,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_lab_execution_brief.cpython-38-pytest-8.3.5.pyc,1460,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_lab_input_validation.cpython-38-pytest-8.3.5.pyc,3698,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_lab_runbook_docs_check.cpython-38-pytest-8.3.5.pyc,3404,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_measurement_bundle_validation.cpython-38-pytest-8.3.5.pyc,4250,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_measurement_preflight.cpython-38-pytest-8.3.5.pyc,3307,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_real_measurement_report.cpython-38-pytest-8.3.5.pyc,3355,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_redaction.cpython-38-pytest-8.3.5.pyc,2589,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_repo_hygiene_audit.cpython-38-pytest-8.3.5.pyc,1700,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_rule_proxy_export.cpython-38-pytest-8.3.5.pyc,4165,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_scenario_marker_helper.cpython-38-pytest-8.3.5.pyc,2707,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_scoring_service_logic.cpython-38-pytest-8.3.5.pyc,3825,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_security_report.cpython-38-pytest-8.3.5.pyc,4056,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_bundle_report.cpython-38-pytest-8.3.5.pyc,2418,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_candidate_validation.cpython-38-pytest-8.3.5.pyc,3638,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_candidates.cpython-38-pytest-8.3.5.pyc,3742,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_manifest.cpython-38-pytest-8.3.5.pyc,3336,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_readme.cpython-38-pytest-8.3.5.pyc,1308,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_zip.cpython-38-pytest-8.3.5.pyc,2844,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_submission_zip_inspection.cpython-38-pytest-8.3.5.pyc,2777,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_thesis_integration_input_check.cpython-38-pytest-8.3.5.pyc,1401,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_thesis_tables_generation.cpython-38-pytest-8.3.5.pyc,2574,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_thesis_update_package.cpython-38-pytest-8.3.5.pyc,1357,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_thresholds.cpython-38-pytest-8.3.5.pyc,4219,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_thresholds.cpython-39-pytest-8.4.2.pyc,4104,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_tracked_generated_outputs_guard.cpython-38-pytest-8.3.5.pyc,2949,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_wazuh_baseline_correlation.cpython-38-pytest-8.3.5.pyc,4975,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_wazuh_baseline_metrics.cpython-38-pytest-8.3.5.pyc,5326,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_wazuh_baseline_parsing.cpython-38-pytest-8.3.5.pyc,6534,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_wazuh_export_file.cpython-38-pytest-8.3.5.pyc,5148,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/test_wazuh_export_summary.cpython-38-pytest-8.3.5.pyc,2134,,tests,false,excluded cache/virtualenv directory
+ml/tests/__pycache__/thesis_integration_fixture.cpython-38.pyc,2674,,tests,false,excluded cache/virtualenv directory
+ml/tests/cicids2017/sample.csv,407,7984caa8713ef860ee8c08d8167d9c02376d19fe25abf9e9b1d533ba4d9563fb,tests,true,
+ml/tests/conftest.py,192,95abed9370fb0a81dec8c64fb1e3634fdf8a06c5ae23d1d98f15fb540c1adfd6,tests,true,
+ml/tests/test_appendix_plan.py,538,26b836f9d794762634b92ea8712d8f0d8cab2823193a79db52557fbc443df87e,tests,true,
+ml/tests/test_autoencoder.py,1554,cd26c20f372fd405fe6603ca23f93c3d8d692f096f778469e9e81f98ea0ca108,tests,true,
+ml/tests/test_benchmark_scoring.py,4320,65000d4a8bf2049aa43d834c9ab66c9924004519ac2193b4533e8d3291c8991f,tests,true,
+ml/tests/test_biraloi_risk_questions.py,417,6c2830d116c85fcf15766a4ab93eded7b3f45ab0f1ebb699790fc9b563c77aa5,tests,true,
+ml/tests/test_case_studies.py,2335,adfc9e8614a736d454a073952301512b55fb20ea05bd527b12504b860d6c0587,tests,true,
+ml/tests/test_cleanup_generated_outputs_plan.py,647,e17636e95bfb95be0cfa1d295cdb36fa352e7972c73fedb8def4708ac579e7b0,tests,true,
+ml/tests/test_collect_thesis_figures.py,1793,732e374a671f0dda30213f3ad71d16af4924c5433d1cdb261a7c540d309315f4,tests,true,
+ml/tests/test_context_features.py,2691,7ff710fca3a05c0b4702c2f8c8e3e5593c2a7eccc94e3c40a960602af75b3bad,tests,true,
+ml/tests/test_dataset_outputs.py,4637,1304fa6f5533f285bc21c3145de17cca6bce872d3145191d361fa22a23195bb1,tests,true,
+ml/tests/test_defense_notes_generation.py,1516,65c41662635f1ae482f105f9bd6d5a209daf51b01a4d67da7a051aa2c3562615,tests,true,
+ml/tests/test_defense_questions_from_results.py,618,e04668f47d5f16b1e2b71dac3c2f81fcc8f77bc5f3d4576909b49c4508733eaf,tests,true,
+ml/tests/test_explain.py,1092,44207d7f16ca82516f88475f353ebe37b77dd53d41bed4194dc145c06b3045df,tests,true,
+ml/tests/test_features.py,46,a4b95e185593b65685706abd109c9f6a1d63043096ce9b29e16c8df2c4e116a3,tests,true,
+ml/tests/test_figures_and_tables_plan.py,657,46de3f1b1bea40813abef6a1d40d41dc3119207857dd07cdc900d9c7bfcaf79e,tests,true,
+ml/tests/test_final_acceptance_documentation.py,899,54cd40430b84a727df4822a9112826e2910b0c5382ce165cdd7ee2a7a882bd78,tests,true,
+ml/tests/test_final_acceptance_failure_modes.py,472,9f7be4ada45919b73550c178f6a6edf48619589e35856b34141747fe8a19c74a,tests,true,
+ml/tests/test_final_acceptance_make_targets.py,1211,244a367685b98bd701e683e4379e70aebc4e8f551c3bfb01f4a5290104e211f6,tests,true,
+ml/tests/test_final_acceptance_provenance_policy.py,1626,d93fc7e1692dcb12fe06b8c26b32925167b5faff38815de871dd5719ef06d3a8,tests,true,
+ml/tests/test_final_acceptance_readiness.py,1323,b0ebdc39b386a9fb039b5da4173f85cc6d2fd6c66534a46b702741f265d1d5fc,tests,true,
+ml/tests/test_final_submission_artifact_plan.py,1054,cafdc9d120f40f6b497783fbaefd9e87063347505d398f903c2a7caff0808fb1,tests,true,
+ml/tests/test_final_submission_no_overclaiming.py,756,3139d342f0f7cbdea6f3df19141cd08e6a74e636fb466f69e4b38530db18eafa,tests,true,
+ml/tests/test_final_submission_readiness.py,1073,66aa9af2cc146f99a17ef9a4d4bd445e731fd9ebfeb930dc87a0f912f58d8cdb,tests,true,
+ml/tests/test_final_submission_requirement_coverage.py,1044,6af840ef528e2602fe1a8558e18b145055824c607947c32ab4afffa385f83eda,tests,true,
+ml/tests/test_final_submission_structure.py,620,711b663438669e26a0e50baccca308ce2f795319d2233e21edbfd680d0759063,tests,true,
+ml/tests/test_generate_abstracts.py,751,262683914e42d0192edd2d1f616d2edce951763048692e5417641cba6d755fb7,tests,true,
+ml/tests/test_generate_chapter5_section.py,697,41b619469b19a1d9a55a34390609738cfcd28da0b8c90b25b3a4d31df8e7f53e,tests,true,
+ml/tests/test_generate_chapter6_section.py,1420,63e2d2fc7c13f226c5aba68c63bf7901597235489adfc1232d2b23a533ed0122,tests,true,
+ml/tests/test_generate_run_commands.py,785,2fb21b51f6726b18b46dc2d90e358a14215b93261ff00e191b48a7a167d884ed,tests,true,
+ml/tests/test_generate_summary_sections.py,1121,61aa573ef12251a8c7daf28f06286503a213f49515d3e626d8642302026a1b83,tests,true,
+ml/tests/test_hybrid_eval.py,2871,85359073406207eb583d79b3bf5b57b3472b8f06980437cdd71b6c5c1d11670a,tests,true,
+ml/tests/test_hybrid_real_eval.py,3403,217bb0a0f0a04035ec9f4cfc769dc242d324f40cca894135eecefcfa41640263,tests,true,
+ml/tests/test_infra_diagnostics_compose_mount_policy.py,1607,77bea15ffa6a054594422f1927715bca07a53f512caec6e294f7ea00c7c7a0f4,tests,true,
+ml/tests/test_infra_diagnostics_wazuh_mounts.py,1579,71431ffe557c1fbb2d3626c87d64ef9c8a887fa48ac95c8526ebc61e2666e915,tests,true,
+ml/tests/test_lab_ae_eval.py,1696,bb0e8377c258f515222cc160830f0959ae01b5e1c8561897d392e597b924d209,tests,true,
+ml/tests/test_lab_ae_features.py,3865,cbdef6a29d1981e94c8edb170b4ac6d04bcb86462646a98a2af5788338e361b5,tests,true,
+ml/tests/test_lab_event_marker.py,2017,fe033b0b9c488983dd979d2584306843ffc50e2708cb74f89418d4943f139549,tests,true,
+ml/tests/test_lab_feature_flow_csv_builder.py,2843,570d55cc94bf9a1d9cc0f6fac2326ba594a1bcdaa975a91495357f46a345af88,tests,true,
+ml/tests/test_lab_feature_zeek_builder.py,4264,4ec9fcb7077d6e468a758a4651e2472d8542da6f0a21b85790de4b5b63028600,tests,true,
+ml/tests/test_lab_session_doctor.py,1893,dab8d0673ab58c2898d67356b0028de974854b3baef63fdedf94e48224106d25,tests,true,
+ml/tests/test_lab_session_plan.py,864,0b478cc1cdd94319f411c652eaf4cda34a6bf6766c3c06fe18c9ce1fd53e39cf,tests,true,
+ml/tests/test_lab_session_summary.py,2036,4869555b85b8e4a922320f9e717203860577a6925903ed9b0428b7c95af7339b,tests,true,
+ml/tests/test_live_dashboard_payload.py,1591,a6b210f3e0d5cd6bc14a9285a31e514ab31ff42e891136e36b2562820ee9933f,tests,true,
+ml/tests/test_live_enrich_wazuh_alerts.py,8291,3179c6d406df79b97be58a037577cc2d53f529a42e17efd3c4e38d1f6c9eaef4,tests,true,
+ml/tests/test_live_integration_thesis_section.py,1289,21d3e617b406e229b723592bbf6b6e061f691d3a72791977d38170b4df770f5b,tests,true,
+ml/tests/test_live_integration_validation.py,2654,21d49d6f836be2820da0b955dcceaf4216f71e3c0f87bfd785e6abe0b7a3d736,tests,true,
+ml/tests/test_live_smoke_docker.py,1233,fe92cd0c16b88b513508b8e7217dcd814562a9d7a447ad4288d1f09010b11e74,tests,true,
+ml/tests/test_live_smoke_input_paths.py,1327,0e0958d7c4cd03b79c36a0757360bcc59968b251f2fd92d076cff20b9fa10fcf,tests,true,
+ml/tests/test_live_smoke_make_dry_run.py,897,a197c50ff6010178173d22de50f108a92810a5b729738bbcf2baeaa2f57949a5,tests,true,
+ml/tests/test_live_smoke_ml_service.py,1217,c39add761c8f3c1bb41e7d277a7317281d7bb201353fa241d760a265074b9cc5,tests,true,
+ml/tests/test_live_smoke_model_artifacts.py,1064,891c37e68b235ca819d3e9ea3f065f47d3816558c480296ce01555654c74a3b1,tests,true,
+ml/tests/test_live_smoke_opensearch.py,1186,d57b566af1f641ca5708487766b3307eb82abc25ca1b1187555e15b0c57d604e,tests,true,
+ml/tests/test_live_smoke_readiness.py,1035,4d38217a22ad97ac070d41a2b957e6e9391195c7ded096c356e96209936b0344,tests,true,
+ml/tests/test_measurement_manifest.py,1548,7ffbbf1a2d51ca9cb20e43ce14d7222a9b75645b34cc8f40bb235bad577098e4,tests,true,
+ml/tests/test_measurement_provenance.py,1618,b6344305cdbdf163e0d41dccb6e9d2744fa75cc1538388de1ed608c163f16f8d,tests,true,
+ml/tests/test_measurement_quality_alignment.py,3915,5604928ccfb01174ca2a79ac0e32b60f0d19c991a1883d88ac45512dcbb93aba,tests,true,
+ml/tests/test_measurement_quality_claim_strength.py,2836,ad5bdd0053458202fda380eda004ce5bd2cdcf7e9703aad5225ad742c2b7bb59,tests,true,
+ml/tests/test_measurement_quality_metric_consistency.py,2871,a43aef027b4d1d2c388c9826da7193471ea8e31810d41d90babf1541ac30d6d9,tests,true,
+ml/tests/test_measurement_quality_scenario_coverage.py,4465,aabcfb5369964048f189e03fa576cecbba546e14085dd84021afd27284a4807e,tests,true,
+ml/tests/test_measurement_quality_summary.py,1410,f122c6248343c9f19af3ddc05119de427cf785fc280728732316e5efc0d8c022,tests,true,
+ml/tests/test_measurement_quality_thesis_notes.py,794,5939145450efb48985f6d01248beb4992f92ca05676f9473f916ff848b9e5df7,tests,true,
+ml/tests/test_measurement_quality_ttd.py,1712,25daf5d6dfd4555cefbbbdecd1e53d29dda66525f590c77e9f67621d534a12b2,tests,true,
+ml/tests/test_metrics.py,1135,a395aadb547258edb1aa8a49fa9660ab750845a73b4399937acf06815e42c406,tests,true,
+ml/tests/test_no_demo_real_results_guard.py,1795,ef7449571ba6306fe566bf5bdaaa34d92cddd793f2fdfdb615a338b05074427c,tests,true,
+ml/tests/test_operator_smoke_brief.py,671,c820eeb7fc6134129648cab611c85cfc6b139fa8ba0409832e04c87ccefb9229,tests,true,
+ml/tests/test_performance_export.py,2462,247cdbeec4f03c7a63f829e4ef8c2e094f9018ded81bf3e46f89ca98880be7df,tests,true,
+ml/tests/test_performance_report.py,1942,7e1ab79638d3d95a2a91d903a978efd0925194e374668b552f496ea010374f97,tests,true,
+ml/tests/test_post_session_input_check.py,3312,193d2fded6b5a8dfa955d28ec2382e1c52d334b59bda90604fc594abbc74d0e6,tests,true,
+ml/tests/test_postrun_quality_gate.py,4712,f782b939d09bcac6be3e7c1c70e224a3dbf4f54e2048b542a744ca90963776f6,tests,true,
+ml/tests/test_real_comparison.py,6704,39293da7059fc524eea33e243149126a14ebd54165852f810cf58d53acef4514,tests,true,
+ml/tests/test_real_lab_execution_brief.py,423,b58e277a92b38d48185fa8a185c375432718f33aa4b5a88f409f845bb413d856,tests,true,
+ml/tests/test_real_lab_input_validation.py,3501,edf8e897dbfd46598a2756d390bafc2f3f2e0f8d4335dfc7b0215ca5c2ba8401,tests,true,
+ml/tests/test_real_lab_runbook_docs_check.py,1709,cf426cbcbe2a9d3d95ee9501a0c1acf6ec0e0185b4fa11d7aef290eaf2dd92fe,tests,true,
+ml/tests/test_real_measurement_bundle_validation.py,2951,c1a1f6448548a576b1efdf76b13a1755ed5c1518e2fffb9faac534bb3f96b837,tests,true,
+ml/tests/test_real_measurement_preflight.py,1624,c211db46f8901e67b24859bc7703f59cd92180f03d6d423f154ec0e87ead5f09,tests,true,
+ml/tests/test_real_measurement_report.py,3162,920ab87e6f3752bad04fbf8e20748eced5ff9dd625b553cae4f0f1d1447192d9,tests,true,
+ml/tests/test_redaction.py,1256,6a3f8bbc594d230fd738cba3bb5e89d4656e6f7a083daa0a0f26f773aa312570,tests,true,
+ml/tests/test_repo_hygiene_audit.py,875,40b81775b5d4ece1ffe4f290b91e157965600beb3aa235938bab18fd1df6183d,tests,true,
+ml/tests/test_rule_proxy_export.py,2575,194035283e78cd75f5855ffa1042f32d443430582afa2e3c86278713adaaca0a,tests,true,
+ml/tests/test_scenario_marker_helper.py,1294,2992646d846b42a5f87b421d52a75b293d99766247c687266a46f3e9285f868a,tests,true,
+ml/tests/test_scoring_service_logic.py,2250,c6fa382023cbd1aadb7c9f86cba979065584ac79210930a54208722202f4f5af,tests,true,
+ml/tests/test_security_report.py,3361,f77319ab020f50c64b920c5c8630bf989c51aa5b008b707e1e28f3f07cfe69a4,tests,true,
+ml/tests/test_submission_bundle_report.py,1817,7e15742c07003c43efec9c86f8ca7bb602a09dae19b2d166711fd5f4bbb9182c,tests,true,
+ml/tests/test_submission_candidate_validation.py,3393,c0135464fa4efd416a4a0797f1863a7e8350b3943a58534af7ebae897ca72b30,tests,true,
+ml/tests/test_submission_candidates.py,2092,b2ac7824b9edbb8926fa97155f2b47a0a72d3aa2e561d6c286f9560f8fdee125,tests,true,
+ml/tests/test_submission_manifest.py,2560,058ac0e48055217ae8c1b027e53ff728846f228ce2c662a63d65120259a5a6cd,tests,true,
+ml/tests/test_submission_readme.py,473,c4cc14eb5b02d98d0af456f419b284a691d4874c8f568c890203cfc6ca11922a,tests,true,
+ml/tests/test_submission_zip.py,2052,bd99c4aa0428512e129196d0f0d5b91749dcdd80a53d45b7bee7750ce5e49a02,tests,true,
+ml/tests/test_submission_zip_inspection.py,2059,e1587746b57b1b8dabd9f0d9fd33a5f0f86b54e16fd25dd26952e6c6f16e2515,tests,true,
+ml/tests/test_thesis_integration_input_check.py,649,0d3e5dea96fa99b75b8dc39e9b0c666aa97e00f4d798d5908799391063ec5b2d,tests,true,
+ml/tests/test_thesis_tables_generation.py,2110,2f2f124e57643e25352f884a7a397188e3259c934cc9b2285d1b3dd74ca48eb7,tests,true,
+ml/tests/test_thesis_update_package.py,647,03a8ab34a170607de9d18953f337241f92348465874a52c2d8f921b3aa1c43f7,tests,true,
+ml/tests/test_thresholds.py,1130,832bbe2970c78313f106e1ea780e407f9741e220a1b056454e1c4b43c5b71931,tests,true,
+ml/tests/test_tracked_generated_outputs_guard.py,1408,b545d2608d056fefd1dfbed8a9c5b11e71e2da04a59c78377b24e332d50b27d2,tests,true,
+ml/tests/test_wazuh_baseline_correlation.py,4384,30f9fa55464594260622b3da434e795585acb903a7ec7d15598e6831386c15a0,tests,true,
+ml/tests/test_wazuh_baseline_metrics.py,2551,6f52d312fb13962f36acc88cf4f136c2b91769a3f6faf03c265e95a868cf37b1,tests,true,
+ml/tests/test_wazuh_baseline_parsing.py,3837,f75e6be58ffc7348773dbfb499e2325f4c5fbba3180408fe86af49bcddf205dd,tests,true,
+ml/tests/test_wazuh_export_file.py,2821,2cc60638bc0f2c42dfd0b9b2ee73e863d7ad84e5bb83bbc0f37c2be6b79313fc,tests,true,
+ml/tests/test_wazuh_export_summary.py,1058,341d90a920aa17465d00e26c5d043f423fb47a0ee69039f5003f40249f627f5d,tests,true,
+ml/tests/thesis_integration_fixture.py,3439,6abb96e6df2ef011ac38f13c599ed5bcc0afed5a884bf62538a08c5b0fbc635e,tests,true,
+experiments/final/ae_minimal.yaml,1573,24eaa65a512c7a0788173a083e84ad54511391f2c01008974f4fc3d3d6596a6d,config,true,
+experiments/final/ae_context.yaml,1853,4c8eab3d35127d044f05234d8a21f667b216e359adebb8b5c60f61e8ff162be9,config,true,
+docs/architecture.md,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,documentation,true,
+docs/data_provenance_and_no_fake_measurements.md,13187,9b44568de3ac4bc96232e5b2e4271c0ffb0d1b6dabb00a7044f117b33a96a030,documentation,true,
+docs/demo_runbook.md,2780,8fdd5388855cd301026f7fe7acf66f4d588b6ecaec1e6e15d6c2cc7b38a15959,documentation,true,
+docs/experiment_plan.md,20278,a5889c5c1a80d98585606ff63c30cd6715caacc0639d207ca2cad7a343e43a60,documentation,true,
+docs/feature_catalog.md,11368,233589e590631a12b2406aa571cc54a58d57ce1cf89190fca4691d2cbc429278,documentation,true,
+docs/final_acceptance_runbook.md,2638,f01e109f6e7dc7f3e8365830a3a5bd2c2719d083762ee3f92435f1f94b1bb123,documentation,true,
+docs/final_real_measurement_checklist.md,10497,bb317e87820f172ac09816951b01950938cad334a02483c0d73c779b4fc17036,documentation,true,
+docs/final_scope.md,14207,80949702867df217f069702636c75120c066662a62f65bb486c1941086280291,documentation,true,
+docs/final_submission_check_runbook.md,2358,158812cf429cda453a722a7de2ccc33f49ff200ac1c3785ed0f3c025efb878ea,documentation,true,
+docs/final_submission_requirements.yaml,2327,b4cf7b10b52ebbfb16fe878160f7a7677fe9e9deadd940b0e0fd139c1a5d6806,documentation,true,
+docs/git_hygiene_notes.md,3490,3b6e7e14e89bdc10a883e7816f146f5e28b9762c3683705133bea4e21b75cd9d,documentation,true,
+docs/lab_100_event_plan_real_lab_001.md,5564,bd3a21fefe1a2c4c58ac118372c4fff7ce5e70c08d51bd4a5fa9b03bcb91db63,documentation,true,
+docs/lab_attack_scenarios_runbook.md,6984,e93c5edf50dd8ae8b160528074905e17e4f87b75821039a6a0a6934dbf8f8266,documentation,true,
+docs/lab_session_orchestration_runbook.md,3896,5b2dcbd0d76b05efe74e3191fab9e9b2b71f708c2cad8cd8ddf1d4d9f0d4dda2,documentation,true,
+docs/lab_validation_runbook.md,2757,d9c634c78bd0604118a5c8cb322d33643686feacbb903be2ac474b439c06c3b8,documentation,true,
+docs/live_integration_runbook.md,4489,d1d510e7fac30fa1d9362443d4c36860e5bf25a98932f0a60046845d80e142d5,documentation,true,
+docs/live_smoke_runbook.md,4120,5a626b7e40733744761553883a06218102cedfa48408d29d2553bd2c0d74ae47,documentation,true,
+docs/may03_validation.md,9053,ee7aa05577d6f3cf0b43af1d61899dc12aa46aa23ae2dcb460fa9ac7f82fd1d4,documentation,true,
+docs/may04_validation.md,6514,8ac26621cdf0d3196534ecee95bf2a47a7a83aef6620ecea1fcf0da099e743f0,documentation,true,
+docs/may05_validation.md,5218,ee5036cab8a8ca1d3061dcce2fb9a6628a763073baebee01129a2b32effed811,documentation,true,
+docs/may06_validation.md,4886,8f974ff3abc097bd6451e8a68226d59dc7aed8d790e6f0c4e4c7c851280d48df,documentation,true,
+docs/may07_validation.md,3992,dc7461b374a82c2278dac9ee35da78da3946ecfc48e9b0710fda9629196b21d4,documentation,true,
+docs/may08_validation.md,3319,19da47b9c63ef5546b18842cc51614369533a4c071b29f6486bdfbcdd2c8ea4f,documentation,true,
+docs/may09_validation.md,2805,510d83a41b81d26677af4dd74bc5ae0a59e560fc832c314018a258d44dd1947c,documentation,true,
+docs/may10_performance_validation.md,3698,1303c4a945ada1c1435555e06317542fa02430a312e1f5d31e5e9a48531b4c6f,documentation,true,
+docs/may10_validation.md,3669,237d6dde4fce322403310c19b481652468f3baecb06d9efcebf922626f898840,documentation,true,
+docs/may11_validation.md,2362,043502173a9ff033d9a5d51985093fcc40e52bf5f956974c30fa2421ab80ef3e,documentation,true,
+docs/measurement_quality_runbook.md,3964,8a7a49c09184fbb92f44e8530fe9b2c0e0d2f2d6097282a8026c682504e22d03,documentation,true,
+docs/measurement_quality_thresholds.yaml,572,8398b05a43f41aef5d9c70dfada97d5cdf769979cef1cc45cf9acf2dbcf82b85,documentation,true,
+docs/measurement_quality_thresholds_real_lab_100.yaml,576,1ccdd9ebed356ea1629b025b67085eaf7cba68d376f06783d2079b1e0058ae08,documentation,true,
+docs/performance_runbook.md,3441,27872f3371e9e65cb02d0345dbb860d70995265337af85fafb7da48783871912,documentation,true,
+docs/real_hybrid_lab_evaluation_runbook.md,5618,dd03098cd074d2f5f99bcd1d17c7df901133340a77431a62124bb925961e0a4e,documentation,true,
+docs/real_lab_001_execution_order.md,3510,a251f5bd62e922f7f7c0d8a0b8d9c8e9e143bba31b1641a8b6a4957993c97701,documentation,true,
+docs/real_lab_001_missing_flow_rerun_runbook.md,5086,4a285d2e64e6565629dda719c4dbcd8967e3f0bf650e9c063b60c550fe5bfde0,documentation,true,
+docs/real_lab_001_pre_measurement_checklist.md,2218,4368332d5fd7cf8043fc335cee486266b0ad9bfd3054be30c755423597a75231,documentation,true,
+docs/real_lab_001_scope_and_safety.md,1639,8030cfa9133580df9fa876f9b3a8c3b4feb342b2e3e377dfef93ac0da7cf22e2,documentation,true,
+docs/real_lab_001_zeek_capture_runbook.md,3306,a1343ee18b279804af22bfd5ec2b59fea5e4a35f5f0f431f01fe6081b574d902,documentation,true,
+docs/real_lab_after_action_review_template.md,1904,7ce2717dc3be613147716c032a2062683f4041efc05c3b03f25d42bf0d8495c9,documentation,true,
+docs/real_lab_execution_day_runbook.md,4854,ea3e19dce2f306b3516723d7c53e366f2a1abfb57fdb02c5eb36d6453eea6d95,documentation,true,
+docs/real_lab_minimum_acceptance_criteria.md,2383,32ebe06332cbaa35f6e6c99a6f8cd70eb9589c25be14397b18f01d35ee46acbe,documentation,true,
+docs/real_lab_one_day_execution_plan.md,2882,d09818171bb6c6cf61d9268900cf397a3a8f7487ff53e61529206ba7360cf615,documentation,true,
+docs/real_lab_operator_command_sheet.md,3268,b0180cde8e5c60f52dbe59725683c6010007c6d27aca157bfe6cdd184e0cad35,documentation,true,
+docs/real_lab_scenario_script.md,6738,b9a33f192eb37549d3a80093eb64a88b95bcea99c40e90049b1b68440581233b,documentation,true,
+docs/real_lab_troubleshooting_guide.md,3723,27d9e68b0088238ad4e95ce8725d0ba36ba1b174a1c97e4510affc3e9a54b948,documentation,true,
+docs/real_measurement_export_and_packaging_runbook.md,4917,9ce73a1c83af6f4c90490cc9c07ec875b7828b813c9925a5cd49e359b3e3b2a3,documentation,true,
+docs/real_measurement_qa_runbook.md,4362,8600a35d482ab5ceff26e771dbf0c37609181ba02eba8693f52838b238682175,documentation,true,
+docs/repository_clean_state.md,2988,44338a5f9a5450599e7fc4ede172e92b9da26bc76e0ab55216a91cc2c2c6a72b,documentation,true,
+docs/runbook.md,0,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,documentation,true,
+docs/submission_bundle_policy.yaml,1692,fa67594a2575ce195b5bfe8b2b4aced727a4e6421e543cd00d62cd7caca3da83,documentation,true,
+docs/submission_bundle_runbook.md,2433,896eed660c129f4ac7dbdbc42e7fd24698de73cba00c7426eab21e01f3d132d3,documentation,true,
+docs/thesis_captions.md,1679,602f0ff7f9d6607c29f787a6a4ed472851e9b16a512f2ca4187a452cf2110db3,documentation,true,
+docs/thesis_chapter_5_implementation_draft.md,13289,02d418d302e349d096db201d496755d6cd2c9d8a5fa061c0bc83f3d578acbde2,documentation,true,
+docs/thesis_chapter_5_implementation_final.md,10406,e20137e525e144e24ceda5db74898f0c85ceb1c323ada8b6d511fb4ab338cc3f,documentation,true,
+docs/thesis_chapter_6_results_draft.md,15164,b8c45796ca980ec80b62b48959c69697f716b46b24600172d8d3abf4a752221d,documentation,true,
+docs/thesis_chapter_6_results_final.md,10451,dd0b2b34b7950ec6ac0ab20bb625b9bb6f9231b4633a875daa595529b39997fa,documentation,true,
+docs/thesis_implementation_notes.md,3425,25f06b2e176b102e0250edc791289983ac789b6f5420a77dbb30fe585227c5f1,documentation,true,
+docs/thesis_integration_runbook.md,3395,545e16fc28d5f45b8e9ded98ae7ea8c188782ca3231bba10783e24e35a8fb43d,documentation,true,
+docs/thesis_limitations_and_error_analysis.md,7265,e22f3de7c8ddd92a977f85b3f8c94b1e71a917549c01edfa5b43a17de67b875f,documentation,true,
+docs/thesis_missing_values.md,1565,48ec844d9e27697cac3ccc81e6ad40a9aa9a448387fc451ce8fcebd839d0da19,documentation,true,
+docs/thesis_performance_notes.md,2663,909051aa2b4b3ad724c7e79cdb4ce600eb663b0414d7a6b0db510aaa4ebad3fd,documentation,true,
+docs/thesis_ready_tables.md,6180,3520fdd09b38e2a93b5c8d79ff617250129b653edc1514e50575730d2945bc20,documentation,true,
+docs/thesis_requirement_mapping.md,4474,ac498f9e6d11375cbb94de0cfa2526642680bb5255015699a06aa3308adbdf61,documentation,true,
+docs/thesis_result_artifacts.md,39192,e8b86c4d5750fcbf3d5206918ed36359259ac6f45788e6d8a466805def033afb,documentation,true,
+docs/thesis_tables_and_figures_plan.md,5481,d885ba70d5539c9f7c749ae371fe83a904307dd16bde0eeac303433b5f409064,documentation,true,
+docs/thesis_word_integration_checklist.md,1310,d5580a4e2f15b3de8ad97f66dc42f96d6397f3438257d1695fbce18e5c27bde7,documentation,true,
+docs/wazuh_bind_mount_troubleshooting.md,3032,e31cc303f6760019d2ffd3f4382d0dd3a864d05db1963fe6b98253f0e951840d,documentation,true,
+docs/wazuh_real_baseline_runbook.md,5030,c746d625ce5b6554246c781f6b1419798d4a04bb3c28fb60cacd06960936de52,documentation,true,
+templates/lab/event_marker_commands_100.md,96416,49641548f00a8c59edf3918b031adf7ea296ecb132d78fbc806a13705ea6167b,lab_templates,true,
+templates/lab/lab_features_template.csv,169,547b9d80eb2f5193ea0be7560cc6ac280f67e2be0b67a10d120abcf598b775a5,lab_templates,true,
+templates/lab/lab_ground_truth_100_skeleton.csv,7468,95a474b274c9b1ac96c70e4c8b3336918fa8c61c45c33f2c63c056495301965d,lab_templates,true,
+templates/lab/lab_ground_truth_template.csv,86,f4be1ea72d2781eda86ce88016bed3b67f57a9429164c6ffe8196e604d8c45a8,lab_templates,true,
+templates/lab/lab_scenarios_template.yaml,1124,13eeacea97c98eb733c66fe638f3569df2fb393bbde9c6c507c5b537cdde0d91,lab_templates,true,
+templates/lab/operator_command_log_100.md,18355,a271988d186979fd59b498692126619d638b53829ee4a528ab8560a05dfa1107,lab_templates,true,
+templates/lab/pilot_event_marker_commands_real_lab_001.md,1836,dcf8c2557fee50106ce6d1ad4d6395d6183a96d7a84305b1736150f0d7d5bbbf,lab_templates,true,
+templates/lab/rerun_missing_flow_event_marker_commands.md,21200,d61c56b494cffaca9a22b4633a25a894e026045df42003a45752d9168bcaded0,lab_templates,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_231700/history.json,1023,c9033851bf1c9c58e5d9349a95d7fb84547aae6dd1eb26345362d0a8b4cf600e,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_231700/model.joblib,28512,a7cea11dd1698aa94d259529fe4662638300e98b4bbbac4b6158ed80ad67456a,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_231700/thresholds.json,209,8d567dc99caed317fa92326bfa8feab748a296475b383a49c44c89a10351cacc,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_231700/train_config.json,1930,549bf82aef6f96c047b5438359f41c44b5a598fdb06318b40173dad308af1a8d,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_233858/history.json,1023,c9033851bf1c9c58e5d9349a95d7fb84547aae6dd1eb26345362d0a8b4cf600e,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_233858/model.joblib,28512,a7cea11dd1698aa94d259529fe4662638300e98b4bbbac4b6158ed80ad67456a,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_233858/thresholds.json,209,8d567dc99caed317fa92326bfa8feab748a296475b383a49c44c89a10351cacc,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260503_233858/train_config.json,1930,549bf82aef6f96c047b5438359f41c44b5a598fdb06318b40173dad308af1a8d,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/history.json,1023,c9033851bf1c9c58e5d9349a95d7fb84547aae6dd1eb26345362d0a8b4cf600e,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/model.joblib,28512,a7cea11dd1698aa94d259529fe4662638300e98b4bbbac4b6158ed80ad67456a,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/thresholds.json,209,8d567dc99caed317fa92326bfa8feab748a296475b383a49c44c89a10351cacc,model_artifact,true,
+artifacts/final/final-ae-minimal-v1/ae_v1_20260504_113852/train_config.json,2002,9455256dd8a34c34b05bfebf06d0756362d3d113033b0512993fb75773399684,model_artifact,true,
+data/processed/final/ae_minimal/preprocess.pkl,3229,5a133672936faa6d5819913a933e2348d9a6fcce111598980988355800034007,model_artifact,true,
+reports/real_measurement/bundle_validation_report.md,1334,c9f3abfaa939ab61a770cba2e66ed48e6649113241c079e239ce55beb5943305,real_measurement_report,true,
+reports/real_measurement/bundle_validation_summary.csv,1085,36c557949a6d34d45cdfb6828652392c3fa4fe8d0407fff8ad3ccb451579bd23,real_measurement_report,true,
+reports/real_measurement/measurement_manifest.csv,25380,054f997cdade8fece4988b91c2c2c4ad7a3bd711f0bb8202f903e3aedee63988,real_measurement_report,true,
+reports/real_measurement/measurement_manifest.json,45091,3c83d81bbe0409bb15559b23998ed1dcac6a48abb584d661da0933fb8177f685,real_measurement_report,true,
+reports/real_measurement/measurement_manifest.md,27377,5f8e525dc78e3693eab8f402bb0ff555aa344ce5a4b7a25a5bee61cd59005868,real_measurement_report,true,
+reports/real_measurement/measurement_provenance.json,1361,d85e4fe5e07ef3d2e805e29f82489c01a067dbb36eb875b0f668681428d61d09,real_measurement_report,true,
+reports/real_measurement/real_lab_results_report.html,3584,2b2007d38117cd5204d4ac149c4ab54e054986c4c8dac01cb394aa8f3ad70940,real_measurement_report,true,
+reports/real_measurement/real_lab_results_report.md,3546,3aaf0da000cfeaff6f5f66544285245a35f93efe9b475797400f9f3d935da2ad,real_measurement_report,true,
+reports/real_measurement/run_metadata.json,329,1c72ce16f9169dd148c7c241dcb171af52042529a1fe9c0d29a5da651ee45caa,real_measurement_report,true,
+reports/real_measurement/thesis_real_lab_section.md,2620,65026d83df21865a39b5e28d09bebfb82e6a2e55e3a7dfb832b357c58b342542,real_measurement_report,true,
+reports/real_measurement_qa/defense_notes_real_measurement.md,3106,ec35ba68fadebdf0e5b8df8587b2b9ced594c839d2299e5b46a30fd3b0acbb74,qa_report,true,
+reports/real_measurement_qa/postrun_metadata.json,179,1c939f2cf86f7f023faccb33a2fe745ec891230ec9380c61bd8012e0ec49e1da,qa_report,true,
+reports/real_measurement_qa/postrun_quality_report.md,2285,99ae0dec143bf0a7942512976c42cb8eb388d0050e05567960efd1961d838d65,qa_report,true,
+reports/real_measurement_qa/postrun_quality_summary.csv,1932,5d5deea73a11f641acb62420e29a54fd7795afe5f2023e7b90a1e7b4d1a063e5,qa_report,true,
+reports/real_measurement_qa/preflight_metadata.json,200,c5d55d750fddc6e75bb7d8ac6df50e5fe4b292d4e3ed61f8931d0cd93ae292d6,qa_report,true,
+reports/real_measurement_qa/preflight_report.md,2754,34f98b6508fd572d4afc8e666cd102bbdc671e4cfa4a2ab8563dffcb4a99c8d8,qa_report,true,
+reports/real_measurement_qa/preflight_summary.csv,2323,9f47d8f1ca525b9e626433886abd65f0a89d6a0b83da6d42dc74b4a7843bfd61,qa_report,true,
+reports/real_measurement_qa/research_question_answer.json,326,dedad4ba83787d03a232331a9a45ebb5595553a62d6837c4f2c28a415f1dd6e9,qa_report,true,
+reports/real_measurement_qa/thesis_interpretation_bullets.md,806,84ef2659fe2f765dce9c43065a40703582236fcb34c53d6dc6f95e4f695b265a,qa_report,true,
+reports/real_measurement_qa/thesis_readiness.md,902,bffc98e81800fe17b7bd595f45e5b4404cd4eeb7ed28ee618dd2cda9a645b3eb,qa_report,true,
+reports/real_measurement_qa/thesis_table_ae_lab.md,269,aefb3fe0047fddb706bbd2b5e9bc42ec41f3e38ca6a0f037b93d9b188df7b722,qa_report,true,
+reports/real_measurement_qa/thesis_table_hybrid_strategies.md,587,91ce0092814d2e1d79f373c7cfc74a71ea9e71ef8c1cee61c378b0622ea90199,qa_report,true,
+reports/real_measurement_qa/thesis_table_real_comparison.md,874,2880ab916c75d7fdb6eb263807798884f7a9d87cd73508bac9bee094047a6fd4,qa_report,true,
+reports/real_measurement_qa/thesis_table_wazuh_only.md,337,5bf81c083dafa34c1feea27496bcc8ed703b04fe768153d10f158ace2175e982,qa_report,true,
+reports/measurement_quality/feature_alert_alignment.csv,2763,42d2ad1243d72894537a18bdc8cbbd89e5f5e05810c6f6214f7a1587c96164e2,quality_report,true,
+reports/measurement_quality/feature_alert_alignment.json,5515,40a8df64bfde4b66a6de1ce065331eed54ebba55658716562d3bba9d68c596d6,quality_report,true,
+reports/measurement_quality/feature_alert_alignment.md,3277,a77fad06a3dcfbe9e69d7a8978a27ded261dae3f5422f0aa175b8e6eeea99ed6,quality_report,true,
+reports/measurement_quality/measurement_quality_summary.csv,173,8c2e85df28244d7eca303677c8a4356280f2d164bc349e18f6f937ebf8336df3,quality_report,true,
+reports/measurement_quality/measurement_quality_summary.json,20095,d9178a0c7dd197b0c3eeaff2886464c3d0a57d0decfbe4fa818eb16951b53987,quality_report,true,
+reports/measurement_quality/measurement_quality_summary.md,6836,c17a80eebeaa0fe200a5aa3559621ff566b75e4f25ba4c7e1842c6d849d86c4f,quality_report,true,
+reports/measurement_quality/metric_consistency.csv,2235,97d1b1391580f0a9425f70b2d7703d8dcf290b8789af594dc46aa35e48d810f2,quality_report,true,
+reports/measurement_quality/metric_consistency.json,5535,9a8d11c910dd55b03375db87bb7ee7f8b282c42cfbb503970d6cb15fda99e3f0,quality_report,true,
+reports/measurement_quality/metric_consistency.md,2743,8b51e486338c8b3d15268ba84209ae32c236ad1525b8ddec1e00a19cd2cc790b,quality_report,true,
+reports/measurement_quality/research_claim_strength.csv,527,9f6120f8da6debc70f13ef7a87a04656f5df39659b6528320dcad6bca4ca354b,quality_report,true,
+reports/measurement_quality/research_claim_strength.json,512,7151eeaa2c1746aee1a256898acf5c5fa698f9f7cb424b2302c7743adde61844,quality_report,true,
+reports/measurement_quality/research_claim_strength.md,796,230c6eddb769196509bf4fdf3985c143e1e4e90292bfe923a2a66344b701eba9,quality_report,true,
+reports/measurement_quality/scenario_coverage.csv,1657,4b7c53204f73ad3214be6fceff6d4dfef350cfc0f93e603582da3fd1137d847d,quality_report,true,
+reports/measurement_quality/scenario_coverage.json,3636,7abd993c242a9549a4a39f0e861bf7e0530030cefc6161bc8c0ccd4dc301622f,quality_report,true,
+reports/measurement_quality/scenario_coverage.md,2041,fa4707fbcd28ed48c7201564563f823cbf25f3916e5cd9c9a8620aaa3d14d2cd,quality_report,true,
+reports/measurement_quality/thesis_measurement_quality_notes.md,1378,b28b0e64e33a552c7ebb0b32c1fe90ad3867a16bf6c58bfbed795bdd34998d09,quality_report,true,
+reports/measurement_quality/ttd_quality.csv,1154,c3826d4b1c15f85e7557ada124bc1728f8dbf19878ac70922f5ef7e545b96875,quality_report,true,
+reports/measurement_quality/ttd_quality.json,2407,3333e584e41c522b57890e89d346ab826a959f4eee513bbc242d749573c2afe7,quality_report,true,
+reports/measurement_quality/ttd_quality.md,1500,299c38f8b82be134c9b1bb7f02ad8f6c9226169e3ebcb3454065ffa12b1e2489,quality_report,true,
+results/wazuh_real/confusion_matrix.csv,67,2f533f0dc0d699e6e27d87351ca28368cf5a23e97503810c9ca61a3a95bba132,real_result,true,
+results/wazuh_real/metrics_summary.csv,281,093737ccf71facd7d2b5021743e22c53c938782ed1ddd932fbe04087c76e4482,real_result,true,
+results/wazuh_real/predictions.csv,4172,f2a5e09fdfeb3c41c2be56aaf6ff0c7db84b5d8e60c7b7051727c4fb22192f7a,real_result,true,
+results/wazuh_real/run_metadata.json,268,3fc61cf163274354fba1f1f84529b0c690ea3c6797ab58ca6668dc19c1e1e1b8,real_result,true,
+results/ae_lab/confusion_matrix.csv,65,7942da294318467254b1e182980863470fbb3842fb0103cd91ced5f60c39828f,real_result,true,
+results/ae_lab/metrics_summary.csv,239,1f48f0c3c5a3a8b4ac64e7580284e8ecd1348f4e7a87c1ebaad898142841bdef,real_result,true,
+results/ae_lab/predictions.csv,20281,18e9562ef3f19c5beb73c445c5062ad3205e19cfc9920829b9d7fe32071f0a93,real_result,true,
+results/ae_lab/run_metadata.json,235,840c3aca219a2181c78228002e5381a3eb27cb94b60fb0c656b5aea042843e88,real_result,true,
+results/hybrid_real/confusion_matrix_by_strategy.csv,206,eab2d7a4e328b4a0a0724475f12279c57c572f73ec97181a316339ff3773c228,real_result,true,
+results/hybrid_real/metrics_summary.csv,527,250dd01997209c723127abda56513143b16dc99bb57d2bd76f62bd592c97adbb,real_result,true,
+results/hybrid_real/predictions.csv,8051,c94f82e6c49c93bc9d0810a46c1b14e4237fb7af05df34fd8a63ac995c606502,real_result,true,
+results/hybrid_real/run_metadata.json,404,3a4091706638b47fc25cbc0441788ef52dc7c7d17b5039308789e008324d36d5,real_result,true,
+results/real_comparison/fig_alert_count.png,59866,4eb9810ff5e082108746092d6920049b6dc58cbe371611af22ef016b4e2bd44f,real_result,true,
+results/real_comparison/fig_false_positive_rate.png,60537,58e384a655ad4a4ff246b9bdb65512467bef05cd43287e50e272ad04c3dbb2c6,real_result,true,
+results/real_comparison/fig_mean_ttd.png,43347,762813ed1fb1b3ced0075cb018e160af90e951c93adcc8784344a3bd05fff81f,real_result,true,
+results/real_comparison/fig_precision_recall_f1.png,65433,14fcdfeb9869bbbd4f7a27bc3c9d62b40f2e684d5b0bdc2a632c30e41b281a4d,real_result,true,
+results/real_comparison/metrics_comparison.csv,655,64a6048c2a27883570b8279cc2c8bba2294be6e47fccb6c58a4b103caf338e72,real_result,true,
+results/real_comparison/metrics_comparison.md,1082,ba8cef3977c3a7e494baa2261859441e37eef54df5f92a44b215bb38660f16f4,real_result,true,
+results/real_comparison/run_metadata.json,563,3d05fb20424303ac2cce6c672be0cdfc70008c9e37b69cd08131a3672a13703a,real_result,true,
+data/lab/lab_ground_truth.csv,11569,ee6e21f0368aa85135285728abdbefad6c6cc4128445db4a91aaf17d1c7e5f82,runtime_input,true,
+data/lab/lab_features.csv,14259,c161185a463916f5f03892c23b167794618c62fee4f3534cc954a346b9aa3fbd,runtime_input,true,
+data/lab/zeek/conn.log,56567,98dff8987b425a6a244eaffc3ada49a7ccd4d8875b575632f8fdfa5b8c9d5503,runtime_input,true,
+data/lab/flows.csv,,,runtime_input,false,MISSING: not packaged; Optional flow-CSV input; Zeek conn.log is the measured input when this is absent.
+data/wazuh/alerts.jsonl,225853,82be69aeb1816618e980ed9bb37d1f4d7af2e071dd52b141cd7214fb68aeed1d,runtime_input,true,
+raw/wazuh_export.json,,,runtime_input,false,MISSING: not packaged; Optional raw manual Wazuh export; normalized alerts.jsonl is sufficient when this is absent.
